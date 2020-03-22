@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 /**
- * DirectMemoryOOM class
+ * DirectMemoryOOM class -Xmx20M -XX:MaxDirectMemorySize=10M
  *
  * @author 谢小平
  * @date 2018/9/13
