@@ -6,7 +6,7 @@ public class SubjectProxy implements ISubject {
     }
     @Override
     public String request() {
-        System.out.println("先跟秘书交谈，秘书记录你的信息，等等");
+        System.out.println("先跟秘书交谈，安全代理,虚拟代理,远程代理");
         return iSubject.request();
     }
 }
