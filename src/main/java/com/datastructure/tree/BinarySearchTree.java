@@ -1,14 +1,9 @@
 package com.datastructure.tree;
 
-import org.apache.tools.ant.taskdefs.Delete;
-
-import javax.xml.soap.Node;
-import java.util.List;
-
 /**
  * BinaryTree class
  *
- * @author 谢小平
+ * @author 格林
  * @date 2020/3/25
  */
 public class BinarySearchTree<E extends Comparable<E>> {
@@ -16,11 +11,25 @@ public class BinarySearchTree<E extends Comparable<E>> {
     private Node root;
     private int size;
 
-    public E e remove(E e) {
-        return root == null ? null :remove(root, null, e,true);
+    public E  remove(E e) {
+        return remove(root, null, e,true);
     }
 
-    public E remove(Node node, Node parent, E e,boolean isleft) {
+    /**
+     *  三种情况
+     *      node 是叶子节点
+     *      node 左子树为空 或者 node 右子树为空
+     *      node 左右子树都不为空
+     * @param node
+     * @param parent
+     * @param e
+     * @param isleft
+     * @return
+     */
+    private E remove(Node node, Node parent, E e,boolean isleft) {
+        if(node == null) {
+            return null;
+        }
         if(e.compareTo(node.e) > 0) {
            return  remove(node.right,node,e,false);
         } else if(e.compareTo(node.e) < 0) {
@@ -44,14 +53,17 @@ public class BinarySearchTree<E extends Comparable<E>> {
                 } else {
                     q.left = s.left;
                 }
+            // 删除的是跟节点，并且只有一个子树。 我是通过父节点删除，先解决这种可能导致后面出现null的问题情况。
             }else if(parent == null ) {
                 root = root.left != null ? root.left : root.right;
+                // 删除节点左节点为空
             } else if(node.left == null) {
                 if(isleft) {
                     parent.left = node.right;
                 } else {
                     parent.right = node.right;
                 }
+                // 删除节点右节点为空
             } else if(node.right == null) {
                 if(isleft) {
                     parent.left = node.left;
@@ -62,17 +74,6 @@ public class BinarySearchTree<E extends Comparable<E>> {
             return returnE;
         }
     }
-    /**
-     *   根据值查找对应父节点， 如果节点不存在，返回对应结束节点。
-     * @param e
-     * @return
-     */
-//    public Node findFather(E e) {
-//
-//    }
-
-
-
 
     public void add( E e) {
         add(root,null, e);
@@ -127,5 +128,28 @@ public class BinarySearchTree<E extends Comparable<E>> {
             left = null;
             right = null;
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        return inTraverse(root,stringBuilder);
+    }
+
+    /**
+     * 中序遍历
+     * @param node
+     * @param stringBuilder
+     * @return
+     */
+    public String inTraverse(Node node, StringBuilder stringBuilder ){
+            if(node == null ) {
+                return null;
+            }
+            inTraverse(node.left,stringBuilder);
+            stringBuilder.append(" " + node.e);
+            inTraverse(node.right,stringBuilder);
+            return stringBuilder.toString();
+
     }
 }
