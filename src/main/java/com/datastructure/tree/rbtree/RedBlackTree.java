@@ -223,6 +223,16 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
         return node;
     }
 
+    public Node balance(Node node) {
+        if(isRed(node.right)) node = rotateLeft(node);
+        if(isRed(node.right) && !isRed(node.left)) node = rotateLeft(node);
+        if(isRed(node.left) && isRed(node.left.left)) node = rotaeRight(node);
+        if(isRed(node.left) && isRed(node.right)) flipColors(node);
+
+        node.N = size(node.left) + 1 + size(node.right);
+        return node;
+
+    }
 
     @Override
     public String toString() {
@@ -241,7 +251,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
             return null;
         }
         inTraverse(node.left,stringBuilder);
-        stringBuilder.append(" " + node.key + " : " + node.value);
+        stringBuilder.append(" " + node.key + " : " + node.value + " color " + node.color + " N : " + node.N );
         inTraverse(node.right,stringBuilder);
         return stringBuilder.toString();
 
