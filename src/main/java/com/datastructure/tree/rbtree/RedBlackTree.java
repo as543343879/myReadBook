@@ -53,6 +53,33 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
         return h;
     }
 
+    public void deleteMin(){
+        if(!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+        root = deleteMin(root);
+        if(!isEmpty())
+            root.color = BLACK;
+    }
+
+    private Node deleteMin(Node node) {
+        if(node.left == null) {
+            return null;
+        }
+        if(!isRed(node.left) && !isRed(node.right))
+            node = moveRedLeft(node);
+        node.left = deleteMin(node.left);
+        return balance(node);
+    }
+
+    /**             ||
+     *              5
+     *             /  \
+     *            3    6        ->
+     *         /   \
+     *        1     4
+     * @param h
+     * @return
+     */
     private Node moveRedLeft(Node h){
         /**
          * 当前节点的左右子节点都是2-节点，左右节点需要从父节点中借一个节点
@@ -76,43 +103,43 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
         return h;
     }
 
-    public void delete(Key key){
-        if(!isRed(root.left)&& !isRed(root.right)){
-            root.color = RED;
-        }
-        root = delete(root,key);
-        if(root != null)
-            root.color = BLACK;
-    }
+//    public void delete(Key key){
+//        if(!isRed(root.left)&& !isRed(root.right)){
+//            root.color = RED;
+//        }
+//        root = delete(root,key);
+//        if(root != null)
+//            root.color = BLACK;
+//    }
 
-    private Node delete(Node h, Key key){
-        if(key.compareTo(h.key) < 0){          // 当目标键小于当前键的时候，我们做类似于寻找最小是的操作，向树左边移动，合并父子结点来消除2-结点
-            if(h.left == null){
-                return null;
-            }
-            if(isRed(h.left) && !isRed(h.left.left)){
-                h = moveRedLeft(h);
-            }
-            h.left = delete(h.left,key);
-        }else{                  // 当目标键大于当前键的时候，我们向右移动，并做与deleteMax相同的操作，如果相同的话，我们使用和二叉树的删除一样的操作，获取当前键的右子树的最小健，然后交换，并将目标键删除
-            if(isRed(h.left)){
-                h = rotateRight(h);
-            }
-            if(key != h.key && h.right == null){    // 我们没有找到目标键，我们将其删除
-                return null;
-            }
-            if(!isRed(h.right) && isRed(h.right.left)){
-                h = moveRedRight(h);
-            }
-            if(key == h.key){
-                h.value = get(h.right,min(h.right).key);
-                h.key = min(h.right).key;
-                h.right = deleteMin(h.right);
-            }
-            else h.right = delete(h.right,key);
-        }
-        return balance(h);
-    }
+//    private Node delete(Node h, Key key){
+//        if(key.compareTo(h.key) < 0){          // 当目标键小于当前键的时候，我们做类似于寻找最小是的操作，向树左边移动，合并父子结点来消除2-结点
+//            if(h.left == null){
+//                return null;
+//            }
+//            if(isRed(h.left) && !isRed(h.left.left)){
+//                h = moveRedLeft(h);
+//            }
+//            h.left = delete(h.left,key);
+//        }else{                  // 当目标键大于当前键的时候，我们向右移动，并做与deleteMax相同的操作，如果相同的话，我们使用和二叉树的删除一样的操作，获取当前键的右子树的最小健，然后交换，并将目标键删除
+//            if(isRed(h.left)){
+//                h = rotateRight(h);
+//            }
+//            if(key != h.key && h.right == null){    // 我们没有找到目标键，我们将其删除
+//                return null;
+//            }
+//            if(!isRed(h.right) && isRed(h.right.left)){
+//                h = moveRedRight(h);
+//            }
+//            if(key == h.key){
+//                h.value = get(h.right,min(h.right).key);
+//                h.key = min(h.right).key;
+//                h.right = deleteMin(h.right);
+//            }
+//            else h.right = delete(h.right,key);
+//        }
+//        return balance(h);
+//    }
 
     /**
      * 查找以node为根节点红黑树的最小节点
@@ -161,7 +188,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
         t.color = node.color;
         node.color = RED;
         t.N = node.N;
-        node.N = 1  + node.left.N + node.right.N;
+        node.N = 1  + size(node.left) +size( node.right);
         return t;
     }
 
@@ -187,7 +214,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
         t.color = node.color;
         node.color = RED;
         t.N = node.N;
-        node.N = 1 + node.left.N + node.right.N;
+        node.N = 1  + size(node.left) +size( node.right);
         return t;
     }
 
@@ -223,16 +250,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
         return node;
     }
 
-    public Node balance(Node node) {
-        if(isRed(node.right)) node = rotateLeft(node);
-        if(isRed(node.right) && !isRed(node.left)) node = rotateLeft(node);
-        if(isRed(node.left) && isRed(node.left.left)) node = rotaeRight(node);
-        if(isRed(node.left) && isRed(node.right)) flipColors(node);
 
-        node.N = size(node.left) + 1 + size(node.right);
-        return node;
-
-    }
 
     @Override
     public String toString() {
@@ -251,7 +269,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
             return null;
         }
         inTraverse(node.left,stringBuilder);
-        stringBuilder.append(" " + node.key + " : " + node.value + " color " + node.color + " N : " + node.N );
+        stringBuilder.append(" " + node.key + " : " + node.value + " color " + (node.color == true ? "red" : "black") + " N : " + node.N );
         inTraverse(node.right,stringBuilder);
         return stringBuilder.toString();
 
