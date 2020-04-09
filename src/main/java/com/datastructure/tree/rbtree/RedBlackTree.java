@@ -1,6 +1,7 @@
 package com.datastructure.tree.rbtree;
 
-import com.datastructure.tree.BinarySearchTree;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * RedBlackTree class
@@ -30,6 +31,19 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
             this.value = value;
             N = n;
         }
+
+        @Override
+        public String toString() {
+            return key +" " + (color ? "Red" : "BLACK");
+//            return "Node{" +
+//                    "color=" + color +
+//                    ", key=" + key +
+//                    ", value=" + value +
+//                    ", N=" + N +
+//                    ", left=" + left +
+//                    ", right=" + right +
+//                    '}';
+        }
     }
 
     public boolean isRed(Node node) {
@@ -53,6 +67,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
         return h;
     }
 
+
     public void deleteMin(){
         if(!isRed(root.left) && !isRed(root.right))
             root.color = RED;
@@ -71,75 +86,157 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
         return balance(node);
     }
 
-    /**             ||
-     *              5
-     *             /  \
-     *            3    6        ->
-     *         /   \
-     *        1     4
+    public void deleteMax() {
+        if(!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+        root = deleteMax(root);
+        if(!isEmpty())
+            root.color = BLACK;
+    }
+
+    private Node deleteMax(Node h) {
+        if(isRed(h.left))
+            h = rotateRight(h);
+        if(h.right == null)
+            return null;
+        if(!isRed(h.right) && !isRed(h.left))
+            h = moveRedRight(h);
+        h.right = deleteMax(h.right);
+        return balance(h);
+    }
+
+    public void levelOrder() {
+        Queue<Node> nodeQueue = new LinkedList<>();
+        nodeQueue.add(root);
+        while (!nodeQueue.isEmpty()) {
+            Node node = nodeQueue.poll();
+            System.out.println(node);
+            if(node.left != null ) {
+                nodeQueue.add(node.left);
+            }
+            if(node.right != null) {
+                nodeQueue.add(node.right);
+            }
+        }
+    }
+
+    /**
+     *
+
+     *   	    \\
+     * 		4.5
+     * 	  /	  \
+     * 	 3     6
+     * 	/ \	 //	 \
+     *   1   4	 5    7
+     *
+     *   	    |
+     * 		4.5
+     * 	 //	  \\
+     * 	 3     6
+     * 	/ \	 //	 \
+     *   1   4	 5    7
+     *
+     *   	    |
+     * 		4.5
+     * 	 //	  \\
+     * 	 3     5
+     * 	/ \	 	 \\
+     *   1   4	      6
+     *                \
+     *                 7
+     *
+     *   	  |
+     * 	  5
+     * 	//  \\
+     *    4.5   6
+     *  //	      \
+     *  3         7
+     * / \
+     * 1   4
      * @param h
      * @return
      */
     private Node moveRedLeft(Node h){
         /**
-         * 当前节点的左右子节点都是2-节点，左右节点需要从父节点中借一个节点
+         * 假设节点h为红色，左右子节点都是黑色
+         * 将节点h.left 或者 h.left 的子节点之一变红
          * 如果该节点的右节点的左节点是红色节点，说明兄弟节点不是2-节点，可以从兄弟节点中借一个
          */
         moveflipColors(h);     // 从父节点中借一个
         if(isRed(h.right.left)){    // 判断兄弟节点，如果是非红节点，也从兄弟节点中借一个
             h.right = rotateRight(h.right);
             h = rotateLeft(h);
-            moveflipColors(h);  //  在从兄弟节点借了一个以后，我们就需要还一个节点给父节点了，因为一开始从父节点那里借了一个
         }
         return h;
     }
 
     private Node moveRedRight(Node h){
+        /**
+         * 假设节点h为红色，左右子节点都是黑色
+         *  将节点h.left 或者 h.left 的子节点之一变红
+         */
         moveflipColors(h);
         if(isRed(h.left.left)){         // 在这里对于兄弟节点的判断都是.left，因为红色节点只会出现在左边
             h=rotateRight(h);
-            moveflipColors(h);
+//            moveflipColors(h);
         }
         return h;
     }
 
-//    public void delete(Key key){
-//        if(!isRed(root.left)&& !isRed(root.right)){
-//            root.color = RED;
-//        }
-//        root = delete(root,key);
-//        if(root != null)
-//            root.color = BLACK;
-//    }
+    public void delete(Key key){
+        if(!isRed(root.left)&& !isRed(root.right)){
+            root.color = RED;
+        }
+        root = delete(root,key);
+        if(root != null)
+            root.color = BLACK;
+    }
 
-//    private Node delete(Node h, Key key){
-//        if(key.compareTo(h.key) < 0){          // 当目标键小于当前键的时候，我们做类似于寻找最小是的操作，向树左边移动，合并父子结点来消除2-结点
-//            if(h.left == null){
-//                return null;
-//            }
-//            if(isRed(h.left) && !isRed(h.left.left)){
-//                h = moveRedLeft(h);
-//            }
-//            h.left = delete(h.left,key);
-//        }else{                  // 当目标键大于当前键的时候，我们向右移动，并做与deleteMax相同的操作，如果相同的话，我们使用和二叉树的删除一样的操作，获取当前键的右子树的最小健，然后交换，并将目标键删除
-//            if(isRed(h.left)){
-//                h = rotateRight(h);
-//            }
-//            if(key != h.key && h.right == null){    // 我们没有找到目标键，我们将其删除
-//                return null;
-//            }
-//            if(!isRed(h.right) && isRed(h.right.left)){
-//                h = moveRedRight(h);
-//            }
-//            if(key == h.key){
-//                h.value = get(h.right,min(h.right).key);
-//                h.key = min(h.right).key;
-//                h.right = deleteMin(h.right);
-//            }
-//            else h.right = delete(h.right,key);
-//        }
-//        return balance(h);
-//    }
+    private Node delete(Node h, Key key){
+        if(key.compareTo(h.key) < 0){          // 当目标键小于当前键的时候，我们做类似于寻找最小是的操作，向树左边移动，合并父子结点来消除2-结点
+            if(h.left == null){
+                return null;
+            }
+            if(isRed(h.left) && !isRed(h.left.left)){
+                h = moveRedLeft(h);
+            }
+            h.left = delete(h.left,key);
+        }else{                  // 当目标键大于当前键的时候，我们向右移动，并做与deleteMax相同的操作，如果相同的话，我们使用和二叉树的删除一样的操作，获取当前键的右子树的最小健，然后交换，并将目标键删除
+            if(isRed(h.left)){
+                h = rotateRight(h);
+            }
+            if(key.compareTo(h.key) == 0 && (h.right == null) ){    // 我们没有找到目标键，我们将其删除
+                return null;
+            }
+            if(!isRed(h.right) && isRed(h.right.left)){
+                h = moveRedRight(h);
+            }
+            if(key.compareTo(h.key) == 0 ){
+                h.value = get(h.right,min(h.right).key);
+                h.key = min(h.right).key;
+                h.right = deleteMin(h.right);
+            }
+            else h.right = delete(h.right,key);
+        }
+        return balance(h);
+    }
+
+
+    public Value get(Key key){
+        return get(root, key);
+    }
+    private Value get(Node node, Key key){
+        if(node == null)
+            return  null;
+        int cmp = key.compareTo(node.key);
+        if(cmp < 0)
+            return get(node.left, key);
+        else if(cmp > 0)
+            return get(node.right, key);
+        else
+            return node.value;
+    }
 
     /**
      * 查找以node为根节点红黑树的最小节点
@@ -250,8 +347,6 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
         return node;
     }
 
-
-
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -269,7 +364,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
             return null;
         }
         inTraverse(node.left,stringBuilder);
-        stringBuilder.append(" " + node.key + " : " + node.value + " color " + (node.color == true ? "red" : "black") + " N : " + node.N );
+        stringBuilder.append(" " + node.key +  " color " + (node.color == true ? "red" : "black") +"|" );
         inTraverse(node.right,stringBuilder);
         return stringBuilder.toString();
 
