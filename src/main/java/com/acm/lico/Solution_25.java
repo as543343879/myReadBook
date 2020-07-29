@@ -79,11 +79,8 @@ public class Solution_25 {
 			}
 			i -- ;
 			if(i == k) {
-				ListNode endNext = end.next;
 				ListNode start = pre.next;
-				end.next = null;
-				ListNode reverse = reverse(start);
-				start.next = endNext;
+				ListNode reverse = reverse(pre, end, k);
 				pre.next = reverse;
 				pre = start;
 				end = start;
@@ -96,15 +93,18 @@ public class Solution_25 {
 	    } while ( end != null);
 	  	return newHead.next;
 	}
-	public ListNode   reverse(ListNode start) {
-
-		ListNode t, ipre =null;
-		while (start != null) {
+	public ListNode   reverse(ListNode pre, ListNode end, int k) {
+		ListNode start = pre.next;
+		if(end == null) {
+			System.out.println(end.val);
+		}
+		ListNode t, ipre = end.next;
+		while (k > 0) {
 			t = start.next;
 			start.next = ipre;
 			ipre = start;
 			start = t;
-//			k--;
+			k--;
 		}
 //		pre.next = start;
 		return ipre;
