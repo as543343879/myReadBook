@@ -31,25 +31,22 @@ public class Solution_25 {
 	    listNode= listNode.next;
 
 	    print(head);
-//	    ListNode listNode1 = reverse2(head);
-//	    print(listNode1);
-	    Solution_25 solution_25 = new Solution_25();
-	    ListNode listNode1 = solution_25.reverseKGroup(head, 2);
+	    ListNode listNode1 = reverse2(head);
 	    print(listNode1);
+//	    Solution_25 solution_25 = new Solution_25();
+//	    ListNode listNode1 = solution_25.reverseKGroup(head, 2);
+//	    print(listNode1);
     }
 
     public static ListNode  reverse2(ListNode head){
-	    ListNode iHead = head;
-	    ListNode t, pre = null;
+	    ListNode t;
+	    ListNode pre = null; // 之前已经取的
 	    head = head.next;
-
-	    int i = 3;
-	    while (i > 0) {
+	    while (head != null) {
 	    	 t = head.next;
 		    head.next = pre;
 		    pre = head;
 		    head = t;
-	    	i--;
 	    }
 	    return pre;
     }
