@@ -71,6 +71,30 @@
             <artifactId>jol-core</artifactId>
             <version>0.9</version>
         </dependency>
+        <dependency>
+            <groupId>com.sun.btrace</groupId>
+            <artifactId>btrace-agent</artifactId>
+            <version>2.0</version>
+            <type>jar</type>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/btrace-agent.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.btrace</groupId>
+            <artifactId>btrace-boot</artifactId>
+            <version>2.0</version>
+            <type>jar</type>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/btrace-boot.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.btrace</groupId>
+            <artifactId>btrace-client</artifactId>
+            <version>2.0</version>
+            <type>jar</type>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/btrace-client.jar</systemPath>
+        </dependency>
 
     </dependencies>
 
