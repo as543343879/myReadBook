@@ -7,6 +7,7 @@
     <groupId>com.mg</groupId>
     <artifactId>book</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
@@ -72,6 +73,40 @@
             <version>0.9</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.sun.btrace</groupId>
+            <artifactId>jep-java</artifactId>
+            <version>3.5</version>
+            <type>jar</type>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/jep-java-3.5-trial.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.btrace</groupId>
+            <artifactId>btrace-agent</artifactId>
+            <version>2.0</version>
+            <type>jar</type>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/btrace-agent.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.btrace</groupId>
+            <artifactId>btrace-boot</artifactId>
+            <version>2.0</version>
+            <type>jar</type>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/btrace-boot.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.btrace</groupId>
+            <artifactId>btrace-client</artifactId>
+            <version>2.0</version>
+            <type>jar</type>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/btrace-client.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -79,12 +114,22 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+        <resource>
+            <directory>${project.basedir}/lib</directory>
+            <targetPath>BOOT-INF/lib/</targetPath>
+            <includes>
+                <include>**/*.jar</include>
+            </includes>
+        </resource>
+    </resources>
     </build>
 </project>
