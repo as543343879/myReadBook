@@ -3,12 +3,10 @@ package com.mg.learn;
 
 import com.singularsys.jep.Jep;
 import com.singularsys.jep.JepException;
-import com.singularsys.jep.functions.If;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Main class

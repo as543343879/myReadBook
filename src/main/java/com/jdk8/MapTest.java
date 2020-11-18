@@ -2,6 +2,7 @@ package com.jdk8;
 
 import org.junit.Test;
 
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -24,6 +25,9 @@ class Stu{
 public class MapTest {
 	@Test
 	public void testHashSet() {
+		BitSet bitSet = new BitSet();
+		bitSet.size();
+		bitSet.length();
 		HashSet set = new HashSet();
 		set.add(new Stu("1","aa"));
 		set.add(new Stu("1","aa2"));

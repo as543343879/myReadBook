@@ -14,6 +14,9 @@ public class IntegerTest {
 		System.out.println(Integer.bitCount(121));
 		System.out.println(swar(121));
 		System.out.println(Integer.toBinaryString(121));
+
+
+
 	}
 
 	public static int swar(int i) {

@@ -1,5 +1,8 @@
 package com.jdk8;
 
+import java.util.BitSet;
+import java.util.Queue;
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -12,7 +15,9 @@ import java.util.concurrent.locks.ReentrantLock;
 public class LcokTest {
 	public static void main(String[] args) {
 	    Lock lock = new ReentrantLock(true);
-	    try{
+		Condition condition = lock.newCondition();
+//		condition.await();
+		try{
 		    lock.lock();
 		    System.out.println("get lock ");
 		    System.out.println("get lock ");
