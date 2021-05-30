@@ -4,11 +4,11 @@ import java.util.Arrays;
 
 /**
  * SortXuanZhe class
- * 选择排序
+ * 插入排序
  * @author 格林
  * @date 2021-05-24
  */
-public class SortXuanZhe {
+public class SortChaRu {
     public static void main(String[] args) {
         int[] arr = { 2, 3, 5, 1, 23, 6, 78, 34 };
         System.out.println("原始数据: " + Arrays.toString(arr));
