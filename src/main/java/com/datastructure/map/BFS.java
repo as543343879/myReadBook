@@ -15,12 +15,13 @@ public class BFS {
         Set set = new HashSet();
         set.add(start);
         queue.add(start);
+        System.out.print( "bfs：");
         while (queue.size() > 0) {
             Integer pop = ((LinkedList<Integer>) queue).pop();
             for(int i = 0; i < map[0].length; i ++) {
                 if(  map[pop][i] != MAX &&  !set.contains(i)  ) {
                     set.add(i);
-                    ((LinkedList<Integer>) queue).offer(i);
+                    queue.offer(i);
                 }
             }
             System.out.print(pop + " ");
@@ -34,6 +35,7 @@ public class BFS {
         Set set = new HashSet();
         set.add(start);
         stack.add(start);
+        System.out.print( "dfs：");
         while (stack.size() > 0) {
             Integer pop = stack.pop();
             for(int i = 0; i < map[0].length; i ++) {
