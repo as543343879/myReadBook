@@ -3,6 +3,7 @@ package com.acm.lico;
 /**
  * Solution43 class
  * 43. 字符串相乘
+ * 大数相乘
  * @author 格林
  * @date 2021-06-19
  */
