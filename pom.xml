@@ -132,11 +132,11 @@
             <version>5.0.2.RELEASE</version>
         </dependency>
         <!--wurmloch-crdt的实现-->
-        <!--<dependency>-->
-            <!--<groupId>com.netopyr.wurmloch</groupId>-->
-            <!--<artifactId>wurmloch-crdt</artifactId>-->
-            <!--<version>0.1.0</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.netopyr.wurmloch</groupId>
+            <artifactId>wurmloch-crdt</artifactId>
+            <version>0.1.0</version>
+        </dependency>
 
     </dependencies>
 
