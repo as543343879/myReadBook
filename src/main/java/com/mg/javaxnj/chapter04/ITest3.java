@@ -1,7 +1,5 @@
 package com.mg.javaxnj.chapter04;
 
-import lombok.Synchronized;
-
 /**
  * ITest3 class
  *  线程死锁等待演示

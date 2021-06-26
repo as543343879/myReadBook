@@ -1,7 +1,5 @@
 package com.mg.javaxnj.chapter08;
 
-import java.io.Serializable;
-
 /**
  * StaticResolution class
  *

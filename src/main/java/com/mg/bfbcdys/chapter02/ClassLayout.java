@@ -1,10 +1,5 @@
 package com.mg.bfbcdys.chapter02;
 
-import java.util.HashMap;
-import java.util.Queue;
-import java.util.Stack;
-import java.util.concurrent.atomic.AtomicInteger;
-
 /**
  * ClassLayout class
  *

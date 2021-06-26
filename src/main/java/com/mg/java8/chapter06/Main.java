@@ -2,10 +2,12 @@ package com.mg.java8.chapter06;
 
 import org.junit.Test;
 
-import java.util.*;
-import java.util.stream.Collector;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
-import  static  java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.*;
 /**
  * Main class
  *

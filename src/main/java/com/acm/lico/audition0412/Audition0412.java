@@ -1,7 +1,5 @@
 package com.acm.lico.audition0412;
 
-import java.util.List;
-
 /**
  * audition0412 class
  *面试题 04.12. 求和路径

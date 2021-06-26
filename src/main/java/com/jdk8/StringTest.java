@@ -28,7 +28,9 @@ public class StringTest {
 	}
 
 	public static void main(String[] args) {
-		StringTest stringTest = new StringTest();
-	    System.out.println("12312".hashCode());
+//		StringTest stringTest = new StringTest();
+//	    System.out.println("12312".hashCode());
+		String x = "ab",y = "a"+"b";
+		System.out.println(x==y);
 	}
 }

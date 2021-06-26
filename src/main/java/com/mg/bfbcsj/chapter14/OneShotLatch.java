@@ -2,7 +2,6 @@ package com.mg.bfbcsj.chapter14;
 
 import org.apache.http.annotation.ThreadSafe;
 
-import java.util.concurrent.locks.AbstractQueuedLongSynchronizer;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
 /**

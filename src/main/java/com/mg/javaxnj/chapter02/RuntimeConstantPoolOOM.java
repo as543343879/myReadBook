@@ -1,7 +1,6 @@
 package com.mg.javaxnj.chapter02;
 
 import org.junit.Test;
-import org.omg.CORBA.StringHolder;
 
 /**
  * RuntimeConstantPoolOOM class

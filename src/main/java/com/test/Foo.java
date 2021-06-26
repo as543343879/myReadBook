@@ -1,7 +1,5 @@
 package com.test;
 
-import java.util.concurrent.locks.AbstractQueuedSynchronizer;
-
 public class Foo {
   static boolean boolValue;
   public static void main(String[] args) {

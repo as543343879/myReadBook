@@ -1,11 +1,7 @@
 package com.datastructure;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 数据结构 class

@@ -1,8 +1,5 @@
 package com.acm.lico.offer68;
 
-import java.util.*;
-
-
 class ListNode {
     int val;
     ListNode next = null;

@@ -1,9 +1,9 @@
 package com.test.btrace;
 
 import com.sun.btrace.AnyType;
-import static com.sun.btrace.BTraceUtils.*;
-import com.sun.btrace.BTraceUtils;
 import com.sun.btrace.annotations.*;
+
+import static com.sun.btrace.BTraceUtils.*;
 
 /**
  * @date 2020-09-22

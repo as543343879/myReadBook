@@ -3,7 +3,6 @@ package com.mg.javaxnj.chapter02;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
-import java.util.List;
 
 /**
  * DirectMemoryOOM class -Xmx20M -XX:MaxDirectMemorySize=10M

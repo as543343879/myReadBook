@@ -1,7 +1,5 @@
 package com.jdk8;
 
-import java.util.BitSet;
-import java.util.Queue;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

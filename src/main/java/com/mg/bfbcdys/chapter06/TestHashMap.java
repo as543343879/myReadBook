@@ -4,9 +4,6 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * TestHashMap class

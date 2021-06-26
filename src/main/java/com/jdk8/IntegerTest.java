@@ -1,7 +1,5 @@
 package com.jdk8;
 
-import java.lang.Byte;
-
 /**
  * IntegerTest class
  *

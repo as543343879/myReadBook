@@ -2,7 +2,7 @@ package com.mg.jd;
 
 
 import org.junit.Test;
-import org.junit.Test;
+
 import java.sql.Timestamp;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

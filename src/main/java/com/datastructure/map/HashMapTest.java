@@ -1,7 +1,5 @@
 package com.datastructure.map;
 
-import com.mg.bcys.Main;
-
 import java.util.HashMap;
 
 /**

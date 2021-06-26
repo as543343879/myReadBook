@@ -2,7 +2,6 @@ package com.mg.java8.chapter11;
 
 
 import static com.mg.java8.chapter11.Util.delay;
-import static com.mg.java8.chapter11.Util.format;
 public class ExchangeService {
 
     public enum Money {

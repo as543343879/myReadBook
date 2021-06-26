@@ -26,7 +26,7 @@ public class TestConcurrenthashmap {
     public void test2() {
         System.out.println(2 & -2);
         int test = 0x80000001;
-//        System.out.println(Integer.valueOf(test + "", 2));
+//        System.out.println(Integer.valueOf(single + "", 2));
         System.out.println(Integer.toHexString(test));
     }
 }

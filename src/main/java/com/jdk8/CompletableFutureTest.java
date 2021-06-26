@@ -1,8 +1,5 @@
 package com.jdk8;
 
-import java.util.Arrays;
-import java.util.concurrent.CompletableFuture;
-
 /**
  * CompletableFuture class
  *

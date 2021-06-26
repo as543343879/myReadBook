@@ -11,9 +11,9 @@ public class Test {
     public static void main(String[] args) {
         Test test = new Test();
         test.test();
-//        test.test2(test.root);
+//        single.test2(single.root);
 //
-//        System.out.println(test.root.data);
+//        System.out.println(single.root.data);
     }
 
     private void test2(Tree node) {

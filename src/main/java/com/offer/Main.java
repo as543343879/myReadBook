@@ -1,9 +1,8 @@
 package com.offer;
 
-import java.util.Iterator;
-import java.util.Scanner;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 //字节跳动
 
 public class Main {

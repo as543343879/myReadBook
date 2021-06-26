@@ -10,7 +10,7 @@ import java.io.File;
  */
 public class FileTest {
 	public static void main(String[] args) {
-		File file = new File("G:\\test\\专业");
+		File file = new File("G:\\single\\专业");
 		change(file);
 
 	}

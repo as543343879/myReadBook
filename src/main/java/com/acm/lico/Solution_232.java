@@ -2,8 +2,6 @@ package com.acm.lico;
 
 import com.acm.lico.p232.MyQueue;
 
-import java.util.Stack;
-
 /**
  * Solution_232 class
  *

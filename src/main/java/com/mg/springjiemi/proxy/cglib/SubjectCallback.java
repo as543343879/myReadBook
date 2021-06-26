@@ -1,6 +1,8 @@
 package com.mg.springjiemi.proxy.cglib;
+
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
+
 import java.lang.reflect.Method;
 public class SubjectCallback implements MethodInterceptor {
     @Override

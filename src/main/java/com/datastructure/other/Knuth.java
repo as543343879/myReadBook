@@ -1,18 +1,20 @@
 package com.datastructure.other;
 
 import org.junit.Test;
-import javax.annotation.concurrent.NotThreadSafe;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
+//import javax.annotation.concurrent.NotThreadSafe;
 
 /**
  * Knuth class
  *
  * @date 2020-11-18
  */
-@NotThreadSafe
+//@NotThreadSafe
 public class Knuth {
 
 
