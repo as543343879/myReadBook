@@ -1,7 +1,10 @@
 package com.acm.lico;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Solution49 class
@@ -21,6 +24,19 @@ import java.util.List;
  * @date 2021/6/30
  */
 public class Solution49 {
+    /**
+     * jdk8 lambda
+     * @param strs
+     * @return
+     */
+    public List<List<String>> groupAnagrams2(String[] strs) {
+        return  new ArrayList<List<String>>( Arrays.stream(strs).collect(Collectors.groupingBy(o -> {
+            char[] chars = o.toCharArray();
+            Arrays.sort(chars);
+            return new String(chars);
+        })).values());
+
+    }
     public List<List<String>> groupAnagrams(String[] strs) {
         List<List<String>> lists = new ArrayList<>();
         for(int i = 0; i < strs.length; i ++) {
