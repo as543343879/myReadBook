@@ -7,6 +7,10 @@ package com.acm.lico;
  * @date 2021-06-19
  */
 public class Solution42 {
+    public static void main(String[] args) {
+        int[] ts = {1,2,3,4};
+        System.out.println(new Solution42().trap(ts));
+    }
     public int trap(int[] height) {
         if(height.length == 0)
             return 0;
