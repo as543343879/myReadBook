@@ -1,5 +1,6 @@
 package com.concurrent;
 
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.LockSupport;
 import java.util.concurrent.locks.ReentrantLock;
@@ -13,11 +14,58 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class PrintABC {
     static Thread threadA,threadB,threadC;
+    //基于锁实现
     static ReentrantLock lock = new ReentrantLock();
     static Condition conditionA = lock.newCondition();
     static Condition conditionB = lock.newCondition();
     static Condition conditionC = lock.newCondition();
     static volatile boolean startA = true;
+    // 基于信号量实现
+    static Semaphore semaphoreA = new Semaphore(1);
+    static Semaphore semaphoreB = new Semaphore(0);
+    static Semaphore semaphoreC = new Semaphore(0);
+
+    public static void printABC3(){
+        threadA = new Thread(()->{
+            try {
+               for(int i = 0 ;i < 10; i ++ ) {
+                   semaphoreA.acquire();
+                   System.out.print(Thread.currentThread().getName());
+                   semaphoreB.release();
+               }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        },"A");
+
+        threadB = new Thread(()->{
+            try {
+                for(int i = 0 ;i < 10; i ++ ) {
+                    semaphoreB.acquire();
+                    System.out.print(Thread.currentThread().getName());
+                    semaphoreC.release();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        },"B");
+
+        threadC = new Thread(()->{
+            try {
+                for(int i = 0 ;i < 10; i ++ ) {
+                    semaphoreC.acquire();
+                    System.out.print(Thread.currentThread().getName());
+                    semaphoreA.release();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        },"C");
+
+        threadC.start();
+        threadB.start();
+        threadA.start();
+    }
 
     public  static void printABC2(){
         threadA = new Thread(()->{
@@ -131,6 +179,7 @@ public class PrintABC {
 
     public static void main(String[] args) {
 //        printABC1();
-        printABC2();
+//        printABC2();
+        printABC3();
     }
 }
