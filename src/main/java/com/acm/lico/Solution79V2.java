@@ -11,12 +11,15 @@ package com.acm.lico;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  * 1 复杂度分析
  * 2 深度便利
+ *
+ * 对 第一版 方向代码重构 代码精简 耗时好烦了一倍
  * @author 谢小平
  * @date 2021/7/21
  */
-public class Solution79 {
+public class Solution79V2 {
     boolean[][] bools;
     int row,col;
+    int[][] direction = new int[][]{{-1,0},{1,0},{0,1},{0,-1}};
     public boolean exist(char[][] board, String word) {
         row = board.length;
         col = board[0].length;
@@ -40,45 +43,19 @@ public class Solution79 {
         if(len == world.length() ) {
             return true;
         }
-        int t = y + 1;
-        if(t < row && !bools[t][x] && board[t][x] == world.charAt(len) ) {
-            bools[t][x] = true;
-            if(dfs(board,t,x,len + 1,world)) {
-                return true;
-            } else {
-                bools[t][x] = false;
+        for(int[] d : direction) {
+            int newX = x + d[0];
+            int newY = y + d[1];
+            if(newX >= 0 && newY>=0  && newY < row  && newX < col && !bools[newY][newX] && board[newY][newX] == world.charAt(len)) {
+                bools[newY][newX] = true;
+                if(dfs(board,newY,newX,len + 1, world)) {
+                    return true;
+                } else {
+                    bools[newY][newX] = false;
+                }
             }
         }
-        t = y - 1;
-        if(t >= 0 && !bools[t][x] && board[t][x] == world.charAt(len) ) {
-            bools[t][x] = true;
-            if(dfs(board,t,x,len + 1,world)) {
-                return true;
-            } else {
-                bools[t][x] = false;
-            }
-        }
-
-        t = x + 1;
-        if(t < col && !bools[y][t] && board[y][t] == world.charAt(len) ) {
-            bools[y][t] = true;
-            if(dfs(board,y,t,len + 1,world)) {
-                return true;
-            } else {
-                bools[y][t] = false;
-            }
-        }
-
-        t = x - 1;
-        if(t >= 0 && !bools[y][t] && board[y][t] == world.charAt(len) ) {
-            bools[y][t] = true;
-            if(dfs(board,y,t,len + 1,world)) {
-                return true;
-            } else {
-                bools[y][t] = false;
-            }
-        }
-        return  false;
+        return false;
     }
 
 }
