@@ -1,4 +1,4 @@
-package com.designPatterns;
+package com.designPatterns.single.review;
 
 /**
  * SingletonEnumV2 class

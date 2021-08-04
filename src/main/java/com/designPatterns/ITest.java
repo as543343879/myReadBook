@@ -1,5 +1,7 @@
 package com.designPatterns;
 
+import com.designPatterns.single.review.SingletonClass;
+import com.designPatterns.single.review.SingletonEnum;
 import org.junit.Test;
 
 import java.lang.reflect.Constructor;

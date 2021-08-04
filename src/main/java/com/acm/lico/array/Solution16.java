@@ -62,5 +62,14 @@ public class Solution16 {
 
     public static void main(String[] args) {
            System.out.println(new Solution16().threeSumClosest(new int[]{0,2,1,-3},1));
+/**
+ * Solution16 class
+ *
+ * @author 谢小平
+ * @date 2021/7/26
+ */
+public class Solution16 {
+    public int threeSumClosest(int[] nums, int target) {
+        return -1;
     }
 }
