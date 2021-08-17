@@ -23,6 +23,17 @@ import com.acm.lico.offer68.TreeNode;
  * @author 谢小平
  * @date 2021/8/11
  */
+/**
+ 1 复杂度分析
+估算问题中复杂度的上限和下限
+    O(n) 一次遍历
+ 2 定位问题
+根据问题类型，确定采用何种算法思维。
+    递归
+ 3 数据操作分析
+    不用特殊数据结构
+ 4 编码实现
+ */
 
 public class Solution101 {
     public boolean isSymmetric(TreeNode root) {
