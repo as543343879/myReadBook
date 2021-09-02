@@ -10,6 +10,9 @@ package com.acm.lico.tree;
 
 import com.acm.lico.offer68.TreeNode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  1 复杂度分析
 估算问题中复杂度的上限和下限
@@ -30,10 +33,14 @@ import com.acm.lico.offer68.TreeNode;
  4 编码实现
  */
 public class Solution105 {
-
+    Map<Integer,Integer> map = new HashMap<>();
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         if(preorder.length == 0) {
             return null;
+        }
+
+        for(int i = 0; i < inorder.length; i ++) {
+            map.put(inorder[i],i);
         }
 
        return  buildTree(preorder,0,preorder.length - 1,inorder, 0 ,preorder.length - 1);
@@ -44,10 +51,19 @@ public class Solution105 {
             return null;
         }
         TreeNode treeNode = new TreeNode(preorder[preorderLeft] );
+        int rootIndex =  map.get(treeNode.val);
+        int lefSize = rootIndex - inorderLeft;
 
-//        treeNode.left = buildTree(preorder,preorderLeft ++,preorderRight,)
+        treeNode.left = buildTree(preorder,preorderLeft + 1 ,preorderLeft + lefSize,inorder,inorderLeft,rootIndex  - 1  );
+        treeNode.right = buildTree(preorder,preorderLeft + lefSize + 1 ,preorderRight,inorder,rootIndex + 1, inorderRight );
 
-        return null;
+        return treeNode;
+    }
+
+    public static void main(String[] args) {
+        int[] preorder =  {3,9,20,15,7};
+        int[] inorder = {9,3,15,20,7};
+        System.out.println(new Solution105().buildTree(preorder,inorder));
     }
 
 }
