@@ -15,11 +15,21 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ArrayListTest {
 	public static void main(String[] args) {
 		List t = new ArrayList();
+		System.out.println(t);
 	}
 
 	@Test
 	public void  test1() {
 		List list = new CopyOnWriteArrayList();
+		System.out.println(list);
 //		list = Collections.synchronizedList()
+	}
+
+	@Test
+	public void test2() {
+		ArrayList<String> list = new ArrayList();
+
+		list.add(2,"22" );
+		System.out.println(list.get(2));
 	}
 }
