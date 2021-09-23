@@ -1,12 +1,21 @@
 package com.jdk8;
 
+import org.junit.Test;
+
 /**
- * IntegerTest class
+ * IntegerTest class 测试
  *
  * @author 谢小平
  * @date 2020-09-30
  */
 public class IntegerTest {
+
+	@Test
+	public void test2(){
+
+		System.out.println(Integer.MAX_VALUE);
+	}
+
 	public static void main(String[] args) {
 		System.out.println(Integer.toBinaryString(0x01010101));
 		System.out.println(Integer.bitCount(121));
