@@ -14,41 +14,70 @@ import java.util.Comparator;
  1 复杂度分析
 估算问题中复杂度的上限和下限
  时间复杂度
+O(nlog^n)
+ 排序时间复杂度
+ O(nlog^n)
+贪心过程
+ O(n)
+
  空间复杂度
+ O(logn)
     O(1) 一个常量下完成
     O(n) 一次遍历
     O(logn) 折半查询
     O(n^2) 两重嵌套循环查询
  2 定位问题
 根据问题类型，确定采用何种算法思维。
-    例如
-     这个问题是什么类型（排序、查找、最优化）的问题；
-     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
-     采用哪些数据结构或算法思维，能把这个问题解决。
+    贪心
  3 数据操作分析
     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
  4 编码实现
  5 执行结果
+ 执行结果： 通过 显示详情 添加备注
+ 执行用时： 59 ms ,在所有 Java 提交中击败了 32.13% 的用户
+ 内存消耗： 61.9 MB , 在所有 Java 提交中击败了 91.16% 的用户
+ 通过测试用例： 48 / 48
  */
 public class Solution452 {
 
-    public int findMinArrowShots(int[][] points){
-        Arrays.sort(points, Comparator.comparingInt(e->e[1]));
-        Arrays.stream(points).forEach(e->System.out.println(Arrays.toString(e)));
-        int count = 1;
-        int right = points[0][1];
-        for(int i = 1; i < points.length; i ++) {
-            while (i < points.length && points[i][1] < right) {
-                i++;
-            }
-            count++;
-            if(i < points.length) {
-                right = points[i][1] + 1;
-
-            }
-
+    public int findMinArrowShots(int[][] points) {
+        if (points.length == 0) {
+            return 0;
         }
-        return count;
+        Arrays.sort(points,  Comparator.comparingInt(e->e[1]));
+        Arrays.stream(points).forEach(e->System.out.println(Arrays.toString(e)));
+        int pos = points[0][1];
+        int ans = 1;
+        for (int[] balloon: points) {
+            if (balloon[0] > pos) {
+
+                pos = balloon[1];
+                System.out.println("pos: " + pos);
+                ++ans;
+            }
+        }
+        return ans;
+    }
+
+
+
+    public int findMinArrowShots_right2(int[][] points){
+            Arrays.sort(points, Comparator.comparingInt(e->e[1]));
+            int count = 1;
+            int right = points[0][1];
+            for(int i = 1; i < points.length; i ++) {
+                while (i < points.length && points[i][0] <= right) {
+                    i++;
+                }
+
+                if(i < points.length) {
+                    count++;
+                    right = points[i][1] ;
+
+                }
+
+            }
+            return count;
     }
 
     public int findMinArrowShots_RROE(int[][] points) {
@@ -111,5 +140,22 @@ public class Solution452 {
 //        int[][] points = {{9,12},{1,10},{4,11},{8,12},{3,9},{6,9},{6,7}};
 //        int[][] points = {{3,9},{7,12},{3,8},{6,8},{9,10},{2,9},{0,9},{3,9},{0,6},{2,8}};
         System.out.println(new Solution452().findMinArrowShots(points));
+    }
+
+    public int findMinArrowShots_right(int[][] points) {
+        if (points.length == 0) {
+            return 0;
+        }
+        Arrays.sort(points,  Comparator.comparingInt(e->e[1]));
+        int pos = points[0][1];
+        int ans = 1;
+        for(int i = 1; i < points.length; i ++) {
+            if (points[i][0] > pos) {
+                pos = points[i][1];
+                ++ans;
+            }
+        }
+
+        return ans;
     }
 }
