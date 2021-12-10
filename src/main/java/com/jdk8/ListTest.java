@@ -1,5 +1,7 @@
 package com.jdk8;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,5 +21,10 @@ public class ListTest {
         Collections.sort(sortList);
 
         System.out.println(sortList.toString());
+    }
+
+    @Test
+    public void test22(){
+        System.out.println(Integer.MAX_VALUE);
     }
 }

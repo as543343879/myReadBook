@@ -24,16 +24,16 @@ public class BeanUtilsTest {
         data.put("name","id");
         data.put("id",1);
 
-        BeanTest beanTestNew = new BeanTest("id2",12);
-//        BeanUtils.copyProperties(data,beanTestNew);
-        try {
-            org.apache.commons.beanutils.BeanUtils.populate(beanTestNew,data);
-            System.out.println(beanTestNew);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+//        BeanTest beanTestNew = new BeanTest("id2",12);
+////        BeanUtils.copyProperties(data,beanTestNew);
+//        try {
+////            org.apache.commons.beanutils.BeanUtils.populate(beanTestNew,data);
+//            System.out.println(beanTestNew);
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//        }
     }
 
 }
