@@ -1,4 +1,4 @@
-package com.datastructure.dp;
+package com.acm.lico.dp;
 
 /**
  * Solution63 class
