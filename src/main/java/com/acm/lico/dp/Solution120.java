@@ -1,6 +1,5 @@
-package com.datastructure.dp;
+package com.acm.lico.dp;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
