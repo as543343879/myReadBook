@@ -16,6 +16,10 @@ public class Solution55 {
     public boolean canJump(int[] nums) {
         int len = nums.length;
         if(len == 1)
+
+
+
+
             return true;
         int nowLen = nums[0] + 1;
         for(int i = 1; i < nowLen; i ++) {
