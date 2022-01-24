@@ -30,7 +30,7 @@ public class NumberOfPeople {
             System.out.println(splitRes.length);
             Set<String> resSet = new HashSet<>();
             Arrays.stream(splitRes).forEach(key->
-            {
+            {//
                 if(key.indexOf('(') != -1) {
                     resSet.add(key);
                 } else {
