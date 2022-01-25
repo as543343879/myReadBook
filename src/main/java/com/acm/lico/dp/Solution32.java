@@ -6,6 +6,10 @@ package com.acm.lico.dp;
  * @author 格林
  * @date 2022-01-24
  */
+
+import java.util.Arrays;
+import java.util.OptionalInt;
+
 /**
  1 复杂度分析
 估算问题中复杂度的上限和下限
@@ -45,7 +49,7 @@ public class Solution32 {
 //        }
 //        return  0;
 //    }
-public int longestValidParentheses(String s) {
+public int longestValidParentheses_error(String s) {
         int len = s.length();
         int[] dp = new int[len + 1];
         dp[0] = 0;
@@ -62,7 +66,7 @@ public int longestValidParentheses(String s) {
                 // 左括号长度， 开始于 i - 1
                 int iLen  = j - i + 1;
                 // 如果全部匹配成功
-                int allRight = isAllRight(s, iLen, j + 1);
+                int allRight = isAllRight(s, iLen, j );
                 if( allRight == 0) {
                     dp[i] = dp[i-1] + 2 * iLen;
                     dp[i + 1] =  dp[i];
@@ -70,7 +74,7 @@ public int longestValidParentheses(String s) {
 
                 } else {
                     dp[i] = 0 ;
-                    i = allRight ;
+//                    i = allRight ;
                 }
 
             }
@@ -84,12 +88,32 @@ public int longestValidParentheses(String s) {
         }
         return  max;
     }
+
+    public int longestValidParentheses(String s) {
+        int[] dp = new int[s.length()];
+        for (int i = 1; i < s.length(); i++) {
+            if (s.charAt(i) == ')' && (i - dp[i-1] - 1 >= 0) && s.charAt(i - dp[i-1] - 1) == '(' ) {
+                if(i - dp[i-1] - 2 > 0 ) {
+                    dp[i] = dp[i-1] + dp[i - dp[i-1] - 2] + 2;
+                } else {
+                    dp[i] = dp[i-1]  + 2;
+                }
+            }
+        }
+        OptionalInt max = Arrays.stream(dp).max();
+        return  max.isPresent() ? max.getAsInt() : 0;
+    }
     private int isAllRight(String str, int len , int startIndex) {
         int allLen = len + startIndex;
-        for(int i =startIndex ; i < allLen && i < str.length(); i ++) {
+        for(int i =startIndex ; i < allLen ; i ++) {
+            if(i == str.length()) {
+                return i-1;
+            }
             if(str.charAt(i) != ')') {
                 return i;
             }
+
+
         }
         return 0;
     }
@@ -100,7 +124,7 @@ public int longestValidParentheses(String s) {
         String str = "()()()()";
         System.out.println(new Solution32().longestValidParentheses(str));
 
-         str = ")(()()()()";
+        str = ")(()()()()";
         System.out.println(new Solution32().longestValidParentheses(str));
 
         str = "()(())";
@@ -108,6 +132,9 @@ public int longestValidParentheses(String s) {
         str = "(())";
         System.out.println(new Solution32().longestValidParentheses(str));
         str = "(()";
+        System.out.println(new Solution32().longestValidParentheses(str));
+
+        str = "(()())";
         System.out.println(new Solution32().longestValidParentheses(str));
     }
 }
