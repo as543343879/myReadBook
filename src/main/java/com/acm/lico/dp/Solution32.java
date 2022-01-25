@@ -46,30 +46,57 @@ public class Solution32 {
 //        return  0;
 //    }
 public int longestValidParentheses(String s) {
-    int len = s.length();
-    int[] dp = new int[len + 1];
-    dp[0] = 0;
-    for(int i = 1; i < len; i ++) {
-        if( s.charAt(i-1) == '(' && s.charAt(i ) == ')'   ) {
-            dp[i] = dp[i-1] + 2;
-            dp[i + 1] =  dp[i];
-            i ++;
-        } else {
-            dp[i] = 0 ;
+        int len = s.length();
+        int[] dp = new int[len + 1];
+        dp[0] = 0;
+        for(int i = 1; i < len; i ++) {
+            if( s.charAt(i-1) == '(' && s.charAt(i ) == ')'   ) {
+                dp[i] = dp[i-1] + 2;
+                dp[i + 1] =  dp[i];
+                i ++;
+            } else if(s.charAt(i-1) == '(' && s.charAt(i ) == '(')  {
+                int j = i + 1;
+                while (s.charAt(j) == '(') {
+                    j++;
+                }
+                // 左括号长度， 开始于 i - 1
+                int iLen  = j - i + 1;
+                // 如果全部匹配成功
+                int allRight = isAllRight(s, iLen, j + 1);
+                if( allRight == 0) {
+                    dp[i] = dp[i-1] + 2 * iLen;
+                    dp[i + 1] =  dp[i];
+                    i = iLen + j + 2;
+
+                } else {
+                    dp[i] = 0 ;
+                    i = allRight ;
+                }
+
+            }
+            else {
+                dp[i] = 0 ;
+            }
         }
+        int max = 0;
+        for(int k : dp) {
+            max = k > max ? k : max;
+        }
+        return  max;
     }
-    int max = 0;
-    for(int k : dp) {
-        max = k > max ? k : max;
+    private int isAllRight(String str, int len , int startIndex) {
+        int allLen = len + startIndex;
+        for(int i =startIndex ; i < allLen && i < str.length(); i ++) {
+            if(str.charAt(i) != ')') {
+                return i;
+            }
+        }
+        return 0;
     }
-    return  max;
-}
     private boolean isRight(char start , char end) {
         return start == '(' && end == ')';
     }
     public static void main(String[] args) {
-        System.out.println('(');
-        System.out.println(')');
         String str = "()()()()";
         System.out.println(new Solution32().longestValidParentheses(str));
 
@@ -77,6 +104,10 @@ public int longestValidParentheses(String s) {
         System.out.println(new Solution32().longestValidParentheses(str));
 
         str = "()(())";
+        System.out.println(new Solution32().longestValidParentheses(str));
+        str = "(())";
+        System.out.println(new Solution32().longestValidParentheses(str));
+        str = "(()";
         System.out.println(new Solution32().longestValidParentheses(str));
     }
 }
