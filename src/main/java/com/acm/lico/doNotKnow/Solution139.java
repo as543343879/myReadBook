@@ -32,6 +32,13 @@ import java.util.*;
  */
 public class Solution139 {
     Boolean res_info = false;
+
+    /**
+     * 直接模拟 时间超限
+     * @param s
+     * @param wordDict
+     * @return
+     */
     public boolean wordBreak(String s, List<String> wordDict) {
         Collections.sort(wordDict, (o1, o2) -> o2.length() - o1.length());
         return dfs(s,0,wordDict);
