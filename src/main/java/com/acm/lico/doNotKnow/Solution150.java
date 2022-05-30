@@ -1,9 +1,6 @@
 package com.acm.lico.doNotKnow;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * https://leetcode.cn/problems/evaluate-reverse-polish-notation/
@@ -44,7 +41,31 @@ import java.util.Stack;
  * @author 谢小平
  * @date 2022/5/27
  */
-public class Solution150 {
+/**
+ 1 复杂度分析
+估算问题中复杂度的上限和下限
+ 时间复杂度
+    O(n)
+ 空间复杂度
+
+    O(n) 一次遍历
+
+ 2 定位问题
+根据问题类型，确定采用何种算法思维。
+ 利用栈
+    例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+ 3 数据操作分析
+    栈
+ 4 编码实现
+ 5 执行结果
+ 执行结果： 通过 显示详情 添加备注 执行用时： 6 ms ,
+ 在所有 Java 提交中击败了 58.31% 的用户 内存消耗： 41.2 MB ,
+ 在所有 Java 提交中击败了 22.24% 的用户 通过测试用例： 20 / 20
+ */
+public class Solution150  {
 
     public int evalRPN(String[] tokens) {
         Stack<Integer> numberStack = new Stack<>();
@@ -55,36 +76,39 @@ public class Solution150 {
         set.add("+");
         set.add("-");
 
-//        for(String key : tokens) {
-//            if (set.contains(key)) {
-//                symbolStack.push(key);
-//            } else {
-//                numberStack.push(Integer.valueOf(key));
-//            }
-//        }
-        int i = 0;
-        while (i < tokens.length) {
-             if((!symbolStack.isEmpty()) ) {
+        for(String key : tokens) {
+            if (set.contains(key)) {
                  int int2 = numberStack.pop();
                  int int1 = numberStack.pop();
-                 int res = compute(int1,int2,symbolStack.pop());
-                 numberStack.push(res);
-             } else {
-                 while ((symbolStack.isEmpty() || numberStack.size() < 2) ) {
-                    i ++;
-                    if(i >= tokens.length) {
-                        break;
-                    }
-                     String key =  tokens[i];
-                   if (set.contains(key)) {
-                        symbolStack.push(key);
-                    } else {
-                        numberStack.push(Integer.valueOf(key));
-                    }
-                 }
-             }
-
+                 int res = compute(int1,int2,key);
+                numberStack.push(res);
+            } else {
+                numberStack.push(Integer.valueOf(key));
+            }
         }
+//        int i = 0;
+//        while (i < tokens.length) {
+//             if((!symbolStack.isEmpty()) ) {
+//                 int int2 = numberStack.pop();
+//                 int int1 = numberStack.pop();
+//                 int res = compute(int1,int2,symbolStack.pop());
+//                 numberStack.push(res);
+//             } else {
+//                 while ((symbolStack.isEmpty() || numberStack.size() < 2) ) {
+//                    i ++;
+//                    if(i >= tokens.length) {
+//                        break;
+//                    }
+//                     String key =  tokens[i];
+//                   if (set.contains(key)) {
+//                        symbolStack.push(key);
+//                    } else {
+//                        numberStack.push(Integer.valueOf(key));
+//                    }
+//                 }
+//             }
+
+//        }
         return numberStack.peek();
     }
     public int compute(int int1, int int2, String computeSymbol) {
