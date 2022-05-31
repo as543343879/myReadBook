@@ -89,4 +89,51 @@ public class Foo1114 {
         semaphoreB.acquire();
         printThird.run();
     }
+
+
+    public static void main(String[] args) {
+        Semaphore semaphore1 = new Semaphore(0);
+        Semaphore semaphore2 = new Semaphore(0);
+        Semaphore semaphore3 = new Semaphore(0);
+        semaphore1.release();
+        final int count = 3;
+        new Thread(()->{
+            for(int i = 0; i < count; i ++) {
+                try {
+                    semaphore1.acquire();
+                    System.out.println("A ");
+                    semaphore2.release();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
+
+        new Thread(()->{
+            for(int i = 0; i < count; i ++) {
+                try {
+                    semaphore2.acquire();
+                    System.out.println("B ");
+                    semaphore3.release();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
+
+
+        new Thread(()->{
+            for(int i = 0; i < count; i ++) {
+                try {
+                    semaphore3.acquire();
+                    System.out.println("C ");
+                    semaphore1.release();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
 }
