@@ -54,6 +54,47 @@ import java.util.Arrays;
  通过测试用例： 322 / 322
  */
 public class Solution42 {
+
+    /**
+     * 执行结果： 通过 显示详情 添加备注 执行用时： 0 ms ,
+     * 在所有 Java 提交中击败了 100.00% 的用户 内存消耗： 42.4 MB ,
+     * 在所有 Java 提交中击败了 6.16% 的用户
+     * 通过测试用例： 322 / 322
+     * @param height
+     * @return
+     */
+    public int trap2(int[] height) {
+        int left = 0;
+        int right = height.length - 1;
+
+        int leftMax = 0, rightMax = 0;
+        int ans = 0;
+        while (left < right) {
+            leftMax = Math.max(leftMax, height[left]);
+            rightMax = Math.max(rightMax, height[right]);
+            if(leftMax < rightMax) {
+                ans += leftMax - height[left];
+                left ++;
+            } else {
+                ans+= rightMax - height[right];
+                right --;
+            }
+
+
+        }
+        return ans;
+
+    }
+
+    /**
+     *  执行结果
+     *  执行结果： 通过 显示详情 添加备注 执行用时： 1 ms ,
+     *  在所有 Java 提交中击败了 73.96% 的用户 内存消耗： 41.8 MB ,
+     *  在所有 Java 提交中击败了 59.23% 的用户
+     *  通过测试用例： 322 / 322
+     * @param height
+     * @return
+     */
     public int trap(int[] height) {
         int[] leftMaxs = new int[height.length];
         int[] rightMaxs = new int[height.length];
