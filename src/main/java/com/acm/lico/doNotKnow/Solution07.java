@@ -2,6 +2,8 @@ package com.acm.lico.doNotKnow;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Solution07 class
@@ -65,7 +67,17 @@ import java.util.HashMap;
  */
 public class Solution07 {
     public int res = 0;
-    public int numWays(int n, int[][] relation, int k) {
+
+    /**
+     *  执行结果： 通过 显示详情 添加备注 执行用时： 1 ms ,
+     *  在所有 Java 提交中击败了 54.67% 的用户 内存消耗： 38.7 MB ,
+     *  在所有 Java 提交中击败了 85.94% 的用户 通过测试用例： 28 / 28
+     * @param n
+     * @param relation
+     * @param k
+     * @return
+     */
+    public int numWays2(int n, int[][] relation, int k) {
         HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
         for(int[] i : relation) {
             ArrayList<Integer> integers = map.get(i[0]);
@@ -92,6 +104,62 @@ public class Solution07 {
                 dfs(map, disks.get(i),k-1,targe);
             }
         }
+
+    }
+
+    /**
+     * 执行结果： 通过 显示详情 添加备注
+     * 执行用时： 5 ms ,在所有 Java 提交中击败了 20.30% 的用户
+     * 内存消耗： 39.9 MB , 在所有 Java 提交中击败了 19.46% 的用户
+     * 通过测试用例： 28 / 28
+     * @param n
+     * @param relation
+     * @param k
+     * @return
+     */
+    public int numWays(int n, int[][] relation, int k) {
+        List<List<Integer>> mapList = new ArrayList<>(n);
+        for(int i = 0; i < n; i ++) {
+            mapList.add(new ArrayList<>());
+        }
+        for(int[] i : relation) {
+            mapList.get(i[0]).add(i[1]);
+        }
+
+        LinkedList<List<Integer>> queue = new LinkedList<>();
+        queue.offer(mapList.get(0));
+        while (!queue.isEmpty() && k > 1) {
+            int size = queue.size();
+            k --;
+            for(int i = 0; i < size; i ++) {
+                List<Integer> list = queue.poll();
+                for (Integer t : list) {
+                    if(mapList.get(t).size() > 0) {
+                        queue.offer(mapList.get(t));
+                    }
+                }
+
+            }
+        }
+        int count = 0;
+        if(k == 1) {
+            n --;
+            while (!queue.isEmpty()) {
+                List<Integer> pollList = queue.poll();
+                for (Integer t : pollList) {
+                    if (t == n) {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+
+    }
+
+    public static void main(String[] args) {
+        int[][] relation = {{0,2},{2,1},{3,4},{2,3},{1,4},{2,0},{0,4}};
+        System.out.println(new Solution07().numWays(5,relation,3));
 
     }
 
