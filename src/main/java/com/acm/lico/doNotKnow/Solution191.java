@@ -91,7 +91,12 @@ public class Solution191 {
     }
     public static void main(String[] args) {
 //        System.out.println(new Solution191().hammingWeight(0b000000001000000001000000001000000001) );
-        System.out.println(new Solution191().hammingWeight(0b000011111111111111111111111111111111) );
+//        System.out.println(new Solution191().hammingWeight(0b000011111111111111111111111111111111) );
+        int t = 3 * 3;
+        System.out.println(Integer.toBinaryString(t));
+        t = t >> 1;
+        System.out.println(Integer.toBinaryString(t));
+        System.out.println(t);
 //        test();
     }
 
@@ -117,4 +122,6 @@ public class Solution191 {
         String str2 = "00000001000000010000000100000001";
 
     }
+
+
 }
