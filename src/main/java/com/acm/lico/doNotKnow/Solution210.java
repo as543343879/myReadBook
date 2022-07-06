@@ -139,6 +139,7 @@ public class Solution210 {
 
     }
 
+
     public int[] findOrder2(int numCourses, int[][] prerequisites) {
         boolean[] isCanStart = new boolean[numCourses];
         Arrays.fill(isCanStart,true);
