@@ -96,7 +96,6 @@ public class Solution210 {
             listMap[i] = new LinkedList<>();
         }
         int[] inDegree = new int[numCourses];
-//        Arrays.
         for(int[] i: prerequisites) {
             listMap[i[1]].add(i[0]);
             inDegree[i[0]]++;

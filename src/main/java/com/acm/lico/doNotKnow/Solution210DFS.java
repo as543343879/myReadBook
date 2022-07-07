@@ -70,11 +70,19 @@ import java.util.*;
     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
  4 编码实现
  5 执行结果
+ 执行结果： 通过 显示详情 添加备注
+ 执行用时： 2 ms , 在所有 Java 提交中击败了 99.88% 的用户
+ 内存消耗： 43.1 MB , 在所有 Java 提交中击败了 5.09% 的用户
+ 通过测试用例： 45 / 45
  */
 public class Solution210DFS {
     LinkedList<Integer>[] mapList;
-    boolean[] isVisit;
+    int[] isVisit;
+    boolean isNotRing = true;
+    int[] res;
+    int index ;
     /**
+     *
      * @param numCourses
      * @param prerequisites
      * @return
@@ -84,19 +92,44 @@ public class Solution210DFS {
         for(int i = 0; i < numCourses; i ++ ) {
             mapList[i] = new LinkedList<>();
         }
-        isVisit = new boolean[numCourses];
+        isVisit = new int[numCourses];
 
         for(int[] i: prerequisites) {
-            mapList[i[1]].get(i[0]);
+            mapList[i[1]].add(i[0]);
+        }
+        res = new int[numCourses];
+        index = numCourses - 1;
+        for(int i = 0; i < numCourses; i ++) {
+            if(isVisit[i] == 0){
+                dfs(i);
+            }
+        }
+        if(isNotRing) {
+            return res;
+        } else {
+            return new int[]{};
         }
 
+    }
 
+    private void dfs(int u) {
+        isVisit[u] = 1;
+        for(int i: mapList[u]) {
+            if(isVisit[i] == 0) {
+                dfs(i);
+                if(!isNotRing) {
+                    return;
+                }
+            } else {
+                if(isVisit[i] == 1) {
+                    isNotRing = false;
+                    return;
+                }
+            }
 
-
-        int[] res = new int[numCourses];
-
-        return res;
-
+        }
+        isVisit[u] = 2;
+        res[index--] = u;
 
     }
 
