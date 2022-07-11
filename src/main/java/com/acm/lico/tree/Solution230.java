@@ -1,4 +1,4 @@
-package com.acm.lico.doNotKnow;
+package com.acm.lico.tree;
 
 /**
  * Solution230 class
@@ -43,18 +43,18 @@ package com.acm.lico.doNotKnow;
  通过测试用例： 93 / 93
  */
 
-  class TreeNode {
-     int val;
-     TreeNode left;
-     TreeNode right;
-     TreeNode() {}
-     TreeNode(int val) { this.val = val; }
-     TreeNode(int val, TreeNode left, TreeNode right) {
-         this.val = val;
-         this.left = left;
-         this.right = right;
-     }
- }
+//  class TreeNode {
+//     int val;
+//     TreeNode left;
+//     TreeNode right;
+//     TreeNode() {}
+//     TreeNode(int val) { this.val = val; }
+//     TreeNode(int val, TreeNode left, TreeNode right) {
+//         this.val = val;
+//         this.left = left;
+//         this.right = right;
+//     }
+// }
 public class Solution230 {
     private int count = 0;
     private int res = 0;
