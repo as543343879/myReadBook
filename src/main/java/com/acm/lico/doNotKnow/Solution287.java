@@ -44,6 +44,13 @@ import com.sun.xml.internal.bind.v2.TODO;
  2 定位问题
  1. 桶排序，数组字典。
  2. 数学规律 1 + ... + n = n * (n + 1) / 2
+
+ 折半查找， 索引 是有序的。 如果 t 是重复的数 或者 k >=t ， 那么count(<= k)  >   k 。
+    其他情况 count(<=t) == t。
+
+ 另一个思路
+    快慢指针， 有环一定会相遇。 然后 一个从起点，一个从相遇点走。再次相遇 就是环的入口点
+
 根据问题类型，确定采用何种算法思维。
     例如
      这个问题是什么类型（排序、查找、最优化）的问题；
@@ -56,6 +63,18 @@ import com.sun.xml.internal.bind.v2.TODO;
  */
 public class Solution287 {
     // TODO
+//    int res = 0;
+
+    /**
+     * 执行结果： 通过 显示详情 添加备注
+     * 执行用时： 27 ms , 在所有 Java 提交中击败了 17.84% 的用户
+     * 内存消耗： 58.4 MB , 在所有 Java 提交中击败了 76.65% 的用户
+     * 通过测试用例： 58 / 58
+     * 时间复杂度 O(nlogN)
+     * 空间复杂度 O(1)
+     * @param nums
+     * @return
+     */
     public int findDuplicate(int[] nums) {
         int left = 1;
         int right = nums.length - 1;
@@ -63,18 +82,19 @@ public class Solution287 {
             int middle = (right + left) / 2;
             int count = 0;
             for(int i = 0; i < nums.length; i ++) {
-                if(nums[i] >= middle) {
+                if(nums[i] <= middle) {
                     count ++;
                 }
             }
 
-            if(count >= middle) {
-                left = middle;
+            if(count > middle) {
+                right = middle;
+//                res = middle;
             } else {
-                left = middle;
+               left = middle + 1;
             }
         }
-        return nums[right];
+        return right;
     }
     /**
      * 执行结果： 通过 显示详情 添加备注
@@ -137,7 +157,7 @@ public class Solution287 {
 
     public static void main(String[] args) {
         int[] testData = new int[] {1,3,4,3,2};
-        testData = new int[] {2,5,9,6,9,3,8,9,7,1};
+//        testData = new int[] {2,5,9,6,9,3,8,9,7,1};
         System.out.println(new Solution287().findDuplicate(testData));
     }
 }
