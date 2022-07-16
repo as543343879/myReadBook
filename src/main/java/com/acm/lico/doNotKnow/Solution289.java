@@ -54,10 +54,64 @@ package com.acm.lico.doNotKnow;
  * @date 2022/7/15
  */
 public class Solution289 {
+    /**
+     * 执行结果： 通过 显示详情 添加备注
+     * 执行用时： 0 ms , 在所有 Java 提交中击败了 100.00% 的用户
+     * 内存消耗： 40.3 MB , 在所有 Java 提交中击败了 5.04% 的用户
+     * 通过测试用例： 22 / 22
+     *
+     * @param board
+     */
+    /**
+     1 复杂度分析
+    估算问题中复杂度的上限和下限
+     时间复杂度
+     O(N*M)
+     空间复杂度
+     O(N*M)
+        O(1) 一个常量下完成
+        O(n) 一次遍历
+        O(logn) 折半查询
+        O(n^2) 两重嵌套循环查询
+     2 定位问题
+    根据问题类型，确定采用何种算法思维。
+        例如
+         这个问题是什么类型（排序、查找、最优化）的问题；
+         这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+         采用哪些数据结构或算法思维，能把这个问题解决。
+     3 数据操作分析
+        根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     */
     public void gameOfLife(int[][] board) {
         int y = board.length;
         int x = board[0].length;
         int[][] newBoard = new int[y][x];
+        for(int i = 0; i < board.length; i ++) {
+            for(int j = 0; j < x; j ++) {
+                int count = getIsLive(i,j,board);
+                if(board[i][j] == 1) {
+                    if (count < 2 || count > 3 ) {
+                        newBoard[i][j] = 0;
+                    } else{
+                        newBoard[i][j] = 1;
+                    }
+                } else {
+                    if(count == 3) {
+                        newBoard[i][j] = 1;
+                    } else {
+                        newBoard[i][j] = 0;
+                    }
+                }
+
+            }
+        }
+        for(int i = 0; i < board.length; i ++) {
+            for (int j = 0; j < x; j++) {
+                board[i][j] = newBoard[i][j];
+            }
+        }
 
     }
 
@@ -73,7 +127,25 @@ public class Solution289 {
      * @param board
      * @return
      */
-    public boolean getIsLive(int y, int x, int[][] board) {
-        return false;
+    public int getIsLive(int y, int x, int[][] board) {
+        int [][] index = new int[][] {{-1,1},{-1,0},{-1,-1},{1,1},{1,0},{1,-1},{0,1},{0,-1}};
+        int n= board.length;
+        int m = board[0].length;
+        int count = 0 ;
+        for(int [] i : index) {
+            int yy = y + i[0];
+            int xx = x + i[1];
+            if (xx >= 0 && yy >= 0 & xx < m && yy < n) {
+                if (board[yy][xx] == 1) {
+                    count ++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public static void main(String[] args) {
+        int[][] testData = new int[][] {{0,1,0},{0,0,1},{1,1,1},{0,0,0}};
+        new Solution289().gameOfLife(testData);
     }
 }
