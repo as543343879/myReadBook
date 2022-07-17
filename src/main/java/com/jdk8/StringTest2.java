@@ -12,12 +12,21 @@ public class StringTest2 {
 		s.intern();
 		String s2 = "111";
 		System.out.println(s == s2);
+		System.out.println(System.identityHashCode(s));
+		System.out.println((System.identityHashCode(s2)));
 
 		String s3 = new String("1") + new String("1");
-		s3  = new StringBuilder("1").append("1").toString();
-		s3.intern();
+//		s3  = new StringBuilder("1").append("1").toString();
+//		String intern = s3.intern();
+
+
+
 		String s4 = "11";
 		System.out.println(s3 == s4);
+		System.out.println(System.identityHashCode(s3));
+//		System.out.println(System.identityHashCode(intern));
+		System.out.println((System.identityHashCode(s4)));
+
 
 		char[] strs = {'a','b'};
 		String s5 = new String(strs,0,2);
