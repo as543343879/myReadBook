@@ -32,8 +32,67 @@ import java.util.Arrays;
  * @author 格林
  * @date 2022-07-19
  */
+/**
+ 1 复杂度分析
+估算问题中复杂度的上限和下限
+ 时间复杂度
+ O(NLOGN)
+ 空间复杂度
+ O(N)
+    O(1) 一个常量下完成
+    O(n) 一次遍历
+    O(logn) 折半查询
+    O(n^2) 两重嵌套循环查询
+ 2 定位问题
+规律题目
+ 奇数怎么都可以。
+ 偶数 x = (n + 1) / 2 - 1
+ [x][n-1][x-1][n-2] 这样排列。
+ 根据问题类型，确定采用何种算法思维。
+    例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+ 3 数据操作分析
+    根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+ 4 编码实现
+ 5 执行结果
+ */
 public class Solution324 {
+    public void wiggleSort3(int[] nums) {
+        int[] arr = nums.clone();
+        Arrays.sort(arr);
+        int n = nums.length;
+        int x = (n + 1) / 2 - 1;
+        int k = n - 1;
+        for (int i = 0; i < n; i += 2, x--, k--) {
+            nums[i] = arr[x];
+            if (i + 1 < n) {
+                nums[i + 1] = arr[k];
+            }
+        }
+    }
+
+    /**
+     * 执行结果： 通过 显示详情 添加备注
+     * 执行用时： 6 ms , 在所有 Java 提交中击败了 18.21% 的用户
+     * 内存消耗： 44.9 MB , 在所有 Java 提交中击败了 79.16% 的用户
+     * 通过测试用例： 52 / 52
+     * @param nums
+     */
     public void wiggleSort(int[] nums) {
+        int[] copyNums = nums.clone();
+        Arrays.sort(copyNums);
+        int n = nums.length;
+        int x = (n + 1) / 2 - 1;
+        int k = n -1;
+        for(int i = 0; i < n; i +=2, x --, k --) {
+            nums[i] =  copyNums[x];
+            if(i +1 < n ) {
+                nums[i+1] = copyNums[k];
+            }
+        }
+
 
     }
     /**
@@ -74,6 +133,12 @@ public class Solution324 {
     public static void main(String[] args) {
         int[] testData = new int[]{
                 1,5,1,1,6,4};
+        testData = new int[] {1,4,3,4,1,2,1,3,1,3,2,3,3};
+        new Solution324().wiggleSort3(testData);
         new Solution324().wiggleSort(testData);
+
+        int k = 1;
+        k = +2;
+        System.out.println(k);
     }
 }
