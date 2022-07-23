@@ -1,4 +1,4 @@
-package com.acm.lico.doNotKnow;
+package com.acm.lico.greedy;
 
 /**
  * Solution334 class
