@@ -59,6 +59,7 @@ import java.util.Arrays;
  5 执行结果
  */
 public class Solution324 {
+
     public void wiggleSort3(int[] nums) {
         int[] arr = nums.clone();
         Arrays.sort(arr);

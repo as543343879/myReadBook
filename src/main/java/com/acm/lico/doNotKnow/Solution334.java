@@ -37,13 +37,61 @@ package com.acm.lico.doNotKnow;
  */
 public class Solution334 {
     /**
+     *  贪心
+     *  让 fist,sencode 尽可能小
+     *  执行结果： 通过 显示详情 添加备注
+     *  执行用时： 2 ms , 在所有 Java 提交中击败了 65.67% 的用户
+     *  内存消耗： 82.5 MB , 在所有 Java 提交中击败了 22.83% 的用户
+     *  通过测试用例： 76 / 76 炫耀一下:
+     * @param nums
+     * @return
+     */
+    public boolean increasingTriplet(int[] nums) {
+
+        int first = nums[0];
+        int sencond = Integer.MAX_VALUE;
+        for(int i = 1; i < nums.length; i ++) {
+            if(nums[i] > sencond) {
+                return true;
+            } else if(nums[i] > first) {
+                sencond = nums[i];
+            } else {
+                first = nums[i];
+            }
+        }
+        return false;
+    }
+    /**
+     *
+     * dp[i] 下标 i数值 左边小于i 的个数
+     * dp[i] = max(dp[0...i-1] + 1)
+     * 还是时间超限
+     * @param nums
+     * @return
+     */
+    public boolean increasingTriplet4(int[] nums) {
+        int[] dp =  new int[nums.length];
+        dp[0] = 0;
+        for(int i = 1; i < nums.length; i ++) {
+            for(int j = 0; j < i; j ++) {
+                if(nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1 );
+                    if(dp[i] >= 2) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    /**
      * 表示右边大于 i 的个数
      * dp[i] = max(dp[i +1] )
      * 时间超限
      * @param nums
      * @return
      */
-    public boolean increasingTriplet(int[] nums) {
+    public boolean increasingTriplet3(int[] nums) {
         int[] dp =  new int[nums.length];
         dp[nums.length - 1] = 0;
         for(int i = nums.length - 2; i >= 0; i --) {
