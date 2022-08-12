@@ -1,4 +1,4 @@
-package com.acm.lico.doNotKnow;
+package com.acm.lico.map;
 
 /**
  * Solution387 class
@@ -22,10 +22,6 @@ package com.acm.lico.doNotKnow;
  * @author 谢小平
  * @date 2022/8/12
  */
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
 
 /**
  1 复杂度分析
