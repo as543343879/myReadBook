@@ -30,7 +30,11 @@ package com.acm.lico.doNotKnow;
     O(logn) 折半查询
     O(n^2) 两重嵌套循环查询
  2 定位问题
-滑动窗口。
+思路一: 滑动窗口。
+ 思路二: 分治，找出ch，ch出现过，并且出现次数小于k的。 根据ch 去做分割，
+    当 不出现ch，就是有答案
+    当  出现ch，用ch 分割，子串 分治，选项最大的。 子串 重复上述的步骤。
+
  根据问题类型，确定采用何种算法思维。
     例如
      这个问题是什么类型（排序、查找、最优化）的问题；
@@ -43,12 +47,44 @@ package com.acm.lico.doNotKnow;
  */
 public class Solution395 {
     public int longestSubstring(String s, int k) {
-        int len = s.length();
-        for(int i = 0; i < len; i ++) {
-            int left = i;
-            int right = len -1;
+        return  dfs(s,0,s.length()-1,k);
+    }
 
+    private int dfs(String s, int left, int right, int k) {
+        int[] intMap = new int[26];
+        for(int i = left; i <= right; i ++) {
+            intMap[s.charAt(i) - 'a'] ++;
+        }
+        char split = 0;
+        for(int i = 0; i < 26; i ++) {
+            if (intMap[i] > 0 && intMap[i] < k) {
+                split = (char) ('a' + i);
+            }
+        }
+
+        if (split == 0) {
+            return right - left + 1;
+        }
+        int i = left;
+        int res = 0;
+        while (left <= right) {
+            while (i <= right && s.charAt(i) == split) {
+                i ++;
+            }
+            if (left > right) {
+                break;
+            }
+            int start = i;
+            while (i <= right && s.charAt(i) != split) {
+                i ++;
+            }
+
+            int len = dfs(s, start,i-1,k);
+             res = Math.max(len, res);
+
+             return res;
 
         }
+        return res;
     }
 }
