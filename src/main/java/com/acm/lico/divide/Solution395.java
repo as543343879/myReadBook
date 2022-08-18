@@ -1,4 +1,4 @@
-package com.acm.lico.doNotKnow;
+package com.acm.lico.divide;
 
 /**
  * Solution395 class
