@@ -44,6 +44,10 @@ package com.acm.lico.doNotKnow;
     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
  4 编码实现
  5 执行结果
+ 执行结果： 通过 显示详情 添加备注
+ 执行用时： 0 ms , 在所有 Java 提交中击败了 100.00% 的用户
+ 内存消耗： 39.6 MB , 在所有 Java 提交中击败了 63.93% 的用户
+ 通过测试用例： 36 / 36
  */
 public class Solution395 {
     public int longestSubstring(String s, int k) {
@@ -67,7 +71,7 @@ public class Solution395 {
         }
         int i = left;
         int res = 0;
-        while (left <= right) {
+        while (i <= right) {
             while (i <= right && s.charAt(i) == split) {
                 i ++;
             }
@@ -81,9 +85,6 @@ public class Solution395 {
 
             int len = dfs(s, start,i-1,k);
              res = Math.max(len, res);
-
-             return res;
-
         }
         return res;
     }
