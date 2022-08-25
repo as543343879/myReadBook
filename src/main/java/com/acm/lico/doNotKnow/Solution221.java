@@ -32,8 +32,11 @@ package com.acm.lico.doNotKnow;
 /**
  1 复杂度分析
 估算问题中复杂度的上限和下限
+ 思路已：
  时间复杂度
+ O(N*M)
  空间复杂度
+ O(N*M)
     O(1) 一个常量下完成
     O(n) 一次遍历
     O(logn) 折半查询
@@ -57,6 +60,7 @@ package com.acm.lico.doNotKnow;
  内存消耗： 52.2 MB , 在所有 Java 提交中击败了 94.91% 的用户
  通过测试用例： 77 / 77
  */
+
 public class Solution221 {
 
     public int maximalSquare(char[][] matrix) {
