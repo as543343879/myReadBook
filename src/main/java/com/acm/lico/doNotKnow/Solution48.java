@@ -70,7 +70,7 @@ public class Solution48 {
         int n = matrix.length;
         int ring = matrix.length % 2 == 0 ? n / 2 : n / 2 + 1;
         for(int tempRing = 0; tempRing <= ring; tempRing ++ ) {
-            int start
+//            int start
         }
 
     }
