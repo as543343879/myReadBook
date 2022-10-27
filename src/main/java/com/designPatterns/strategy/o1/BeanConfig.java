@@ -15,5 +15,6 @@ public class BeanConfig {
     public HandlerFactory<Long, StrategyInterfaceC> strategyInterfaceCFactory(){
         return new HandlerFactory<>(StrategyInterfaceC.class);
     }
-  
+
+
 }
