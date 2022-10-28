@@ -11,6 +11,7 @@ public class Main {
 		try {
 			synchronized (main) {
 				main.wait();
+
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
