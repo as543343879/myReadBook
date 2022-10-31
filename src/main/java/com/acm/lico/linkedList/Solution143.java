@@ -47,7 +47,10 @@ package com.acm.lico.linkedList; /**
  1 复杂度分析
  估算问题中复杂度的上限和下限
  时间复杂度
+ O(N)
  空间复杂度
+ O(N)
+
  O(1) 一个常量下完成
  O(n) 一次遍历
  O(logn) 折半查询
@@ -63,6 +66,9 @@ package com.acm.lico.linkedList; /**
  根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
  4 编码实现
  5 执行结果
+ 解答成功:
+ 执行耗时:2 ms,击败了43.03% 的Java用户
+ 内存消耗:44 MB,击败了71.95% 的Java用户
  */
 //leetcode submit region begin(Prohibit modification and deletion)
 
