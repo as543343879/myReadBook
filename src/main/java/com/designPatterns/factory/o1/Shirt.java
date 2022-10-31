@@ -17,7 +17,7 @@ public abstract class Shirt{
  class MenShirt extends Shirt{
     @Override
     public void Show(){
-        System.out.println("展示男款衬衫")；
+        System.out.println("展示男款衬衫");
         }
 }
 
