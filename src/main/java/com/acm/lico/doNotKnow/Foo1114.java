@@ -61,13 +61,13 @@ import java.util.concurrent.Semaphore;
  内存消耗： 40.8 MB , 在所有 Java 提交中击败了 20.50% 的用户
  通过测试用例： 36 / 36
  */
+
 public class Foo1114 {
     Semaphore semaphoreA = new Semaphore(0);
     Semaphore semaphoreB = new Semaphore(0);
     public Foo1114() {
-
+//        Math.min()
     }
-
     public void first(Runnable printFirst) throws InterruptedException {
 
         // printFirst.run() outputs "first". Do not change or remove this line.
