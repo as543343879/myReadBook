@@ -47,26 +47,26 @@ public class Solution56 {
         Arrays.sort(intervals, Comparator.comparingInt(e->e[0]));
 //        Arrays.stream(intervals).forEach(e->System.out.println(Arrays.toString(e)));
 //        int begin = 0;
-        int endValue = intervals[0][1];
-        int startValue = intervals[0][0];
+        int rightValue = intervals[0][1];
+        int leftVale = intervals[0][0];
         for(int i = 1; i < intervals.length; i ++) {
-            if(intervals[i][0] > endValue) {
+            if(intervals[i][0] > rightValue) {
                 int[] tempInt = new int[2];
-                tempInt[0] = startValue;
-                tempInt[1] =  endValue;
+                tempInt[0] = leftVale;
+                tempInt[1] =  rightValue;
                 res.add(tempInt);
 
-                startValue = intervals[i][0];
-                endValue = intervals[i][1];
+                leftVale = intervals[i][0];
+                rightValue = intervals[i][1];
             } else {
-                endValue = Math.max(endValue,intervals[i][1]);
+                rightValue = Math.max(rightValue,intervals[i][1]);
 
             }
         }
 
         int[] tempInt = new int[2];
-        tempInt[0] = startValue;
-        tempInt[1] = endValue;
+        tempInt[0] = leftVale;
+        tempInt[1] = rightValue;
         res.add(tempInt);
 
         return res.toArray(new int[res.size()][2]);
