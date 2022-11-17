@@ -81,6 +81,11 @@ package com.acm.lico.dp;// 不相交的线
  解答成功:
  执行耗时:5 ms,击败了37.03% 的Java用户
  内存消耗:40.6 MB,击败了95.36% 的Java用户
+
+ maxUncrossedLines2:
+ 解答成功:
+ 执行耗时:4 ms,击败了99.46% 的Java用户
+ 内存消耗:41 MB,击败了58.49% 的Java用户
  */
 //leetcode submit region begin(Prohibit modification and deletion)
 import java.lang.Math;
@@ -100,5 +105,23 @@ class Solution1035 {
         }
         return dp[n1][n2];
     }
+
+    public int maxUncrossedLines2(int[] nums1, int[] nums2) {
+        int n1 = nums1.length;
+        int n2 = nums2.length;
+        int [][] dp = new int[n1 + 1][n2 + 1];
+        for(int i = 1; i <= n1; i ++) {
+            int t1 = nums1[i - 1];
+            for(int j = 1; j <= n2; j ++) {
+                if(t1 == nums2[j - 1]) {
+                    dp[i][j] = 1 + dp[i-1][j-1] ;
+                } else {
+                    dp[i][j] = Math.max(dp[i][j-1], dp[i-1][j]);
+                }
+            }
+        }
+        return dp[n1][n2];
+    }
+
 }
 //leetcode submit region end(Prohibit modification and deletion)
