@@ -84,8 +84,8 @@ package com.acm.lico.dp;// 不相交的线
 
  maxUncrossedLines2:
  解答成功:
- 执行耗时:4 ms,击败了99.46% 的Java用户
- 内存消耗:41 MB,击败了58.49% 的Java用户
+ 执行耗时:4 ms,击败了99.46% 的Java 用户
+ 内存消耗:41 MB,击败了58.49% 的Java 用户
  */
 //leetcode submit region begin(Prohibit modification and deletion)
 import java.lang.Math;
