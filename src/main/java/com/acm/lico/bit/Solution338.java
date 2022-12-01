@@ -74,13 +74,13 @@ package com.acm.lico.bit; /**
  4 编码实现
  5 执行结果
 
- countBits 解答成功:
+ countBits2 解答成功:
  执行耗时:1 ms,击败了99.94% 的Java用户
  内存消耗:45.4 MB,击败了61.60% 的Java用户
  */
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution338 {
-    public int[] countBits(int n) {
+    public int[] countBits2(int n) {
         int[] res = new int[n+1];
         for(int i = 0; i <= n; i ++) {
             res[i] = Integer.bitCount(i);
