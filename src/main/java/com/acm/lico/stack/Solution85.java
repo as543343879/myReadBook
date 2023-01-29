@@ -57,6 +57,7 @@ package com.acm.lico.stack; /**
 
  **/
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -90,6 +91,9 @@ import java.util.LinkedList;
  思路二： 单调栈
  使用单调栈，找到某个元素 左右两边 小于他的元素高度。  再乘以宽度。 就是这个柱子的最大面积
 
+ 思路三： 单调栈
+ 使用单调栈，找到某个元素 左两边 小于他的元素高度， 跟另外一个小于 这个元素的高度。  再乘以宽度。 就是这个柱子的最大面积
+
  3 数据操作分析
  根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
  4 编码实现
@@ -103,6 +107,11 @@ import java.util.LinkedList;
  解答成功:
  执行耗时:12 ms,击败了60.96% 的Java用户
  内存消耗:44.8 MB,击败了82.74% 的Java用户
+
+ 思路三：
+ 解答成功:
+ 执行耗时:9 ms,击败了73.52% 的Java用户
+ 内存消耗:46.1 MB,击败了20.05% 的Java用户
 
  */
 
@@ -179,6 +188,44 @@ class Solution85 {
 
                 res = Math.max(res, area);
             }
+        }
+        return res;
+    }
+
+    public int maximalRectangle3(char[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int[][] widths = new int[n][m];
+
+        for(int i = 0; i < n; i ++) {
+            for(int j = 0; j < m; j ++) {
+                if(matrix[i][j] == '1') {
+                    widths[i][j] = j == 0 ? 1:( widths[i][j - 1] + 1);
+                }
+            }
+        }
+        int res = 0;
+        for(int j = 0; j < m; j ++) {
+            int[] lefts = new int[n];
+            int[] rights = new int[n];
+            Arrays.fill(rights,n);
+            LinkedList<Integer> stack = new LinkedList<>();
+            for(int i = 0; i < n; i ++ ) {
+                while ( !stack.isEmpty() && widths[stack.peek()][j] >=  widths[i][j]) {
+                    Integer popI = stack.pop();
+                    rights[popI] = i;
+                }
+                lefts[i] = stack.isEmpty() ? -1 : stack.peek();
+                stack.push(i);
+            }
+
+
+            for(int i = 0; i < n; i ++) {
+                int height = rights[i] - lefts[i] - 1;
+                res = Math.max(res , height * widths[i][j]);
+            }
+
+
         }
         return res;
     }
