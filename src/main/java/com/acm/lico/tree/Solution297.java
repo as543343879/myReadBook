@@ -1,8 +1,6 @@
 package com.acm.lico.tree;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Solution297 class
@@ -56,6 +54,27 @@ public class Solution297 {
         return str;
     }
 
+    public String serialize3(TreeNode root) {
+        StringBuilder stringBuilder = new StringBuilder();
+        Deque<TreeNode> stack = new LinkedList<TreeNode>();
+        while (root != null || !stack.isEmpty()) {
+            while (root != null) {
+                stringBuilder.append( root.val + ",");
+                stack.push(root);
+                root = root.left;
+            }
+            stringBuilder.append("None,");
+            if(root == null) {
+                root = stack.pop();
+                root = root.right;
+            }
+
+        }
+        stringBuilder.append("None,");
+//        doSerialize(root, stringBuilder);
+        return stringBuilder.toString();
+    }
+
     public static void main(String[] args) {
         TreeNode treeNode1 = new TreeNode(1);
         TreeNode treeNode2 = new TreeNode(2);
@@ -78,7 +97,9 @@ public class Solution297 {
 //        treeNode3.right = treeNode5;
 //        treeNode5.right = treeNode6;
 
-        String s = new Solution297().serialize2(treeNode1);
+        String s = new Solution297().serialize3(treeNode1);
+        System.out.println(s);
+         s = new Solution297().serialize2(treeNode1);
         System.out.println(s);
 
     }
