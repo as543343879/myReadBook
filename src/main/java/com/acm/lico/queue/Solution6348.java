@@ -81,6 +81,7 @@ class Solution6348 {
             int n = k / len;
             k = k % len;
             for(int i = 0; i < len; i ++ ) {
+
                for(int j =0; j < n; j ++) {
                    gifts[i] = (int) Math.sqrt(gifts[i]);
                }
