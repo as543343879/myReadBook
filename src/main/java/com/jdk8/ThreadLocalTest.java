@@ -1,5 +1,10 @@
 package com.jdk8;
 
+import org.junit.Test;
+
+import java.util.Collections;
+import java.util.Map;
+
 /**
  * ThreadLocalTest class
  *
@@ -10,5 +15,32 @@ public class ThreadLocalTest {
 	public static void main(String[] args) {
 
 		ThreadLocal threadLocal = new ThreadLocal();
+	}
+
+
+	@Test
+	public void testInheritableThreadLocal() {
+		final ThreadLocal threadLocal = new InheritableThreadLocal();
+		threadLocal.set("droidyue.com");
+
+		final ThreadLocal threadLocal2 = new InheritableThreadLocal();
+		threadLocal.set("droidyue.com2");
+
+
+		Thread t = new Thread() {
+			@Override
+			public void run() {
+				super.run();
+				System.out.println("testInheritableThreadLocal =" + threadLocal.get());
+			}
+		};
+
+		t.start();
+	}
+
+	@Test
+	public void test2() {
+		Map<String, Object> objectObjectMap = Collections.emptyMap();
+		System.out.println(objectObjectMap.get("xx"));
 	}
 }

@@ -1,4 +1,4 @@
-/**
+package com.acm.lico.array; /**
  最短无序连续子数组:581
  2022-12-20 15:13:56
  //给你一个整数数组 nums ，你需要找出一个 连续子数组 ，如果对这个子数组进行升序排序，那么整个数组都会变为升序排序。
@@ -95,21 +95,21 @@ class Solution581 {
         int n = nums.length;
         int min = nums[n-1];
         int max = nums[0];
-        int left=-1, right = 0;
+        int right=-1, left = 0;
         for(int i = 0 ; i < n; i ++) {
             if( nums[i] >= max) {
                 max = nums[i];
             } else {
-                left = i;
+                right = i;
             }
 
             if( nums[n-i-1] <= min) {
                 min = nums[n-i-1];
             } else {
-                right = n-i-1;
+                left = n-i-1;
             }
         }
-        return left - right  + 1;
+        return right - left  + 1;
     }
 
     public int findUnsortedSubarray2(int[] nums) {
