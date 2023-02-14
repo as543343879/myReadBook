@@ -74,7 +74,7 @@ import java.util.Set;
  这个问题是什么类型（排序、查找、最优化）的问题；
  这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
  采用哪些数据结构或算法思维，能把这个问题解决。
- 自己思路：
+ 自己思路： 思路错误
  先根据任务名分组： {A,2}, {B,3}, {C,4}; 宽度窗口为 n
  大顶堆 存 数据。
  time = iValue + n * iValue ;
@@ -96,8 +96,7 @@ class Solution62 {
         Map<Character, Integer> map = new HashMap<>();
         for(char t : tasks) {
             map.put(t, map.getOrDefault(t, 0) + 1);
-        }
-        Set<Map.Entry<Character, Integer>> entries = map.entrySet();
+        }        Set<Map.Entry<Character, Integer>> entries = map.entrySet();
         entries.forEach(e->{
             priorityQueue.add(e);
         });
@@ -106,13 +105,17 @@ class Solution62 {
             Map.Entry<Character, Integer> maxValue = priorityQueue.poll();
             res += maxValue.getValue() + n * maxValue.getValue();
             int tempSize = n * maxValue.getValue();
+            int countValueEqual = 0;
             while(!priorityQueue.isEmpty() && (tempSize >= priorityQueue.peek().getValue())){
                 Map.Entry<Character, Integer> tempEntry = priorityQueue.poll();
+                if(tempEntry.getValue() >= maxValue.getValue()) {
+                    countValueEqual ++;
+                }
                 tempSize -= tempEntry.getValue();
             }
             if(tempSize > 0) {
                 if(priorityQueue.isEmpty()) {
-                    res -= tempSize - maxValue.getValue()   + 1;
+                    res -= n-countValueEqual;
                 } else {
                     Map.Entry<Character, Integer> entry = priorityQueue.poll();
                     entry.setValue(entry.getValue() - tempSize);
