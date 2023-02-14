@@ -1,4 +1,4 @@
-package com.acm.lico.doNotKnow; /**
+/**
  621 ,任务调度器
  //给你一个用字符数组 tasks 表示的 CPU 需要执行的任务列表。其中每个字母表示一种不同种类的任务。任务可以以任意顺序执行，并且每个任务都可以在 1 个
  //单位时间内执行完。在任何一个单位时间，CPU 可以完成一个任务，或者处于待命状态。
@@ -68,6 +68,10 @@ import java.util.Set;
  O(n) 一次遍历
  O(logn) 折半查询
  O(n^2) 两重嵌套循环查询
+ 官方思路：
+ 时间复杂度 O(N) 时间复杂度 O(K + n) k表示 26个字母
+ 空间复杂度 O(N) 错误 O(k) 因为只有 26个字母
+
  2 定位问题
  根据问题类型，确定采用何种算法思维。
  例如
@@ -79,19 +83,59 @@ import java.util.Set;
  大顶堆 存 数据。
  time = iValue + n * iValue ;
  继续取出 value 。 直到 n* iValue 被消耗。 没消耗完就 重新放入队列。
+
+ 官方思路：
+ 最多有 n+1 列的情况 (A-1) * (n + 1) + maxCount
+ maxCount 标识次数等于n 的。
+ 假如超过n列
+ task.length
+
  3 数据操作分析
  根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
  权重
  4 编码实现
  5 执行结果
+ 官方思路：
+ 解答成功:
+ 执行耗时:15 ms,击败了35.22% 的Java用户
+ 内存消耗:42.3 MB,击败了66.35% 的Java用户
+
  */
 //leetcode submit region begin(Prohibit modification and deletion)
 
 
 
-class Solution62 {
+class Solution {
 
     public int leastInterval(char[] tasks, int n) {
+        Map<Character, Integer> map = new HashMap<>();
+        int maxCountValue = 0;
+        for(char t : tasks) {
+            int tValue = map.getOrDefault(t, 0) + 1;
+            map.put(t, tValue);
+            maxCountValue = Math.max(tValue,maxCountValue);
+        }
+        Set<Map.Entry<Character, Integer>> entries = map.entrySet();
+        int maxCount = 0;
+        for(Map.Entry<Character, Integer> t: entries) {
+            if(t.getValue() == maxCountValue) {
+                maxCount ++;
+            }
+        }
+
+        int res = (maxCountValue - 1) * (n + 1) + maxCount;
+
+        return Math.max(res, tasks.length);
+
+    }
+    /**
+     * 自己思路
+     * 总体来说 自己思路 有部分是正确的。
+     * @param tasks
+     * @param n
+     * @return
+     */
+    public int leastInterval2(char[] tasks, int n) {
         PriorityQueue<Map.Entry<Character, Integer>> priorityQueue = new PriorityQueue<>(((o1, o2) -> o2.getValue() - o1.getValue() ));
         Map<Character, Integer> map = new HashMap<>();
         for(char t : tasks) {
