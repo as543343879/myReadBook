@@ -1,5 +1,7 @@
 package com.jdk8.stringtest;
 
+import org.junit.Test;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,5 +21,11 @@ public class Test01 {
 
         String[] split = str.split(",");
         List<String> list = new LinkedList<>(Arrays.asList(split));
+    }
+
+    @Test
+    public void test2() {
+        String str = "xwp";
+        System.out.println(str.substring(0,0) + str.substring(1,2));
     }
 }
