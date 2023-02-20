@@ -44,6 +44,10 @@ package com.acm.lico.linkedList; /**
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+
+
+import com.acm.lico.Solution328;
+
 /**
  1 复杂度分析
  估算问题中复杂度的上限和下限
@@ -68,16 +72,12 @@ package com.acm.lico.linkedList; /**
  5 执行结果
  */
 class Solution61 {
-    public static void main(String[] args) {
-        ListNode node1 = new ListNode(1);
-        ListNode node2 = new ListNode(2);
-        node1.next = node2;
-        System.out.println(new Solution61().rotateRight(node1, 2));
-    }
     public ListNode rotateRight(ListNode head, int k) {
         ListNode fastK = head;
         ListNode tail = head;
-        if (k == 0 || head == null || head.next == null) { return head; }
+        if (k == 0 || head == null || head.next == null) {
+            return head;
+        }
         while (k > 0) {
             if(fastK.next != null) {
                 fastK = fastK.next;
@@ -92,12 +92,11 @@ class Solution61 {
                 tail = tail.next;
             }
         }
-
         ListNode fastKNext = null;
         if(fastK.next== null) {
             fastKNext = head;
             head = head.next;
-            fastKNext = null;
+            fastKNext.next = null;
 
             tail.next = fastKNext;
 
