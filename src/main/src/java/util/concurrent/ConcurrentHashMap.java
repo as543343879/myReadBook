@@ -507,24 +507,29 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
      * bounds for power of two table sizes, and is further required
      * because the top two bits of 32bit hash fields are used for
      * control purposes.
+     * 最大可能的表容量。该值必须恰好为 1<<30 以保持在 Java 数组分配和索引范围内以获取两个表大小的幂，并且还需要此值，因为 32 位哈希字段的前两位用于控制目的。
      */
     private static final int MAXIMUM_CAPACITY = 1 << 30;
 
     /**
      * The default initial table capacity.  Must be a power of 2
      * (i.e., at least 1) and at most MAXIMUM_CAPACITY.
+     * 默认初始表容量。必须是 2 的幂
      */
     private static final int DEFAULT_CAPACITY = 16;
 
     /**
      * The largest possible (non-power of two) array size.
      * Needed by toArray and related methods.
+     * 最大可能的（非二的幂）数组大小。 toArray 和相关方法需要。
      */
     static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
     /**
      * The default concurrency level for this table. Unused but
      * defined for compatibility with previous versions of this class.
+     *
+     * 该表的默认并发级别。未使用但定义为与此类的先前版本兼容。
      */
     private static final int DEFAULT_CONCURRENCY_LEVEL = 16;
 
@@ -534,6 +539,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
      * actual floating point value isn't normally used -- it is
      * simpler to use expressions such as {@code n - (n >>> 2)} for
      * the associated resizing threshold.
+     * 此表的加载因子。在构造函数中覆盖此值仅影响初始表容量。通常不使用实际的浮点值——使用 n - (n >>> 2) 等表达式作为关联的调整阈值会更简单。
      */
     private static final float LOAD_FACTOR = 0.75f;
 
@@ -544,6 +550,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
      * than 2, and should be at least 8 to mesh with assumptions in
      * tree removal about conversion back to plain bins upon
      * shrinkage.
+     * 使用树而不是 列表列表的  计数阈值。将元素添加到至少具有这么多节点的容器时，容器将转换为树。该值必须大于 2，并且至少应为 8，以符合树木移除中关于收缩时转换回普通箱的假设。
      */
     static final int TREEIFY_THRESHOLD = 8;
 
@@ -551,6 +558,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
      * The bin count threshold for untreeifying a (split) bin during a
      * resize operation. Should be less than TREEIFY_THRESHOLD, and at
      * most 6 to mesh with shrinkage detection under removal.
+     * 在调整大小操作期间取消树化（拆分）列表 的  计数阈值。应小于 TREEIFY_THRESHOLD，并且最多 6 个以在移除下使用收缩检测进行网格划分。
      */
     static final int UNTREEIFY_THRESHOLD = 6;
 
@@ -559,6 +567,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
      * (Otherwise the table is resized if too many nodes in a bin.)
      * The value should be at least 4 * TREEIFY_THRESHOLD to avoid
      * conflicts between resizing and treeification thresholds.
+     * 可将 红黑树化的最小表容量。 （否则，如果 bin 中的节点太多，则调整表的大小。）该值应至少为 4 * TREEIFY_THRESHOLD 以避免调整大小和树化阈值之间的冲突。
      */
     static final int MIN_TREEIFY_CAPACITY = 64;
 
@@ -568,38 +577,43 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
      * serves as a lower bound to avoid resizers encountering
      * excessive memory contention.  The value should be at least
      * DEFAULT_CAPACITY.
+     * 每个转移步骤的最小重新装箱数。范围被细分以允许多个调整器线程。此值用作下限，以避免调整器遇到过多的内存争用。该值应至少为 DEFAULT_CAPACITY。
      */
     private static final int MIN_TRANSFER_STRIDE = 16;
 
     /**
      * The number of bits used for generation stamp in sizeCtl.
      * Must be at least 6 for 32bit arrays.
+     * sizeCtl 中用于生成标记的位数。对于 32 位数组，必须至少为 6。
      */
     private static int RESIZE_STAMP_BITS = 16;
 
     /**
      * The maximum number of threads that can help resize.
      * Must fit in 32 - RESIZE_STAMP_BITS bits.
+     * 可以帮助调整大小的最大线程数。必须适合 32 - RESIZE_STAMP_BITS 位。
      */
     private static final int MAX_RESIZERS = (1 << (32 - RESIZE_STAMP_BITS)) - 1;
 
     /**
      * The bit shift for recording size stamp in sizeCtl.
+     * sizeCtl 中记录大小戳的位移位。
      */
     private static final int RESIZE_STAMP_SHIFT = 32 - RESIZE_STAMP_BITS;
 
     /*
      * Encodings for Node hash fields. See above for explanation.
+     * 节点哈希字段的编码。见上文的解释。
      */
-    static final int MOVED     = -1; // hash for forwarding nodes
-    static final int TREEBIN   = -2; // hash for roots of trees
-    static final int RESERVED  = -3; // hash for transient reservations
-    static final int HASH_BITS = 0x7fffffff; // usable bits of normal node hash
+    static final int MOVED     = -1; // hash for forwarding nodes 转发节点的哈希
+    static final int TREEBIN   = -2; // hash for roots of trees 树根的散列
+    static final int RESERVED  = -3; // hash for transient reservations 临时保留的散列
+    static final int HASH_BITS = 0x7fffffff; // usable bits of normal node hash 正常节点散列的可用位
 
-    /** Number of CPUS, to place bounds on some sizings */
+    /** Number of CPUS, to place bounds on some sizings CPU 数量，用于限制某些尺寸 */
     static final int NCPU = Runtime.getRuntime().availableProcessors();
 
-    /** For serialization compatibility. */
+    /** For serialization compatibility. 为了序列化兼容性。 */
     private static final ObjectStreamField[] serialPersistentFields = {
         new ObjectStreamField("segments", Segment[].class),
         new ObjectStreamField("segmentMask", Integer.TYPE),
@@ -615,6 +629,8 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
      * in bulk tasks.  Subclasses of Node with a negative hash field
      * are special, and contain null keys and values (but are never
      * exported).  Otherwise, keys and vals are never null.
+     * 键值输入。此类永远不会作为用户可变的 Map.Entry 导出（即支持 setValue；请参阅下面的 MapEntry），
+     * 但可用于批量任务中使用的只读遍历。具有负散列字段的 Node 子类是特殊的，并且包含空键和值（但从不导出）。否则，keys 和 vals 永远不会为 null。
      */
     static class Node<K,V> implements Map.Entry<K,V> {
         final int hash;
@@ -680,6 +696,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
      * cheapest possible way to reduce systematic lossage, as well as
      * to incorporate impact of the highest bits that would otherwise
      * never be used in index calculations because of table bounds.
+     * hash 方法 跟hashmap 是一致的。
      */
     static final int spread(int h) {
         return (h ^ (h >>> 16)) & HASH_BITS;
@@ -688,6 +705,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
     /**
      * Returns a power of two table size for the given desired capacity.
      * See Hackers Delight, sec 3.2
+     * 返回给定所需容量的两个表大小的幂。请
      */
     private static final int tableSizeFor(int c) {
         int n = c - 1;
