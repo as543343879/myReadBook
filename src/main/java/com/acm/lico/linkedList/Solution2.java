@@ -1,4 +1,4 @@
-package com.acm.lico.linkedList; /**
+package linkedList; /**
  2 ,两数相加
  //给你两个 非空 的链表，表示两个非负的整数。它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位 数字。
  //
@@ -54,6 +54,10 @@ package com.acm.lico.linkedList; /**
  O(n) 一次遍历
  O(logn) 折半查询
  O(n^2) 两重嵌套循环查询
+
+ 自己思路：
+ 时间复杂度 O(max(N,M))
+ 空间复杂度 O(1)
  2 定位问题
  根据问题类型，确定采用何种算法思维。
  例如
@@ -67,33 +71,78 @@ package com.acm.lico.linkedList; /**
  时间优先： 先把链表反转。 然后直接加。
  空间优先： 放到两个栈里面，然后 取值相加。
  5 执行结果
+ 自己思路：
+ 解答成功:
+ 执行耗时:1 ms,击败了100.00% 的Java用户
+ 内存消耗:41.4 MB,击败了61.22% 的Java用户
  */
 //leetcode submit region begin(Prohibit modification and deletion)
 
 
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
+
+
+  class ListNode {
+     int val;
+     ListNode next;
+     ListNode() {}
+     ListNode(int val) { this.val = val; }
+     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ }
+
 class Solution2 {
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        l1 = reserve(l1);
-        l2 = reserve(l2);
+    /**
+     * 第一遍的代码
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public ListNode addTwoNumbersOld(ListNode l1, ListNode l2) {
+        ListNode head = new ListNode(0);
+        ListNode pre = head;
+        int carry = 0,sum;
+        while (l1 != null || l2 != null) {
+            int value1 = l1 == null ? 0 : l1.val;
+            int value2 = l2 == null ? 0 : l2.val;
+            sum = value1 + value2 + carry;
+            ListNode tNode = new ListNode(sum % 10);
+            carry = sum / 10;
+            pre.next = tNode;
+            pre = pre.next;
 
-        int pre = 0;
-        while ( l1 != null ||  l2 != null) {
-            int count = l1.val + l2.val;
-            pre = l1.val + l2.val;
-
-
-
+            // 改成if 判断
+            l1 = l1 != null ? l1.next : null;
+            l2 = l2 != null ? l2.next : null;
         }
+        if (carry == 1) {
+            ListNode tNode = new ListNode(1);
+            pre.next = tNode;
+        }
+        return head.next;
+    }
+    
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        if(l1 == null) {
+            return l2;
+        }
+        if(l2 == null) {
+            return l1;
+        }
+        int pre = 0;
+        ListNode root = new ListNode(0);
+        ListNode head = root;
+        while ( l1 != null ||  l2 != null) {
+            int count = (l1 == null ? 0 : l1.val) +( l2 == null ? 0: l2.val) + pre;
+            pre = count / 10;
+            head.next = new ListNode(count % 10);
+            head = head.next;
+            l1 = l1==null ? null : l1.next;
+            l2 = l2 == null ? null : l2.next;
+        }
+        if(pre != 0) {
+            head.next = new ListNode(pre);
+        }
+        root = root.next;
+        return root;
     }
 
     public ListNode reserve(ListNode root) {
@@ -104,7 +153,7 @@ class Solution2 {
             pre = root;
             root = node;
         }
-        return root;
+        return pre;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
