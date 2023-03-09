@@ -28,4 +28,10 @@ public class Test01 {
         String str = "xwp";
         System.out.println(str.substring(0,0) + str.substring(1,2));
     }
+
+    @Test
+    public void test3() {
+        String minValue = Integer.MIN_VALUE + "";
+        System.out.println(minValue);
+    }
 }
