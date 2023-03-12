@@ -1,41 +1,168 @@
-package com.acm.lico.dp;
+package com.acm.lico.dp; /**
+ 5 ,最长回文子串
+ //给你一个字符串 s，找到 s 中最长的回文子串。
+ //
+ // 如果字符串的反序与原始字符串相同，则该字符串称为回文字符串。
+ //
+ //
+ //
+ // 示例 1：
+ //
+ //
+ //输入：s = "babad"
+ //输出："bab"
+ //解释："aba" 同样是符合题意的答案。
+ //
+ //
+ // 示例 2：
+ //
+ //
+ //输入：s = "cbbd"
+ //输出："bb"
+ //
+ //
+ //
+ //
+ // 提示：
+ //
+ //
+ // 1 <= s.length <= 1000
+ // s 仅由数字和英文字母组成
+ //
+ //
+ // Related Topics 字符串 动态规划 👍 6199 👎 0
 
-import lombok.extern.slf4j.Slf4j;
-
-/**
- * Solution5 class
- *
- * @author 谢小平
- * @date 2021/11/10
- * 给你一个字符串 s，找到 s 中最长的回文子串。
- *
-
+ **/
 /**
  1 复杂度分析
-估算问题中复杂度的上限和下限
+ 估算问题中复杂度的上限和下限
  时间复杂度
  空间复杂度
-    O(1) 一个常量下完成
-    O(n) 一次遍历
-    O(logn) 折半查询
-    O(n^2) 两重嵌套循环查询
+ O(1) 一个常量下完成
+ O(n) 一次遍历
+ O(logn) 折半查询
+ O(n^2) 两重嵌套循环查询
+ 自己思路：
+ 时间复杂度 O(N) 错误 应该是 O(N ^ 2)
+ 空间复杂度 O(1)
  2 定位问题
-根据问题类型，确定采用何种算法思维。
-    例如
-     这个问题是什么类型（排序、查找、最优化）的问题；
-     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
-     采用哪些数据结构或算法思维，能把这个问题解决。
+ 根据问题类型，确定采用何种算法思维。
+ 例如
+ 这个问题是什么类型（排序、查找、最优化）的问题；
+ 这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+ 采用哪些数据结构或算法思维，能把这个问题解决。
+ 自己思路：
+ 枚举所有回文中心， 一共有 2*n -1个
+ left = i / 2 , right = i / 2 + i % 2;
+
+
  3 数据操作分析
-    根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+ 根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
  4 编码实现
  5 执行结果
+ 官方跟自己相同的思路：
+ 解答成功:
+ 执行耗时:18 ms,击败了76.00% 的Java用户
+ 内存消耗:41.3 MB,击败了81.55% 的Java用户
 
-
+ 自己思路：
+ 解答成功:
+ 执行耗时:21 ms,击败了65.60% 的Java用户
+ 内存消耗:41.4 MB,击败了78.30% 的Java用户
  */
-@Slf4j
-public class Solution5 {
+//leetcode submit region begin(Prohibit modification and deletion)
+class Solution5 {
 
+    public String longestPalindrome_official(String s) {
+        if(s == null || s.length() < 0 )
+            return null;
+        int max = 0;
+        int start = 0;
+        for(int i = 0; i < s.length() ; i ++) {
+            int jiLen = maxPalindrome(s, i, i);
+            int ouLen = maxPalindrome(s, i, i + 1);
+            int t = Math.max(jiLen, ouLen);
+            if(max < t) {
+                max = t;
+                start = i - (max - 1) / 2;
+            }
+        }
+        return s.substring(start,max  + start);
+    }
 
+    private int maxPalindrome(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left --;
+            right ++;
+        }
+        return right - left - 1;
+    }
+
+    /**
+     * 自己思路
+     * @param s
+     * @return
+     */
+    public String longestPalindrome_me(String s) {
+        if(s == null) {
+            return s;
+        }
+        int total = s.length() * 2 - 1;
+        int max = 1;
+        int start = 0;
+        int end = 0;
+        for(int i = 0; i < total; i ++) {
+            int left = i  / 2 ;
+            int right = left + i % 2;
+            int tempMax = s.charAt(left) == s.charAt(right)  ? left == right ? 1 : 2 : 0;
+            if(tempMax > 0) {
+                while (left >= 1  && right < s.length() - 1 && s.charAt(left - 1) == s.charAt(right + 1)   ) {
+                    left --;
+                    right ++;
+                    tempMax += 2;
+                }
+                if(tempMax > max) {
+                    start = left  ;
+                    end = right;
+                    max = tempMax;
+                }
+            }
+        }
+        return s.substring(start,end + 1) ;
+    }
+
+    /**
+     * 修改 没有完成 ， 替换调 i + 1
+     * @param s
+     * @return
+     */
+    public String longestPalindrome(String s) {
+        if(s == null) {
+            return s;
+        }
+        int total = s.length() * 2 - 1;
+        int max = 2;
+        int start = 0;
+        int end = 0;
+        for(int i = 0; i < total; i ++) {
+            int left = i  / 2 ;
+            int right = left + i % 2;
+            int tempMax = 0 ;
+            if(tempMax > 0) {
+                while (left >= 0  && right < s.length()  && s.charAt(left ) == s.charAt(right + 1)   ) {
+                    left --;
+                    right ++;
+                    tempMax += 2;
+                }
+                if(tempMax >= max) {
+                    start = left  ;
+                    end = right;
+                    max = tempMax;
+                }
+            }
+        }
+        return s.substring(start,end + 1) ;
+    }
     /**
      *
      *  P(i,j) = true 如果 Si->Sj 是回文子串
@@ -125,21 +252,16 @@ public class Solution5 {
 
     public boolean isRepern(String s, int begin, int end) {
         int i = begin,j = end;
-      while (begin < end) {
-          if (s.charAt(begin) != s.charAt(end)) {
-              return false;
-          }
-          begin ++;
-          end -- ;
-      }
+        while (begin < end) {
+            if (s.charAt(begin) != s.charAt(end)) {
+                return false;
+            }
+            begin ++;
+            end -- ;
+        }
 //      log.info("begin={}`end={}`res={}",i,j,s.substring(i,j + 1));
         return true;
     }
 
-
-
-    public static void main(String[] args) {
-        String str = "cbbd";
-         System.out.println(new Solution5().longestPalindrome_dp(str));
-    }
 }
+//leetcode submit region end(Prohibit modification and deletion)
