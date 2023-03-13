@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /**
  * QuickSort class
+ * 快速排序
  */
 public class QuickSort {
 
