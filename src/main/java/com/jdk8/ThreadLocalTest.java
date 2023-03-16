@@ -14,7 +14,18 @@ import java.util.Map;
 public class ThreadLocalTest {
 	public static void main(String[] args) {
 
-		ThreadLocal threadLocal = new ThreadLocal();
+		ThreadLocal<String> threadLocal1 = new ThreadLocal();
+		threadLocal1.set("xxp");
+
+		String s = threadLocal1.get();
+		System.out.println(s);
+
+
+		ThreadLocal<String> threadLocal2 = new ThreadLocal();
+		threadLocal2.set("xxpthreadLocal2");
+
+		 s = threadLocal2.get();
+		System.out.println(s);
 	}
 
 
