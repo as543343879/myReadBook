@@ -10,6 +10,7 @@ package com.datastructure.tree;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 /**
  1 复杂度分析
@@ -86,10 +87,26 @@ public class BuildTreeByLevel {
         }
     }
 
+    public static void  trace(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+        while ( !stack.isEmpty() || node != null) {
+            while (node != null) {
+                System.out.print(" " + node.val);
+                stack.push(node);
+                node = node.left;
+            }
+
+            if(!stack.isEmpty()) {
+               node = stack.pop().right;
+            }
+        }
+
+    }
     public static void main(String[] args) {
         int[] res = new int[] {1,2,3,4,5,6,7,9};
         TreeNode treeNode = new BuildTreeByLevel().buildTree(res);
-        System.out.println(treeNode);
+        trace(treeNode);
     }
 }
 
