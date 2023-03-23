@@ -1,20 +1,121 @@
-package com.acm.lico;
+package com.acm.lico; /**
+ 54 ,螺旋矩阵
+ //给你一个 m 行 n 列的矩阵 matrix ，请按照 顺时针螺旋顺序 ，返回矩阵中的所有元素。
+ //
+ //
+ //
+ // 示例 1：
+ //
+ //
+ //输入：matrix =
+ [
+ [1,2,3],
+ [4,5,6],
+ [7,8,9]]
+ //输出：[1,2,3,6,9,8,7,4,5]
+ //
+ //
+ // 示例 2：
+ //
+ //
+ //输入：matrix = [
+ [1,2,3,4],
+ [5,6,7,8],
+ [9,10,11,12]]
+ //输出：[1,2,3,4,8,12,11,10,9,5,6,7]
+ //
+ //
+ //
+ //
+ // 提示：
+ //
+ //
+ // m == matrix.length
+ // n == matrix[i].length
+ // 1 <= m, n <= 10
+ // -100 <= matrix[i][j] <= 100
+ //
+ //
+ // Related Topics 数组 矩阵 模拟 👍 1337 👎 0
 
+ **/
+
+import com.acm.lico.Solution54;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Solution class
- *54. 螺旋矩阵
- * 给你一个 m 行 n 列的矩阵 matrix ，请按照 顺时针螺旋顺序 ，返回矩阵中的所有元素。
- *
- *
- * @author 谢小平
- * @date 2021/7/1
+ 1 复杂度分析
+ 估算问题中复杂度的上限和下限
+ 时间复杂度
+ 空间复杂度
+ O(1) 一个常量下完成
+ O(n) 一次遍历
+ O(logn) 折半查询
+ O(n^2) 两重嵌套循环查询
+ 自己思路：
+ 时间复杂度 O(N)
+ 空间复杂度 O(1)
+ 2 定位问题
+ 根据问题类型，确定采用何种算法思维。
+ 例如
+ 这个问题是什么类型（排序、查找、最优化）的问题；
+ 这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+ 采用哪些数据结构或算法思维，能把这个问题解决。
+ 自己思路：
+ [1,2  ,3 ,4],
+ [5,6  ,7 ,8],
+ [9,10 ,11,12]]
+ 定义一个方向数组，{{0，1}， {-1，0}， {0，-1},{1, 0}},当 下标出了范围，跳出循环。
+
+ 3 数据操作分析
+ 根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+ 4 编码实现
+ 5 执行结果
+ 自己思路
+ 解答成功:
+ 执行耗时:0 ms,击败了100.00% 的Java用户
+ 内存消耗:39.5 MB,击败了70.70% 的Java用户
  */
-public class Solution54 {
+//leetcode submit region begin(Prohibit modification and deletion)
+class Solution54 {
     public List<Integer> spiralOrder(int[][] matrix) {
+        if(matrix == null || matrix[0].length == 0) {
+            return null;
+        }
+        int[][] dirct = {{0,1},{1,0}, {0,-1},{-1, 0}};
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int count = 0;
+        int allCount = n * m;
+        List<Integer> res = new ArrayList<>(allCount);
+        int MIN = 101;
+        int i = 0, j =-1;
+        while (count  < allCount ) {
+            for(int[] t: dirct) {
+                while (true) {
+                    i += t[0];
+                    j += t[1];
+                    if(i  < 0 ||  i >= n   || j  < 0 || j  >= m ||matrix[i][j] == MIN ) {
+                        i -= t[0];
+                        j -= t[1];
+                        break;
+                    }
+                    count++;
+                    res.add(matrix[i][j]);
+                    matrix[i][j] = MIN;
+                }
+            }
+
+        }
+        return res;
+    }
+
+
+    public List<Integer> spiralOrder2(int[][] matrix) {
         List<Integer> list = new LinkedList<>();
         int totalNum = matrix.length * matrix[0].length;
 
@@ -60,13 +161,13 @@ public class Solution54 {
         }
         return list;
     }
-    
+
     public static void main(String[] args) {
         int[][] map = {{1,2,3,4},
-                       {5,6,7,8},
-                       {9,10,11,12}};
+                {5,6,7,8},
+                {9,10,11,12}};
         // [1,2,3,4,8,12,11,10,9,5,6,7]
-       System.out.println(Arrays.toString(new Solution54().spiralOrder(map).toArray()));
+        System.out.println(Arrays.toString(new Solution54().spiralOrder(map).toArray()));
     }
-//    [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
 }
+//leetcode submit region end(Prohibit modification and deletion)
