@@ -65,7 +65,7 @@ import java.util.Arrays;
  O(n^2) 两重嵌套循环查询
  自己思路：
  时间复杂度 O(N * M)
- 空间复杂度 O（1)
+ 空间复杂度 O(N * M)
  2 定位问题
  根据问题类型，确定采用何种算法思维。
  例如
@@ -82,6 +82,10 @@ import java.util.Arrays;
  根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
  4 编码实现
  5 执行结果
+ 自己思路：
+ 解答成功:
+ 执行耗时:0 ms,击败了100.00% 的Java用户
+ 内存消耗:38.3 MB,击败了56.42% 的Java用户
  */
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution62 {
