@@ -1,6 +1,6 @@
-/**
+package com.acm.lico.tree; /**
  235 ,二叉搜索树的最近公共祖先
- //给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。
+ //给该树中两个指定节定一个二叉搜索树, 找到点的最近公共祖先。
  //
  // 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（
  //一个节点也可以是它自己的祖先）。”
@@ -58,6 +58,8 @@
  自己思路：
  应该是用后序遍历， 递归不断返回 左右节点的的祖先节点。 当两个 节点祖先节点一致，就是最近公共祖先。
 
+ 自己思路新：
+ 目标root 应该是 root.val >= p.val && root.val <= q.val;
  官方思路：
  如果当前节点 ，大于 pq节点， 说明 最近公共祖先 在左侧
  如果当前节点， 小于 pq节点， 说明 最近公共祖先 在右侧。
@@ -76,11 +78,13 @@
  解答成功:
  执行耗时:5 ms,击败了99.95% 的Java用户
  内存消耗:42.4 MB,击败了46.83% 的Java用户
+
+ 自己思路新：
+ 解答成功:
+ 执行耗时:5 ms,击败了100.00% 的Java用户
+ 内存消耗:42 MB,击败了80.62% 的Java用户
  */
 //leetcode submit region begin(Prohibit modification and deletion)
-
-import com.acm.lico.offer68.TreeNode;
-
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -94,6 +98,19 @@ import com.acm.lico.offer68.TreeNode;
 class Solution235 {
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null) {
+            return root;
+        }
+        if(p.val > root.val && q.val > root.val ) {
+            return lowestCommonAncestor(root.right, p,q);
+        } else if(p.val < root.val && q.val < root.val) {
+            return lowestCommonAncestor(root.left, p, q);
+        } else {
+            return root;
+        }
+    }
+
+    public TreeNode lowestCommonAncestor4(TreeNode root, TreeNode p, TreeNode q) {
         while (true) {
             if(p.val > root.val && q.val > root.val  ) {
                 root =  root.right;
