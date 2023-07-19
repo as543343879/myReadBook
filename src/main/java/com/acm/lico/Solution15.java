@@ -100,6 +100,66 @@ import java.util.List;
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution15 {
     /**
+     1 复杂度分析
+    估算问题中复杂度的上限和下限
+     时间复杂度  O(N^2
+     空间复杂度 O(1)错误 应该是 O(LgN) 排序的空间复杂度
+        O(1) 一个常量下完成
+        O(n) 一次遍历
+        O(logn) 折半查询
+        O(n^2) 两重嵌套循环查询
+     2 定位问题
+    根据问题类型，确定采用何种算法思维。
+        例如
+         这个问题是什么类型（排序、查找、最优化）的问题；
+         这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+         采用哪些数据结构或算法思维，能把这个问题解决。
+        自己思路：
+            1. 先排序，然后二重循环模拟。
+            2. 第二重循环里面，第二个数字，从左往右， 第三个数 从右往左。 特点是，第二个数是变大的，第三个数是变小的。
+            3. 去重 1. 第二个数相等，跳过。 2. 第三个数相等，跳过。
+     3 数据操作分析
+        根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+         解答成功:
+         执行耗时:43 ms,击败了20.92% 的Java用户
+         内存消耗:50.2 MB,击败了24.74% 的Java用户
+     */
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> resList = new ArrayList<>();
+        for(int i = 0; i < nums.length; i ++) {
+            int sum = -nums[i];
+            int left = i + 1;
+            int right = nums.length - 1;
+            if(i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            while(left < right) {
+                if(nums[left] + nums[right] == sum) {
+                    if(left > i + 1 && nums[left] == nums[left - 1]) {
+                        left ++;
+                        continue;
+                    }
+                    List<Integer> tempOne = new ArrayList<>();
+                    tempOne.add(nums[i]);
+                    tempOne.add(nums[left]);
+                    tempOne.add(nums[right]);
+                    resList.add(tempOne);
+                    left ++;
+                    right --;
+                } else if(nums[left] + nums[right] < sum) {
+                    left ++;
+                } else {
+                    right --;
+                }
+            }
+
+        }
+        return resList;
+    }
+    /**
      * 刷第一遍的正确答案
      * @param nums
      * @return
@@ -144,7 +204,7 @@ class Solution15 {
         new Solution15().threeSum(arr);
     }
 
-    public List<List<Integer>> threeSum(int[] nums) {
+    public List<List<Integer>> threeSumOld2(int[] nums) {
         Arrays.sort(nums);
         List<List<Integer>> res = new ArrayList<>();
 
