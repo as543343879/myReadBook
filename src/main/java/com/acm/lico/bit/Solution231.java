@@ -105,6 +105,10 @@ package com.acm.lico.bit; /**
 
  官方思路
  2^n 二进制 , 假如二进制是  1000000 之类 n-1 是 0111111
+
+ 自己思路新：
+ 2^n 的二进制 只有一个1.
+
  3 数据操作分析
  根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
  4 编码实现
@@ -115,11 +119,25 @@ package com.acm.lico.bit; /**
 
  官方思路：
  解答成功:
- 执行耗时:1 ms,击败了22.35% 的Java用户
- 内存消耗:38.7 MB,击败了62.79% 的Java用户
+ 执行耗时:0 ms,击败了100.00% 的Java用户
+ 内存消耗:38.6 MB,击败了72.66% 的Java用户
+
+ 自己思路新：
+ 解答成功:
+ 执行耗时:0 ms,击败了100.00% 的Java用户
+ 内存消耗:38.7 MB,击败了45.38% 的Java用户
  */
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution231 {
+
+    public boolean isPowerOfTwo4(int n) {
+        if(n <= 0) {
+            return false;
+        }
+        int bitCount = Integer.bitCount(n);
+        return bitCount == 1;
+    }
+
     public boolean isPowerOfTwo(int n) {
         return n > 0 &&( n & (n-1)) == 0;
     }
@@ -133,7 +151,7 @@ class Solution231 {
             return false;
         }
         n /= 2;
-        return isPowerOfTwo(n);
+        return isPowerOfTwo2(n);
     }
 
 }

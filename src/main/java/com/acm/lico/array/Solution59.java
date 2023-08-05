@@ -42,6 +42,12 @@ package com.acm.lico.array; /**
  O(n) 一次遍历
  O(logn) 折半查询
  O(n^2) 两重嵌套循环查询
+
+ 自己思路新：
+ 时间复杂度 O(n*n)
+ 空间复杂度 O(1)
+
+
  2 定位问题
  根据问题类型，确定采用何种算法思维。
  例如
@@ -60,13 +66,42 @@ package com.acm.lico.array; /**
  执行耗时:0 ms,击败了100.00% 的Java用户
  内存消耗:39.2 MB,击败了96.10% 的Java用户
 
- 官方思路：
-    可以把 方向 用数组替换
+ 自己思路新：
+ 解答成功:
+ 执行耗时:0 ms,击败了100.00% 的Java用户
+ 内存消耗:39.5 MB,击败了48.18% 的Java用户
  */
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution59 {
 
     public int[][] generateMatrix(int n) {
+        if(n == 1) {
+            return new int[][]{{1}};
+        }
+        int[][] res = new int[n][n];
+        int x=0,y=-1;
+        int allCount = n * n;
+        int count = 1;
+        int[][] dirct = {{0,1},{1,0},{0,-1},{-1, 0}};
+        while (count <= allCount) {
+            for(int[] t : dirct) {
+                while (true) {
+                    x += t[0];
+                    y += t[1];
+                    if(x < 0 || x >= n || y >= n || y < 0 || res[x][y] != 0) {
+                        x -= t[0];
+                        y -= t[1];
+                        break;
+                    }
+                    res[x][y] = count++;
+                }
+            }
+        }
+
+        return res;
+    }
+
+    public int[][] generateMatrixOld(int n) {
         if(n == 1) {
             return new int[][]{{1}};
         }
@@ -108,8 +143,6 @@ class Solution59 {
         }
         return res;
     }
-
-
 
 }
 //leetcode submit region end(Prohibit modification and deletion)

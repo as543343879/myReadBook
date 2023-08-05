@@ -1,62 +1,89 @@
-package com.acm.lico.doNotKnow;
+package com.acm.lico.doNotKnow; /**
+ 169 ,多数元素
+ //给定一个大小为 n 的数组 nums ，返回其中的多数元素。多数元素是指在数组中出现次数 大于 ⌊ n/2 ⌋ 的元素。
+ //
+ // 你可以假设数组是非空的，并且给定的数组总是存在多数元素。
+ //
+ //
+ //
+ // 示例 1：
+ //
+ //
+ //输入：nums = [3,2,3]
+ //输出：3
+ //
+ // 示例 2：
+ //
+ //
+ //输入：nums = [2,2,1,1,1,2,2]
+ //输出：2
+ //
+ //
+ //
+ //提示：
+ //
+ //
+ // n == nums.length
+ // 1 <= n <= 5 * 10⁴
+ // -10⁹ <= nums[i] <= 10⁹
+ //
+ //
+ //
+ //
+ // 进阶：尝试设计时间复杂度为 O(n)、空间复杂度为 O(1) 的算法解决此问题。
+ //
+ // Related Topics 数组 哈希表 分治 计数 排序 👍 1774 👎 0
 
+ **/
+
+import com.acm.lico.doNotKnow.Solution169;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Solution169 class
- *https://leetcode.cn/problems/majority-element/
- * 169. 多数元素
- * 给定一个大小为 n 的数组 nums ，返回其中的多数元素。多数元素是指在数组中出现次数 大于 ⌊ n/2 ⌋ 的元素。
- *
- * 你可以假设数组是非空的，并且给定的数组总是存在多数元素。
- *
- *
- *
- * 示例 1：
- *
- * 输入：nums = [3,2,3]
- * 输出：3
- * 示例 2：
- *
- * 输入：nums = [2,2,1,1,1,2,2]
- * 输出：2
- *
- * 提示：
- * n == nums.length
- * 1 <= n <= 5 * 104
- * -109 <= nums[i] <= 109
- *  
- *
- * 进阶：尝试设计时间复杂度为 O(n)、空间复杂度为 O(1) 的算法解决此问题。
- *
- * 来源：力扣（LeetCode）
- * 链接：https://leetcode.cn/problems/majority-element
- * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
- * @author 谢小平
- * @date 2022/6/21
- */
-/**
  1 复杂度分析
-估算问题中复杂度的上限和下限
+ 估算问题中复杂度的上限和下限
  时间复杂度
  空间复杂度
-    O(1) 一个常量下完成
-    O(n) 一次遍历
-    O(logn) 折半查询
-    O(n^2) 两重嵌套循环查询
+ O(1) 一个常量下完成
+ O(n) 一次遍历
+ O(logn) 折半查询
+ O(n^2) 两重嵌套循环查询
+ 自己思路：
+ 时间复杂度 O(NlogN)
+ 空间复杂度 O(1) 如果是堆排序，如果是其他排序 O(logN)
  2 定位问题
-根据问题类型，确定采用何种算法思维。
-    例如
-     这个问题是什么类型（排序、查找、最优化）的问题；
-     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
-     采用哪些数据结构或算法思维，能把这个问题解决。
+ 根据问题类型，确定采用何种算法思维。
+ 例如
+ 这个问题是什么类型（排序、查找、最优化）的问题；
+ 这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+ 采用哪些数据结构或算法思维，能把这个问题解决。
+ 自己思路：
+ 先排序，取中间元素
  3 数据操作分析
-    根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+ 根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
  4 编码实现
  5 执行结果
+ 自己思路：
+ 解答成功（    先排序，取中间元素）:
+ 执行耗时:2 ms,击败了62.58% 的Java用户
+ 内存消耗:44.9 MB,击败了55.58% 的Java用户
  */
-public class Solution169 {
+//leetcode submit region begin(Prohibit modification and deletion)
+class Solution169 {
+    public int majorityElement(int[] nums) {
+        if(nums == null) {
+            return  0;
+        }
+        int len = nums.length;
+        Arrays.sort(nums);
+        return nums[len / 2];
+
+    }
+
+
     /**
      * 执行用时： 11 ms , 在所有 Java 提交中击败了 27.65% 的用户
      * 内存消耗： 46.6 MB , 在所有 Java 提交中击败了 10.94% 的用户
@@ -88,7 +115,7 @@ public class Solution169 {
      * @param nums
      * @return
      */
-    public int majorityElement(int[] nums) {
+    public int majorityElementOld(int[] nums) {
         if(nums.length <= 2) {
             return nums[0];
         }
@@ -129,3 +156,4 @@ public class Solution169 {
         System.out.println(new Solution169().majorityElement(test));
     }
 }
+//leetcode submit region end(Prohibit modification and deletion)

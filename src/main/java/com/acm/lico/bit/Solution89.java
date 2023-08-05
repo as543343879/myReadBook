@@ -71,6 +71,11 @@ import java.util.List;
  官方思路：
  格雷码的规则是： g(i) = b(i+1) ^ b(i), 0<=i <=n.  g 表示格雷码， b 表示 n位二进制数， g(i), b(i) 分别表示 g, b的第i位。且 b(n) = 0
 
+ 规则：
+ 保留格雷码的最高位作为自然二进制码的最高位，
+ 而次高位自然二进制码为高位自然二进制码与次高位格雷码相异或，
+ 而自然二进制码的其余各位与次高位自然二进制码的求法相类似。
+
 
  https://blog.csdn.net/jingfengvae/article/details/51691124
  https://upload-images.jianshu.io/upload_images/9547570-21232ba508430a5f.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240
