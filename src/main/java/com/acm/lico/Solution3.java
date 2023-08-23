@@ -82,7 +82,55 @@ import java.util.Set;
  */
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution3 {
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度
+     空间复杂度
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     1. 用一个 set 做滑动窗口
+     2. 当前值 temp ,如果set 中没有，就加入，如果有，计算最大值max,然后移除set 中的第一个值和左边的值，继续判断
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:93 ms,击败了8.80% 的Java用户
+     内存消耗:43.5 MB,击败了5.12% 的Java用户
+     6. 优化
+        1. 用一个 map 做滑动窗口， 记录left 的值。 如果碰到翔的值，就移动left 到重复值的下标 + 1。
+        2. 最大值 max = Math.max(max, i - left + 1);
+     */
     public int lengthOfLongestSubstring(String s) {
+        if(s == null || s.length() == 0) {
+            return 0;
+        }
+        char[] chars = s.toCharArray();
+        Map<Character, Integer> map = new HashMap<>();
+        int max = 0;
+        for(int i = 0; i < chars.length; i ++) {
+            char t = chars[i];
+            if(map.containsKey(t)) {
+                max = Math.max(max,map.size());
+                i = map.get(t);
+                map.clear();
+            } else {
+                map.put(t, i);
+            }
+        }
+        max = Math.max(max,map.size());
+        return max;
+    }
+    public int lengthOfLongestSubstringV1(String s) {
         if(s == null || s.length() == 0) {
             return 0;
         }
