@@ -76,6 +76,79 @@ package com.acm.lico.sort; /**
  */
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution4 {
+    public static void main(String[] args) {
+        System.out.println(new Solution4().findMedianSortedArrays(new int[]{1,3},new int[] {2}));
+    }
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度  O(lg(min(n,m)))
+     空间复杂度  O(1)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：数组 A,B  寻找一条分割线，i,j。保证 A[i] >= B[j-1] && A[i-1] <= B[j]。 这样的分割线 就是 两个数组的中卫线。
+     1. 可能出现 i ,j  数组越界的情况
+     2. 当 m + n 为偶数时候， 左边元素个数 (n + m) / 2
+     3. 当 m + n  为奇数时候， 左边元素个数 (n + m + 1) / 2
+     4. 统一处理， 左边元素个数 (n + m + 1) / 2 , 这样不用奇偶，只需要确定一个数组分割线的位置，另一个分割线位置可以通过公式计算出来。
+
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:1 ms,击败了100.00% 的Java用户
+     内存消耗:43.5 MB,击败了30.88% 的Java用户
+     */
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        // 保证第一个数组长度比较短， 这样 leftTotal-i 才能保证，不会数组越界。
+        if(nums1.length > nums2.length) {
+            int[] temp = nums1;
+            nums1 = nums2;
+            nums2 = temp;
+        }
+        int len1 = nums1.length;
+        int len2 = nums2.length;
+        int left = 0;
+        int right = len1;
+        int leftTotal = (len1 + len2 + 1) / 2;
+        while (left < right) {
+            int i = left + (right - left + 1) / 2;
+            int j = leftTotal - i;
+            if(nums1[i - 1] > nums2[j]) {
+                // 要在 num1[left,i-1] 中寻找
+                right = i - 1;
+            } else {
+                // 要在 num1[i,right] 中寻找
+                // 假如 只有两个元素 num1[left, right] 会进入死循环，所以这里 要加1   int i = left + (right - left + 1) / 2;
+                left = i;
+            }
+        }
+        int i = left;
+        int j = leftTotal - i;
+        // 已经能确定 分割线 左右的4个值了， 但是要考虑 一些边界情况， 保证 边界情况不能被取到。
+        int leftMaxValue1 = i == 0 ? Integer.MIN_VALUE : nums1[i-1];
+        int leftMaxValue2 = j == 0 ? Integer.MIN_VALUE : nums2[j-1];
+
+        int rightMinValue1 = i == len1 ? Integer.MAX_VALUE : nums1[i];
+        int rightMinValue2 = j == len2 ? Integer.MAX_VALUE : nums2[j];
+
+        // 奇数
+        if(((len1 + len2) & 1) == 1) {
+            return Math.max(leftMaxValue1, leftMaxValue2);
+        } else {
+            return ( Math.max(leftMaxValue1, leftMaxValue2) + Math.min(rightMinValue1, rightMinValue2) ) / 2.0;
+        }
+
+    }
     /**
      1 复杂度分析
      估算问题中复杂度的上限和下限
@@ -103,7 +176,7 @@ class Solution4 {
      执行耗时:1 ms,击败了100.00% 的Java用户
      内存消耗:43.5 MB,击败了17.71% 的Java用户
      */
-    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+    public double findMedianSortedArraysOld(int[] nums1, int[] nums2) {
         int len1 = nums1.length;
         int len2 = nums2.length;
         int len = len1 + len2;
