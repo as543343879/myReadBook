@@ -72,6 +72,60 @@ package com.acm.lico.dp; /**
  */
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution5 {
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度 O(N^2)
+     空间复杂度 O(1）
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：中心扩散法
+     1. 枚举[0,n-1) 的 中心节点 i，
+     2. 同时判断 （i,i） 和 （i,i+1） 的中心节点
+     3. 判断回文子串长度， 如果长度 大于max。 则记录下标。
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:8 ms,击败了94.59% 的Java用户
+     内存消耗:40.2 MB,击败了78.05% 的Java用户
+     */
+    public String longestPalindrome_new01(String s) {
+        if(s == null || s.length() == 0) {
+            return s;
+        }
+        char[] chars = s.toCharArray();
+        int maxLen = 1;
+        int index = 0;
+        for(int i = 0; i < s.length() - 1; i ++) {
+            int len1 = getLen(chars,i,i);
+            int len2 = getLen(chars,i,i+1);
+            int len = Math.max(len1,len2);
+            if(len > maxLen) {
+                maxLen = len;
+                index = i;
+            }
+        }
+        return s.substring(index -  (maxLen- 1) / 2 , index + maxLen / 2 + 1);
+
+    }
+    private int getLen( char[] chars, int left, int right) {
+        while (left >= 0 && right <= chars.length - 1 && chars[left] == chars[right]) {
+            left --;
+            right ++;
+        }
+        //  012345
+        return right - left - 1;
+    }
 
     public String longestPalindrome_official(String s) {
         if(s == null || s.length() < 0 )
