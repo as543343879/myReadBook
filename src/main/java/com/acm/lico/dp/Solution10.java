@@ -96,6 +96,86 @@ package com.acm.lico.dp; /**
  */
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution10 {
+
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度  O(sLen * pLen)
+     空间复杂度  O(sLen * pLen)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     详细看 有道笔记 刷题10
+     动态规划：
+     if p[j] == * // 假如是*
+     if mathch(s[i],p[j-1]) // 如果p当前是*， 并且 s[i] == p[j-1]。那就相当于 把 s[i] 干掉，继续匹配s[i-1]  这里也是一个 小的动态规划。 这里也可能是把 s[j-1] 匹配 0次
+     dp[i][j] = dp[i-1][j] || dp[i][j-2]
+     else
+     dp[i][j] = dp[i][j-2] // 把 s[j-1] 匹配 0次
+     else // 假如是字母
+     if mathch(s[i],p[j])
+     dp[i][j] = dp[i-1][j-1]
+     else
+     false
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功: 说明charAt 不需要重新开辟内存
+     执行耗时:1 ms,击败了99.50% 的Java用户
+     内存消耗:40.1 MB,击败了29.15% 的Java用户
+     */
+    public boolean isMatchNew20(String s, String p) {
+        if(s.isEmpty() && p.isEmpty()) {
+            return true;
+        }
+        if(s.isEmpty() || p.isEmpty()) {
+            return false;
+        }
+        char[] sChars = s.toCharArray();
+        char[] pChars = p.toCharArray();
+        int sLen = s.length();
+        int pLen = p.length();
+        boolean dp[][] = new boolean[sLen + 1][pLen + 1];
+        dp[0][0] = true;
+        for(int i = 0; i <= sLen; i ++ ) {
+            for(int j = 1; j <= pLen; j ++) {
+                if(pChars[j-1] != '*') {
+                    if(match(sChars, pChars, i-1,j-1)) {
+                        dp[i][j] = dp[i-1][j-1];
+                    } else {
+                        dp[i][j] = false;
+                    }
+                } else {
+                    if(match(sChars, pChars, i-1, j-2)) {
+                        dp[i][j] = dp[i-1][j] || dp[i][j-2];
+                    } else {
+                        dp[i][j] = dp[i][j-2];
+                    }
+                }
+            }
+        }
+        return dp[sLen][pLen];
+    }
+
+    private boolean match( char[] sChars, char[] pChars, int i, int j ) {
+        if(i < 0) {
+            return false;
+        }
+        if(pChars[j] == '.') {
+            return true;
+        }
+        return sChars[i] == pChars[j];
+    }
+
+
     public boolean isMatch(String s, String p) {
         int n = s.length();
         int m = p.length();
