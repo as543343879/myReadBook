@@ -72,6 +72,51 @@ package com.acm.lico; /**
  */
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution11 {
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度  O(N)
+     空间复杂度  0(1)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     双指针：
+     1. 定义left 指向 下标0， 定义 right 指向下标 n-1;
+     2. 计算 当前的容器大小， 如果大于之前进行赋值。
+     3. 如果 right 的值小于 left 的值。 right 向左移动。 否则 left 向右移动， 重复第二步。
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:3 ms,击败了90.94% 的Java用户
+     内存消耗:54.3 MB,击败了82.66% 的Java用户
+     */
+    public int maxAreaNew2(int[] height) {
+        int left = 0;
+        int right = height.length - 1;
+        int res = 0;
+        while (left <= right) {
+            int tempRes = (right - left ) * Math.min(height[left], height[right]);
+            if(res < tempRes) {
+                res = tempRes;
+            }
+            if(height[left] < height[right]) {
+                left ++;
+            } else  {
+                right --;
+            }
+        }
+        return res;
+    }
+
     public int maxArea(int[] height) {
         int left = 0;
         int right = height.length - 1;
