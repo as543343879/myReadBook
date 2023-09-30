@@ -57,7 +57,51 @@ public class Solution13 {
         }
         return  sum;
     }
+
+
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度  O(N)
+     空间复杂度  O(1)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：start 下标为0
+     1. 每次选取两个数，如果左边的数小于右边的数，就算减法 右移两位 。否则就只算一个字符，右移一位。
+     2. 重复 第一步。 把值求和
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:3 ms,击败了70.00% 的Java用户
+     内存消耗:42.4 MB,击败了71.91% 的Java用户
+     */
+    public int romanToIntNew2(String s) {
+        int i = 0;
+        int index = s.length() - 1;
+        int res = 0;
+        while (i < s.length()) {
+            int temp1 = map.get(s.charAt(i)), temp2;
+            if(i == index || (temp1  >= (temp2 =  map.get(s.charAt(i + 1)))) ) {
+                res += temp1;
+                i++;
+            } else {
+                res += temp2 - temp1;
+                i+=2;
+            }
+        }
+        return res;
+    }
     public static void main(String[] args) {
-       System.out.println( new Solution13().romanToInt("IV"));
+       System.out.println( new Solution13().romanToIntNew2("LVIII"));
     }
 }
