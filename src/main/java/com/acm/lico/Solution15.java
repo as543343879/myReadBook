@@ -99,6 +99,73 @@ import java.util.List;
  */
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution15 {
+
+
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度  O(N^2)
+     空间复杂度 O(logN)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：
+     1. 先排序， 这样能避免 重复
+     2. 循环获取 选择 ti。
+     3. 然后 双指针 tj,tk。 把 -ti = tj + tk 结果等于0 放入结果集
+
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:43 ms,击败了20.45% 的Java用户
+     内存消耗:49 MB,击败了85.31% 的Java用户
+     */
+    public List<List<Integer>> threeSumNew20(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<>();
+        for(int i = 0; i < nums.length; i ++ ) {
+            if((i != 0) &&( nums[i] == nums[i-1]) ) {
+                continue;
+            }
+            int valuei = -nums[i];
+            int left = i + 1;
+            int right = nums.length - 1;
+            while (left < right) {
+                if( (left > i + 1) &&  (nums[left] == nums[left - 1])) {
+                    left ++ ;
+                    continue;
+                }
+                if( (right != nums.length - 1) && (nums[right] == nums[right + 1])  ) {
+                    right --;
+                    continue;
+                }
+                if(nums[left] + nums[right] == valuei) {
+                    List<Integer> tempList = new ArrayList(3);
+                    tempList.add(nums[i]);
+                    tempList.add(nums[left]);
+                    tempList.add(nums[right]);
+                    res.add(tempList);
+                    left ++;
+                    right -- ;
+                } else if(nums[left] + nums[right] > valuei) {
+                    right -- ;
+                } else {
+                    left ++;
+                }
+
+            }
+        }
+        return res;
+    }
     /**
      1 复杂度分析
     估算问题中复杂度的上限和下限
@@ -199,9 +266,9 @@ class Solution15 {
     }
     public static void main(String[] args) {
         int[] arr = {-1,0,1,2,-1,-4};
-        Arrays.sort(arr);
+//        Arrays.sort(arr);
         System.out.println(Arrays.toString(arr));
-        new Solution15().threeSum(arr);
+        new Solution15().threeSumNew20(arr);
     }
 
     public List<List<Integer>> threeSumOld2(int[] nums) {
