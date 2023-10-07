@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Foo114Test class
- *
+ * 循环 打印 ABC
  * @author 谢小平
  * @date 2022/5/31
  */
@@ -143,9 +143,10 @@ public class Foo114Test {
 
         threadA = new Thread(()->{
             for(int i = 0; i < count; i ++) {
+                LockSupport.park();
                 System.out.println(Thread.currentThread().getName());
                 LockSupport.unpark(threadB);
-                LockSupport.park();
+
             }
         }, "A");
 
@@ -168,6 +169,7 @@ public class Foo114Test {
          threadA.start();
          threadB.start();
          threadC.start();
+        LockSupport.unpark(threadA);
 
     }
     public static void main(String[] args) {

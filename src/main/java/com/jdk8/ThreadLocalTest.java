@@ -20,6 +20,7 @@ public class ThreadLocalTest {
 		String s = threadLocal1.get();
 		System.out.println(s);
 
+//		Thread
 
 		ThreadLocal<String> threadLocal2 = new ThreadLocal();
 		threadLocal2.set("xxpthreadLocal2");
