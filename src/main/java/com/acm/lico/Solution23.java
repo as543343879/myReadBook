@@ -121,7 +121,85 @@ import java.util.PriorityQueue;
  * }
  */
 class Solution23 {
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度 O(N^2logN) 错误 O(K^2 N) k 合并的代价， n 最大长度 为N
+     O(1) < O(logn) < O(n) < O(nlogn) < O(n^2) < O(n^3) < O(2^n) < O(n!)
+     O(1) 常数阶
+     O(logn) 对数阶
+     O(n) 线性阶
+     O(nlogn) 线性对数阶
+     O(n^2) 平方阶
+     O(n^3) 立方阶
+     O(2^n) 指数阶
+     O(n!) 阶乘阶
+     空间复杂度 O(1)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：
+     1. 编写一个方法 合并两个链表。
+     2. 循环处理n个链表
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:98 ms,击败了25.16% 的Java用户
+     内存消耗:42.1 MB,击败了63.29% 的Java用户
+     */
+    public ListNode mergeKListsNew20(ListNode[] lists) {
+        if(lists.length == 0) {
+            return null;
+        }
+        if(lists.length == 1) {
+            return lists[0];
+        }
+        ListNode res = merge(lists[0], lists[1]);
+        for(int i = 2; i < lists.length; i ++) {
+            res = merge(res , lists[i]);
+        }
+        return res;
+    }
 
+    /**
+     * 时间复杂 O(n^2)
+     * @param node1
+     * @param node2
+     * @return
+     */
+    private ListNode merge(ListNode node1, ListNode node2 ) {
+        ListNode head = new ListNode(0);
+        ListNode temp = head;
+        while (node1 != null || node2 != null) {
+            if(node1 == null) {
+                head.next = node2;
+                break;
+            } else if(node2 == null) {
+                head.next = node1;
+                break;
+            } else {
+                if(node1.val < node2.val) {
+                    head.next = node1;
+                    node1 = node1.next;
+                } else {
+                    head.next = node2;
+                    node2 = node2.next;
+                }
+                head = head.next;
+            }
+        }
+
+        return temp.next;
+    }
     public ListNode mergeKLists(ListNode[] lists) {
         if(lists == null || lists.length == 0) {
             return null;
