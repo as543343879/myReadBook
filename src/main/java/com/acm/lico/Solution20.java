@@ -153,5 +153,62 @@ class Solution20 {
         }
         return list.isEmpty();
     }
+
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度 O(N)
+     空间复杂度 O(N)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：
+     1. 建立一个符号栈。
+     2. 如果碰到右括号，就出栈。
+     3. 判断是否匹配，如果不匹配就是false。
+     4. 加入匹配完， 栈不空， 那也是false
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:2 ms,击败了51.32% 的Java用户
+     内存消耗:38.9 MB,击败了99.58% 的Java用户
+     */
+    static Map<Character, Character> map = new HashMap<>();
+
+    static {
+        map.put(')', '(');
+        map.put(']', '[');
+        map.put('}', '{');
+    }
+    public boolean isValidNew20(String s) {
+
+        Stack<Character> stack = new Stack<>();
+        for(int i = 0; i < s.length(); i ++) {
+            if(s.charAt(i) == ')' || s.charAt(i) == ']' || s.charAt(i) == '}') {
+                if(stack.isEmpty()) {
+                    return false;
+                }
+                if( stack.pop() != map.get(s.charAt(i))) {
+                    return false;
+                }
+
+            } else {
+                stack.push(s.charAt(i));
+            }
+        }
+        if(!stack.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
 }
 //leetcode submit region end(Prohibit modification and deletion)
