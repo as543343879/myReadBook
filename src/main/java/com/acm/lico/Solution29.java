@@ -69,7 +69,75 @@ public class Solution29 {
         return (int) count;
     }
     public static void main(String[] args) {
+        System.out.println(Integer.MAX_VALUE);
         System.out.println(-2147483648 * -1);
-        System.out.println(new Solution29().divide(-2147483648, 2));
+        System.out.println(new Solution29().divideNew20(-1010369383, -2147483648));
     }
+
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度  O(N)
+     空间复杂度  O(1)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：除法 转 减法
+     1. 对 1 -1  特殊处理
+     2. 取符号。如果是负数 返回的时候返回就行
+     3. 如果 dividend 大于 divisor 就减少  divisor， 然后结果 res + 1。 直到 devidend 小于divisor.
+     问题：
+     转符号的时候会出现 负数最大值 容易出现问题。
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:1527 ms,击败了5.02% 的Java用户
+     内存消耗:38.6 MB,击败了47.80% 的Java用户
+     */
+    public int divideNew20(int dividend, int divisor) {
+        if(dividend == 0) {
+            return 0;
+        } else if(divisor == 1) {
+            return dividend;
+        }else if( divisor == -1) {
+            if(dividend == Integer.MIN_VALUE) {
+                return Integer.MAX_VALUE;
+            }
+            return - dividend;
+        }
+        boolean sign = (dividend < 0 && divisor > 0) || (dividend > 0 && divisor < 0);
+        int res = 0;
+        if(dividend == Integer.MIN_VALUE) {
+            if(sign) {
+                dividend += divisor;
+            } else {
+                dividend -= divisor;
+            }
+            res = 1;
+        }
+        if(divisor == Integer.MIN_VALUE) {
+            return res;
+        }
+
+        dividend = dividend < 0 ? -dividend: dividend;
+        divisor = divisor < 0 ? -divisor : divisor;
+
+        while (dividend >= divisor) {
+            dividend -= divisor;
+            res ++;
+        }
+
+        return sign ? -res : res;
+
+    }
+
 }
