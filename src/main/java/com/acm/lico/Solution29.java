@@ -2,7 +2,7 @@ package com.acm.lico;
 
 /**
  * Solution29 class
- * 数相除
+ * 29  数相除
  * 给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。
  *
  * 返回被除数 dividend 除以除数 divisor 得到的商。
@@ -136,6 +136,39 @@ public class Solution29 {
             res ++;
         }
 
+        return sign ? -res : res;
+
+    }
+
+    /**
+     * 因为精度溢出， 所有 直接用 负数计算。
+     * 解答成功:
+     * 	执行耗时:1623 ms,击败了5.02% 的Java用户
+     * 	内存消耗:38.4 MB,击败了83.37% 的Java用户
+     * @param dividend
+     * @param divisor
+     * @return
+     */
+    public int divideNew21(int dividend, int divisor) {
+        if(dividend == 0) {
+            return 0;
+        } else if(divisor == 1) {
+            return dividend;
+        }else if( divisor == -1) {
+            if(dividend == Integer.MIN_VALUE) {
+                return Integer.MAX_VALUE;
+            }
+            return - dividend;
+        }
+        boolean sign = (dividend < 0 && divisor > 0) || (dividend > 0 && divisor < 0);
+        int res = 0;
+        dividend = dividend < 0 ? dividend: -dividend;
+        divisor = divisor < 0 ? divisor : -divisor;
+
+        while (dividend <= divisor) {
+            dividend -= divisor;
+            res ++;
+        }
         return sign ? -res : res;
 
     }
