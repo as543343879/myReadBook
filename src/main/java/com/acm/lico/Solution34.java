@@ -36,4 +36,75 @@ public class Solution34 {
         }
         return new int[]{-1,-1};
     }
+
+
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度  O(logN)
+     空间复杂度  O(logN)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：
+     1. 先根据二分查找，找到目标值的位置
+     2. 如果找到就向两边扩散。找到左右边界
+     3. 如果没找到，直接返回[-1, -1]
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:0 ms,击败了100.00% 的Java用户
+     内存消耗:43.1 MB,击败了93.63% 的Java用户
+     */
+    public int[] searchRangeNew20(int[] nums, int target) {
+        int bySearch = findBySearch(nums, 0, nums.length-1, target);
+        if(bySearch == -1) {
+            return new int[] {-1, -1};
+        }
+        int left = bySearch;
+        if(nums[0] == target) {
+            left = 0;
+        } else {
+            while (left >= 0 && nums[left] == target) {
+                left --;
+            }
+            left ++;
+        }
+
+        int right = bySearch;
+        if(nums[nums.length - 1] == target) {
+            right = nums.length -1;
+        } else {
+            while (right < nums.length && nums[right] == target) {
+                right ++;
+            }
+            right --;
+        }
+
+        return new int[] {left, right};
+    }
+
+    private int findBySearch(int[] nums, int left, int right, int target) {
+        if( left > right) {
+            return -1;
+        }
+        int middle = (right + left + 1) / 2;
+        if(nums[middle] == target) {
+            return middle;
+        } else if(nums[middle] < target) {
+            return findBySearch(nums, middle + 1, right, target);
+        } else {
+            return findBySearch(nums, left, middle - 1, target);
+        }
+
+    }
 }
