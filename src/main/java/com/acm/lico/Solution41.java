@@ -1,5 +1,6 @@
 package com.acm.lico;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,5 +80,64 @@ public class Solution41 {
                 return i + 1;
         }
         return n + 1;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new Solution41().firstMissingPositiveNew20(new int[]{1,2,0}));
+    }
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度  O(NlogN)
+     空间复杂度  O(logN)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     [-9,2] [1,2,3]
+     思路：
+     1. 先排序
+     2. 从左到右边 是 正数 找出 num[i] + 1 != num[i + 1]
+     3. 如果 num[0] >= 2 return 1;
+     3. 如果 num[i] < 0 && num[i + 1] return 1
+
+
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:11 ms,击败了13.96% 的Java用户
+     内存消耗:57.3 MB,击败了80.23% 的Java用户
+     */
+    public int firstMissingPositiveNew20(int[] nums) {
+
+        Arrays.sort(nums);
+        int i = 0;
+        if(nums[0] >= 2) {
+            return 1;
+        } else if(nums[0] < 0) {
+            while ((i < nums.length) && (nums[i] < 0)) {
+                i ++;
+            }
+            if((i >= nums.length) ||  (nums[i] > 1)) {
+                return 1;
+            }
+        }
+        int res = 0;
+        for(; i < nums.length; i ++) {
+            if((i + 1 < nums.length) &&  ( nums[i + 1] - nums[i] > 1 )) {
+                res = nums[i] + 1;
+                break;
+            }
+        }
+
+        return  res != 0 ? res: nums[nums.length-1] + 1  ;
     }
 }
