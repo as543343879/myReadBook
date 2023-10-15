@@ -25,6 +25,7 @@ package com.acm.lico.doNotKnow;
 
 //import javax.validation.constraints.Max;
 import java.util.Arrays;
+import java.util.Stack;
 
 /**
  1 复杂度分析
@@ -114,6 +115,52 @@ public class Solution42 {
     }
 
     /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度
+     空间复杂度
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：
+     1. 维护一个 从栈底到栈顶， 单独递减的栈, 存数据的下标。
+     2. 如果 栈非空，或者 top <= height[i] , 计算面积 res = min(height[i], top) * (i - top - 1)
+     3. 其他情况入栈
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     单调栈
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:13 ms,击败了23.46% 的Java用户
+     内存消耗:42.8 MB,击败了83.93% 的Java用户
+     */
+    public int trapNew21(int[] height) {
+        Stack<Integer> stack = new Stack<>();
+        int res = 0;
+        for(int i = 0; i < height.length; i ++) {
+            while (!stack.isEmpty() && (height[stack.peek()] < height[i]) ) {
+                Integer topIndex = stack.pop();
+                if(stack.isEmpty()) {
+                    break;
+                }
+                int left = stack.peek();
+                int currWidth = i - left - 1;
+                res += (Math.min(height[left], height[i]) - height[topIndex]) * currWidth;
+            }
+            stack.push(i);
+        }
+        return res;
+    }
+
+    /**
      * 执行结果： 通过 显示详情 添加备注 执行用时： 0 ms ,
      * 在所有 Java 提交中击败了 100.00% 的用户 内存消耗： 42.4 MB ,
      * 在所有 Java 提交中击败了 6.16% 的用户
@@ -183,9 +230,31 @@ public class Solution42 {
     }
 
     public static void main(String[] args) {
+//        int[] testData = {
+//                0,1,0,2,1,0,1,3,2,1,2,1};
+
         int[] testData = {
-                0,1,0,2,1,0,1,3,2,1,2,1};
-        System.out.println(new Solution42().trap(testData));
+                4,2,0,3,2,5};
+        System.out.println(new Solution42().trap5(testData));
+    }
+
+    public int trap5(int[] height) {
+        Stack<Integer> stack = new Stack<>();
+        int res = 0;
+        for(int i = 0; i < height.length; i ++) {
+            while (!stack.isEmpty() && (height[stack.peek()] < height[i]) ) {
+                Integer topIndex = stack.pop();
+                if(stack.isEmpty()) {
+                    break;
+                }
+                int width = (i - stack.peek() - 1);
+                int heights = Math.min(height[i] , height[stack.peek()] - height[topIndex]);
+                int tempRes= heights * width;
+                res += tempRes;
+            }
+            stack.push(i);
+        }
+        return res;
     }
 
 
