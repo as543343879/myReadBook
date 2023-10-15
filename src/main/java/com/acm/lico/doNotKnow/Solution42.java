@@ -54,6 +54,64 @@ import java.util.Arrays;
  通过测试用例： 322 / 322
  */
 public class Solution42 {
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度  O(N)
+     空间复杂度  O(N)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：
+     1. 每跟柱子能接水， 只能 左右两边最大高度有关。
+     2. 用 leftMax[] 记录从左到右的 每个i，左边最大高度， 用rightMax[] 记录从右到做 每个i右边的最大高度
+     3. i 能盛水的最大高度 min(rightMax[i], leftMax[i]) - height[i]
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:1 ms,击败了77.39% 的Java用户
+     内存消耗:42.9 MB,击败了75.23% 的Java用户
+     */
+    public int trapNew20(int[] height) {
+        if(height == null) {
+            return 0;
+        }
+        int leftMax = height[0];
+        int n = height.length;
+        int[] leftMaxs = new int[n];
+        for(int i = 0; i < n; i ++) {
+            leftMaxs[i] = leftMax;
+            if(height[i] > leftMax) {
+                leftMax = height[i];
+            }
+        }
+
+        int rightMax = height[n-1];
+        int[] rightMaxs = new int[n];
+        for(int i = n -1; i >= 0; i -- ) {
+            rightMaxs[i] = rightMax;
+            if(height[i] > rightMax) {
+                rightMax = height[i];
+            }
+        }
+
+        int res = 0;
+        for(int i = 0 ; i < n; i ++ ) {
+            int temRes= Math.min(leftMaxs[i], rightMaxs[i]) - height[i];
+            res += temRes < 0 ? 0 : temRes;
+        }
+        return res;
+
+    }
 
     /**
      * 执行结果： 通过 显示详情 添加备注 执行用时： 0 ms ,
@@ -129,4 +187,6 @@ public class Solution42 {
                 0,1,0,2,1,0,1,3,2,1,2,1};
         System.out.println(new Solution42().trap(testData));
     }
+
+
 }
