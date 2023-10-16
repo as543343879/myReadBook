@@ -79,6 +79,60 @@ import java.util.*;
  */
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution46 {
+
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度  O(N^2) 错误  O(N * N!)
+     空间复杂度  O(N)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：
+     1. 深度搜索+ 回溯。 用 Set 表示是否加入过。
+     2. 当 set 中元素长度等于 nums 的长度返回。
+     3. 否则 从nums 中加一个元素进去，并进行回溯。
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:2 ms,击败了9.18% 的Java用户
+     内存消耗:42.9 MB,击败了5.25% 的Java用户
+     */
+
+    public List<List<Integer>> permuteNew20(int[] nums) {
+        if(nums == null) {
+            return res;
+        }
+        dfs(nums, new LinkedHashSet<>(nums.length * 4 / 3 + 1));
+        return res;
+    }
+
+    private void dfs(int[] nums, Set<Integer> oneRes) {
+        if(oneRes.size() == nums.length) {
+            res.add(new ArrayList<>(oneRes));
+            return;
+        }
+        for(int i = 0; i < nums.length; i ++) {
+            Integer temp = nums[i];
+            if(!oneRes.contains(temp)) {
+                oneRes.add(temp);
+                dfs(nums, oneRes);
+                oneRes.remove(temp);
+            }
+
+        }
+
+    }
+
     List<List<Integer>> res = new ArrayList<>();
 
     /**
@@ -163,6 +217,61 @@ class Solution46 {
         int[] nums = {1,2,3};
         System.out.println(Arrays.toString(new Solution46().permute(nums).toArray()));
     }
+
+
+
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度  O(N * N!)
+     空间复杂度  O(N)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：
+     1. 利用 tempRes 数组存放一个结果， 选择了的 长度为i, i 左边的是已经选择了的。 i 右边是没有选择的。
+     2. 利用 数组里的元素， num[i] [left] 交换位置来实现回溯
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:0 ms,击败了100.00% 的Java用户
+     内存消耗:42.4 MB,击败了85.43% 的Java用户
+     */
+
+    public List<List<Integer>> permuteNew21(int[] nums) {
+        if(nums == null) {
+            return res;
+        }
+        List<Integer> tempList = new ArrayList<>(nums.length);
+        for(int i = 0; i < nums.length; i ++) {
+            tempList.add(nums[i]);
+        }
+        dfs(nums, tempList, 0);
+        return res;
+    }
+
+    private void dfs(int[] nums,  List<Integer> oneRes, int left) {
+        if(left == nums.length) {
+            res.add(new ArrayList<>(oneRes));
+            return;
+        }
+        for(int i = left; i < nums.length; i ++) {
+            Collections.swap(oneRes, left, i);
+            dfs(nums, oneRes, left + 1);
+            Collections.swap(oneRes, left, i);
+        }
+
+    }
+
 
 }
 //leetcode submit region end(Prohibit modification and deletion)
