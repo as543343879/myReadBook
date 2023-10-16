@@ -172,10 +172,76 @@ public class Foo114Test {
         LockSupport.unpark(threadA);
 
     }
+
+    private static void lockFair() {
+        Lock lock = new ReentrantLock(false);
+
+        Condition conditionA = lock.newCondition();
+        Condition conditionB = lock.newCondition();
+        Condition conditionC = lock.newCondition();
+
+        new Thread(()->{
+            for(int i = 0; i < 10; i ++) {
+                try {
+                    lock.lock();
+
+                    System.out.println("A");
+                    conditionB.signal();
+                    if(i != 9) {
+                        conditionA.await();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    lock.unlock();
+                }
+            }
+
+        }).start();
+
+        new Thread(()->{
+            for(int i = 0; i < 10; i ++) {
+                try {
+                    lock.lock();
+
+                    System.out.println("B");
+                    conditionC.signal();
+                    if(i!=9) {
+                        conditionB.await();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    lock.unlock();
+                }
+            }
+        }).start();
+
+
+        new Thread(()->{
+            for(int i = 0; i < 10; i ++) {
+                try {
+                    lock.lock();
+
+                    System.out.println("C");
+                    conditionA.signal();
+                    if(i!=9) {
+                        conditionC.await();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    lock.unlock();
+                }
+            }
+        }).start();
+
+    }
     public static void main(String[] args) {
 //        lock();
 //        semaphore();
-        lockSupport();
+//        lockSupport();
+        lockFair();
     }
 
 }
