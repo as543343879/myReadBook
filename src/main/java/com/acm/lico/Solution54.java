@@ -163,11 +163,147 @@ class Solution54 {
     }
 
     public static void main(String[] args) {
-        int[][] map = {{1,2,3,4},
-                {5,6,7,8},
-                {9,10,11,12}};
+//        int[][] map = {{1,2,3,4},
+//                {5,6,7,8},
+//                {9,10,11,12}};
+
+        int[][] map = {{1,2,3},{4,5,6},{7,8,9}};
         // [1,2,3,4,8,12,11,10,9,5,6,7]
-        System.out.println(Arrays.toString(new Solution54().spiralOrder(map).toArray()));
+        System.out.println(Arrays.toString(new Solution54().spiralOrderNew20(map).toArray()));
+    }
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度  O(N *M)
+     空间复杂度 O(1)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：
+     1. i，j 分别是 matrix 下标， 走过的地方赋值 -101。
+     2. 先往有右边走， matrix[i][j++]
+     3. 然后往下走， matrix[i--][j]
+     4. 然后往左边走， matrix[i][j--]
+     5. 然后往上面走，matrix[i--][j]
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:0 ms,击败了100.00% 的Java用户
+     内存消耗:39.6 MB,击败了22.90% 的Java用户
+     */
+    public List<Integer> spiralOrderNew21(int[][] matrix) {
+        if(matrix == null) {
+            return new ArrayList<>();
+        }
+        int n = matrix.length;
+        int m = matrix[0].length;
+        List<Integer> res = new ArrayList<>(n * m);
+        int i = 0, j = -1;
+        int count = 0;
+        int visit = -101;
+        int[][] directs = {{0,1},{1,0}, {0,-1},{-1, 0}};
+        while (res.size() < n * m) {
+            for(int[] direct: directs) {
+                while (true) {
+                    int tempI = i + direct[0];
+                    int tempJ = j +  direct[1];
+                    if(tempI >= 0 && tempI < n && tempJ >= 0 && tempJ < m && matrix[tempI][tempJ] != visit) {
+                        i = tempI;
+                        j = tempJ;
+                        res.add(matrix[i][j]);
+                        matrix[i][j] = visit;
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度  O(N *M)
+     空间复杂度 O(1)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：
+     1. i，j 分别是 matrix 下标， 走过的地方赋值 -101。
+     2. 先往有右边走， matrix[i][j++]
+     3. 然后往下走， matrix[i--][j]
+     4. 然后往左边走， matrix[i][j--]
+     5. 然后往上面走，matrix[i--][j]
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:0 ms,击败了100.00% 的Java用户
+     内存消耗:39.5 MB,击败了42.64% 的Java用户
+     */
+    public List<Integer> spiralOrderNew20(int[][] matrix) {
+        if(matrix == null) {
+            return new ArrayList<>();
+        }
+        int n = matrix.length;
+        int m = matrix[0].length;
+        List<Integer> res = new ArrayList<>(n * m);
+        int i = 0, j = 0;
+        int count = 0;
+        int visit = -101;
+
+        while (res.size() < n * m) {
+            while (j < m  && matrix[i][j] != visit) {
+                res.add(matrix[i][j]);
+                matrix[i][j] = visit;
+                j++;
+            }
+            j --;
+            i++;
+
+            while (i < n && j >=0 && matrix[i][j] != visit) {
+                res.add(matrix[i][j]);
+                matrix[i][j] = visit;
+                i++;
+            }
+            i --;
+            j --;
+
+            while (j >= 0 &&  i >= 0&& matrix[i][j] != visit) {
+                res.add(matrix[i][j]);
+                matrix[i][j] = visit;
+                j--;
+            }
+            j ++;
+            i --;
+
+            while (i >= 0 && j < m && matrix[i][j] != visit) {
+                res.add(matrix[i][j]);
+                matrix[i][j] = visit;
+                i--;
+            }
+            i ++;
+            j++;
+
+        }
+        return res;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
