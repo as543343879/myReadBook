@@ -1,4 +1,7 @@
+package com.acm.lico.string;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  数组中的字符串匹配:1408
