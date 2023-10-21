@@ -77,6 +77,47 @@ import com.acm.lico.temporary.Solution121;
  */
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution121 {
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度  O(N)
+     空间复杂度  O(1)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：
+     1. 记录最低价格，能赚钱 就卖出， 记录最大值。
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:1 ms,击败了100.00% 的Java用户
+     内存消耗:57.6 MB,击败了44.26% 的Java用户
+     */
+    public int maxProfitNew20(int[] prices) {
+        int res = 0;
+        if(prices == null || prices.length == 0 ){
+            return res;
+        }
+        int min = prices[0];
+        for(int i = 1; i < prices.length; i ++) {
+            if(prices[i] - min > res) {
+                res = prices[i] - min;
+            }
+            if(prices[i] < min) {
+                min = prices[i];
+            }
+        }
+        return res;
+    }
     public int maxProfit(int[] prices) {
         int minPrices = Integer.MAX_VALUE;
         int res = 0;
