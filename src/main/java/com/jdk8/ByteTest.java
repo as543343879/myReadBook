@@ -1,5 +1,7 @@
 package com.jdk8;
 
+import org.junit.Test;
+
 import java.util.Arrays;
 
 /**
@@ -18,4 +20,18 @@ public class ByteTest {
 	    }
 	    System.out.println(Arrays.toString(weightInByte));
 	}
+
+	@Test
+	public void test() {
+		System.out.println(gcd(4, 2));
+		System.out.println(gcd(2,4));
+
+		System.out.println(gcd(5, 15));
+		System.out.println(gcd(15,5));
+	}
+	public static int gcd(int x, int y) {
+		return y > 0 ? gcd(y, x % y) : x;
+	}
+
+
 }

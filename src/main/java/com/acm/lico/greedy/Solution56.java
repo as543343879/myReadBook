@@ -42,6 +42,57 @@ import java.util.List;
  通过测试用例： 168 / 168
  */
 public class Solution56 {
+
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度  O(N) 元素个数 错误，O(NlogN) 因为还有排序
+     空间复杂度  O(1)    错误  O(log(N)) 因为还有排序
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：
+     1. 先根据 后面一个数字排序。
+     2. 遍历 找出有重叠区域的进行合并， start 取 min(start), end 取 max(end);
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:7 ms,击败了81.93% 的Java用户
+     内存消耗:44.3 MB,击败了60.01% 的Java用户
+     */
+    public int[][] mergeNew20(int[][] intervals) {
+        if(intervals == null) {
+            return new int[][]{{}};
+        }
+        List<int[]> resList = new ArrayList<>();
+        Arrays.sort(intervals ,((o1, o2) -> o1[0] - o2[0]));
+        int start = intervals[0][0],end = intervals[0][1];
+        for(int i = 0; i < intervals.length; i ++) {
+            start = intervals[i][0];
+            end = intervals[i][1];
+            while (i < intervals.length && end >= intervals[i][0]) {
+                end = Math.max(intervals[i][1], end);
+                i++;
+            }
+            resList.add(new int[]{start, end});
+            i -- ;
+        }
+        int[][] res = new int[resList.size()][2];
+        for(int i = 0 ; i < resList.size(); i ++) {
+            res[i] = resList.get(i);
+        }
+        return res;
+    }
+
     public int[][] merge(int[][] intervals) {
         List<int[]> res = new ArrayList<>();
         Arrays.sort(intervals, Comparator.comparingInt(e->e[0]));
