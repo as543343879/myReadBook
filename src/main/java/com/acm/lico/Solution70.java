@@ -100,7 +100,7 @@ class Solution70 {
      执行耗时:0 ms,击败了100.00% 的Java用户
      内存消耗:38 MB,击败了61.22% 的Java用户
      */
-    public int climbStairsNew20(int n) {
+    public int climbStairsNew20 (int n) {
         if(n <= 0) {
             return 0;
         }

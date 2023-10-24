@@ -11,6 +11,7 @@ import com.netflix.hystrix.HystrixThreadPoolProperties;
  */
 public class HystrixTest {
     public static void main(String[] args) {
+
         HystrixCommandProperties.Setter().withExecutionIsolationStrategy(HystrixCommandProperties.ExecutionIsolationStrategy.THREAD);
         HystrixCommandProperties.Setter().withExecutionIsolationStrategy(HystrixCommandProperties.ExecutionIsolationStrategy.SEMAPHORE);
         HystrixThreadPoolProperties.Setter().withMaxQueueSize(111);
