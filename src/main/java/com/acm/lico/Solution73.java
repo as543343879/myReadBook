@@ -39,6 +39,60 @@ import java.util.Set;
  * @date 2021-07-06
  */
 public class Solution73 {
+
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度 O(N*M)
+     空间复杂度 O(M) 0的个数
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：
+     1. 便利 一遍， 用两个set 分别记录行和列。
+     2. 便利 第二篇， 对行和列
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:1 ms,击败了48.83% 的Java用户
+     内存消耗:43.4 MB,击败了74.75% 的Java用户
+     */
+    public void setZeroesNew20(int[][] matrix) {
+        if(matrix == null) {
+            return ;
+        }
+        Set<Integer> cols = new HashSet<>();
+        Set<Integer> rows = new HashSet<>();
+        for(int i = 0; i < matrix.length; i ++) {
+            for(int j = 0; j < matrix[0].length; j ++) {
+                if(matrix[i][j] == 0) {
+                    cols.add(j);
+                    rows.add(i);
+                }
+            }
+        }
+        for(int t : rows) {
+            for(int i = 0 ; i < matrix[0].length; i ++) {
+                matrix[t][i] = 0;
+            }
+        }
+        for(int t: cols) {
+            for(int i = 0; i < matrix.length; i ++ ) {
+                matrix[i][t] = 0;
+            }
+        }
+
+    }
+
     public void setZeroes(int[][] matrix) {
         Set<Integer> setLine = new HashSet<>();
         Set<Integer> setY = new HashSet<>();
