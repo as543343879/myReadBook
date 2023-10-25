@@ -75,4 +75,45 @@ public class Solution75 {
             }
         }
     }
+
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度  O(N)
+     空间复杂度  O(1)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：
+     1. 三个变量记录元素个数。
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:0 ms,击败了100.00% 的Java用户
+     内存消耗:39.9 MB,击败了59.43% 的Java用户
+     */
+    public void sortColorsNew20(int[] nums) {
+        int[] counts = new int[3];
+        for(int i : nums) {
+            counts[i] ++;
+        }
+        for(int i = 0; i < counts[0]; i ++) {
+            nums[i] = 0;
+        }
+        for(int i = counts[0]; i < counts[1] + counts[0]; i ++) {
+            nums[i] = 1;
+        }
+        for(int i = counts[0] + counts[1]; i < nums.length; i ++) {
+            nums[i] = 2;
+        }
+    }
 }
