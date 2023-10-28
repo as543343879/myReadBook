@@ -76,6 +76,44 @@ import java.util.LinkedList;
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution84 {
     /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度
+     空间复杂度
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：
+     1. 枚举 所有宽度， 枚举所有高度， 求最大值。
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+        时间超限
+     */
+    public int largestRectangleAreaNew20(int[] heights) {
+        if(heights == null || heights.length == 0) {
+            return 0;
+        }
+        int res = 0;
+        for(int left = 0; left < heights.length; left ++) {
+            int minHeight = heights[left];
+            for(int right = left; right < heights.length; right ++) {
+                minHeight = Math.min(heights[right], minHeight);
+                int tempRes = minHeight * (right - left + 1);
+                res = Math.max(tempRes, res);
+            }
+        }
+        return res;
+    }
+    /**
      *  时间超限
      * @param heights
      * @return
