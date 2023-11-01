@@ -75,6 +75,52 @@ class Solution11 {
     /**
      1 复杂度分析
      估算问题中复杂度的上限和下限
+     时间复杂度 O(N)
+     空间复杂度 O(1)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：双指针 left ，right
+     1. 计算 left 和 right 的范围的体积。
+     2. 如果 left < right ，left 左移， 否者 right 右移
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:3 ms,击败了91.71% 的Java用户
+     内存消耗:54.7 MB,击败了13.20% 的Java用户
+     */
+    public int maxAreaNew21(int[] height) {
+        if(height == null || height.length == 0) {
+            return 0;
+        }
+        int n = height.length;
+        int left = 0, right = n -1;
+        int max = Integer.MIN_VALUE;
+        while (left <= right) {
+            int tempRes = (right - left ) * Math.min(height[left], height[right]);
+            if(tempRes > max) {
+                max = tempRes;
+            }
+            if(height[left] < height[right]) {
+                left ++;
+            } else {
+                right --;
+            }
+        }
+        return max;
+    }
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
      时间复杂度  O(N)
      空间复杂度  0(1)
      O(1) 一个常量下完成
