@@ -39,5 +39,9 @@ public class DataSourcesCache extends Observable {
             super.notifyObservers(key);
             log.info("change {} data {}",key, JSON.toJSONString(data));
         },5,5, TimeUnit.SECONDS);
+
+
     }
+
+
 }

@@ -992,13 +992,17 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * @param completedAbruptly if the worker died due to user exception
      */
     private void processWorkerExit(Worker w, boolean completedAbruptly) {
+        // 如果completedAbruptly值为true，则说明线程执行时出现了异常，需要将workerCount减1；
+        // 如果线程执行时没有出现异常，说明在getTask()方法中已经已经对workerCount进行了减1操作，这里就不必再减了。
         if (completedAbruptly) // If abrupt, then workerCount wasn't adjusted
             decrementWorkerCount();
 
         final ReentrantLock mainLock = this.mainLock;
         mainLock.lock();
         try {
+            //统计完成的任务数
             completedTaskCount += w.completedTasks;
+            // 从workers中移除，也就表示着从线程池中移除了一个工作线程
             workers.remove(w);
         } finally {
             mainLock.unlock();
@@ -1037,6 +1041,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      *         workerCount is decremented
      */
     private Runnable getTask() {
+        // timeOut变量的值表示上次从阻塞队列中取任务时是否超时
         boolean timedOut = false; // Did the last poll() time out?
 
         for (;;) {
@@ -1045,6 +1050,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 
             // Check if queue empty only if necessary.
             if (rs >= SHUTDOWN && (rs >= STOP || workQueue.isEmpty())) {
+                // 将workerCount减1并返回null。
                 decrementWorkerCount();
                 return null;
             }
@@ -1052,6 +1058,9 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
             int wc = workerCountOf(c);
 
             // Are workers subject to culling?
+            // timed变量用于判断是否需要进行超时控制。，
+            // wc > corePoolSize，表示当前线程池中的线程数量大于核心线程数量；
+            //  对于超过核心线程数量的这些线程，需要进行超时控制
             boolean timed = allowCoreThreadTimeOut || wc > corePoolSize;
 
             if ((wc > maximumPoolSize || (timed && timedOut))
