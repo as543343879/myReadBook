@@ -1,5 +1,8 @@
 package com;
 
+
+import okhttp3.OkHttpClient;
+
 import java.text.MessageFormat;
 
 /**
@@ -11,6 +14,7 @@ import java.text.MessageFormat;
 public class MessageFormatTest   {
 
     public static void main(String[] args) {
+        OkHttpClient okHttpClient = new OkHttpClient();
 //        MessageFormat messageFormat = new MessageFormat("{0}--{1}");
 //        String format = messageFormat.format(new Object[]{String.valueOf(1000), 2});
 

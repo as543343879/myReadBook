@@ -68,11 +68,7 @@ public class Solution29 {
             return Integer.MIN_VALUE;
         return (int) count;
     }
-    public static void main(String[] args) {
-        System.out.println(Integer.MAX_VALUE);
-        System.out.println(-2147483648 * -1);
-        System.out.println(new Solution29().divideNew20(-1010369383, -2147483648));
-    }
+
 
     /**
      1 复杂度分析
@@ -171,6 +167,41 @@ public class Solution29 {
         }
         return sign ? -res : res;
 
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Integer.MAX_VALUE);
+        System.out.println(-2147483648 * -1);
+        System.out.println(new Solution29().divideNew20(-1010369383, -2147483648));
+        System.out.println(new Solution29().divideNewCopy(7,2));
+    }
+
+    public int divideNewCopy(int dividend, int divisor) { // 被除数 除数
+        if(divisor == -1 && dividend == Integer.MIN_VALUE) return Integer.MAX_VALUE; // 溢出
+        int sign = 1;
+        if((dividend > 0 && divisor < 0)||(dividend < 0 && divisor > 0))
+            sign = -1;
+        // if(divisor == 1) return dividend;
+        // if(divisor == -1) return -dividend;
+        int a = dividend>0 ? -dividend : dividend;
+        int b = divisor>0 ? -divisor : divisor;
+        // 都改为负号是因为int 的范围是[2^31, 2^31-1]，如果a是-2^32，转为正数时将会溢出
+        //System.out.println(a + " " + b);
+        if(a > b) return 0;
+        int ans = div(a,b);
+        return sign == -1 ? -ans : ans;
+    }
+    int div(int a, int b)
+    {
+        if(a > b) return 0;
+        int count = 1;
+        int tb = b;
+        while(tb+tb >= a && tb+tb < 0){ // 溢出之后不再小于0
+            tb += tb;
+            count += count;
+            //System.out.println(tb + " " + count + " " + count*b);
+        }
+        return count+div(a-tb,b);
     }
 
 }
