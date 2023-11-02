@@ -62,6 +62,70 @@ package com.acm.lico.dp;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution44 {
+
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度
+     空间复杂度
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路： 动态规划 dp[i][j]  表示 Si 和 Pi 的 是否符合匹配。
+     Pj != '*' : dp[i][j] = dp[i-1][j-1]
+     Pj == '*' if Si == P i - 1 : dp[i][j] = dp[i-1][j] | dp[i][j-1]  else = dp[i][j-1]
+
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:14 ms,击败了80.24% 的Java用户
+     内存消耗:43.7 MB,击败了48.46% 的Java用户
+     */
+    public boolean isMatchNew21(String s, String p) {
+        if(s == null || p == null  ) {
+            return false;
+        }
+        int n = s.length();
+        int m = p.length();
+        boolean dp[][] = new boolean[n + 1][ m + 1];
+        dp[0][0] = true;
+
+        char[] charsP = p.toCharArray();
+        for(int i = 0; i < p.length(); i ++) {
+            if(charsP[i] == '*') {
+                dp[0][i + 1] = true;
+            } else {
+                break;
+            }
+        }
+
+        char[] charsS = s.toCharArray();
+
+        for(int i = 1; i <= s.length(); i ++) {
+            for(int j = 1; j <= p.length(); j ++) {
+                char tempP = charsP[j - 1];
+                if(tempP == '*') {
+                    dp[i][j] = dp[i-1][j] || dp[i][j-1];
+                } else {
+                    if(tempP == '?' || tempP == charsS[i-1] ) {
+                        dp[i][j] = dp[i-1][j-1];
+                    } else {
+                        dp[i][j] = false;
+                    }
+                }
+            }
+        }
+        return dp[n][m];
+    }
     /**
      1 复杂度分析
      估算问题中复杂度的上限和下限
