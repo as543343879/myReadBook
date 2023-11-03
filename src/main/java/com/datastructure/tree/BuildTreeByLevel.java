@@ -102,11 +102,32 @@ public class BuildTreeByLevel {
             }
         }
 
+        System.out.println(" " );
+
     }
     public static void main(String[] args) {
         int[] res = new int[] {1,2,3,4,5,6,7,9};
         TreeNode treeNode = new BuildTreeByLevel().buildTree(res);
         trace(treeNode);
+
+         treeNode = new BuildTreeByLevel().CreateTree(res);
+        trace(treeNode);
     }
+    private int  size = 0;
+    public TreeNode CreateTree(int[] c) {
+        int var = size < c.length ? c[size++] : -1;
+        if (var == -1) {
+            return null;
+        }
+        //创建根节点
+        TreeNode node = new TreeNode(var);
+        //构造左子树
+        node.left = CreateTree(c);
+        //构造右子树
+        node.right = CreateTree(c);
+        //返回根节点
+        return node;
+    }
+
 }
 
