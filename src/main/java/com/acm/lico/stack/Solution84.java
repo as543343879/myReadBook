@@ -137,7 +137,7 @@ class Solution84 {
         System.arraycopy(heights,0, heightsNew,1, heights.length);
         int len = heightsNew.length;
         heightsNew[0] = heightsNew[len-1] = 0;
-            Deque<Integer> stack = new ArrayDeque();
+        Deque<Integer> stack = new ArrayDeque();
         int res = 0;
         stack.offerLast(0);
         for(int i = 1; i < len; i ++) {
