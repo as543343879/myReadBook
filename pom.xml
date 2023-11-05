@@ -25,6 +25,12 @@
     </properties>
     <dependencies>
         <dependency>
+             <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+             <version>29.0-jre</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>3.14.9</version>

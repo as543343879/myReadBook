@@ -67,6 +67,57 @@ class Node {
 // TODO: 2021/9/9 不需要借助map
 
 public class Solution116 {
+
+
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度  O(N)
+     空间复杂度  O(N)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路： 层次遍历
+     1. 先对根节点 入队列。
+     2. 然后 取出 队列大小 ， 建立联系。
+     3. 如果 左右 孩子不为空， 扩展下一层
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     */
+    public Node connectNew20(Node root) {
+        if(root == null) {
+            return root;
+        }
+        LinkedList<Node> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for(int i = 0 ; i < size; i ++) {
+                Node node = queue.poll();
+                if(i < size - 1) {
+                    node.next = queue.peek();
+                }
+                if(node.left != null) {
+                    queue.offer(node.left);
+                }
+
+                if(node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+        }
+        return root;
+    }
+
     Map<Integer,Node> map = new HashMap<>();
 
     public Node connect(Node root) {
