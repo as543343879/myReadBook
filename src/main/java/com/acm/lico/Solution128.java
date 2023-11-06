@@ -19,10 +19,7 @@ package com.acm.lico;
  * @date 2022/4/27
  */
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  1 复杂度分析
@@ -50,6 +47,57 @@ import java.util.Set;
  通过测试用例： 70 / 70
  */
 public class Solution128 {
+
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度 O(N logN) .如果换成 hasmMap ,时间复杂度 可以是 O(N)
+     空间复杂度 O(N)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：
+     1. 先把数据存入map。
+     2. 然后 找一个元素，判断下一个 元素是否存在。 直到找到下一个元素不存在。
+     3. 用treeSet 最优。
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:123 ms,击败了27.14% 的Java用户
+     内存消耗:55.8 MB,击败了57.88% 的Java用户
+     */
+    public int longestConsecutiveNew20(int[] nums) {
+        if(nums == null || nums.length == 0) {
+            return 0;
+        }
+        TreeSet<Integer> treeSet = new TreeSet<Integer>( );
+        Arrays.stream(nums).forEach( e -> treeSet.add(e));
+        boolean begin = true;
+        int res = 0;
+        int tempSize = 1;
+        for(Integer t : treeSet) {
+            if(  treeSet.contains(t + 1)) {
+                tempSize ++;
+            } else {
+                if(tempSize > res) {
+                    res = tempSize;
+                }
+                tempSize = 1;
+            }
+        }
+
+        return  res;
+    }
+
     /**
      *  这里判断 是否存在 官网的思路 是 x+1 并且 x 没有前驱， 就不会 x,x+1 多次进入循环
      *
