@@ -1,24 +1,48 @@
 package com.acm.lico.map;
 
 /**
- * Solution130 class
- * https://leetcode-cn.com/problems/surrounded-regions/
- *给你一个 m x n 的矩阵 board ，由若干字符 'X' 和 'O' ，找到所有被 'X' 围绕的区域，并将这些区域里所有的 'O' 用 'X' 填充。
- *
- *
- * 示例 1：
- *
- *
- * 输入：board = [['X','X','X','X'],['X','O','O','X'],['X','X','O','X'],['X','O','X','X']]
- * 输出：[['X','X','X','X'],['X','X','X','X'],['X','X','X','X'],['X','O','X','X']]
- * 解释：被围绕的区间不会存在于边界上，换句话说，任何边界上的 'O' 都不会被填充为 'X'。 任何不在边界上，或不与边界上的 'O' 相连的 'O' 最终都会被填充为 'X'。如果两个元素在水平或垂直方向相邻，则称它们是“相连”的。
- * 示例 2：
- *
- * 输入：board = [['X']]
- * 输出：[['X']]
- * @author 谢小平
- * @date 2022/4/28
- */
+ 被围绕的区域:130
+ 2023-11-06 14:56:29
+ //给你一个 m x n 的矩阵 board ，由若干字符 'X' 和 'O' ，找到所有被 'X' 围绕的区域，并将这些区域里所有的 'O' 用 'X' 填充
+ //。
+ //
+ //
+ //
+ //
+ //
+ //
+ //
+ // 示例 1：
+ //
+ //
+ //输入：board = [["X","X","X","X"],["X","O","O","X"],["X","X","O","X"],["X","O",
+ //"X","X"]]
+ //输出：[["X","X","X","X"],["X","X","X","X"],["X","X","X","X"],["X","O","X","X"]]
+ //解释：被围绕的区间不会存在于边界上，换句话说，任何边界上的 'O' 都不会被填充为 'X'。 任何不在边界上，或不与边界上的 'O' 相连的 'O' 最终都
+ //会被填充为 'X'。如果两个元素在水平或垂直方向相邻，则称它们是“相连”的。
+ //
+ //
+ // 示例 2：
+ //
+ //
+ //输入：board = [["X"]]
+ //输出：[["X"]]
+ //
+ //
+ //
+ //
+ // 提示：
+ //
+ //
+ // m == board.length
+ // n == board[i].length
+ // 1 <= m, n <= 200
+ // board[i][j] 为 'X' 或 'O'
+ //
+ //
+ // Related Topics 深度优先搜索 广度优先搜索 并查集 数组 矩阵 👍 1048 👎 0
+
+ **/
 
 import java.util.Arrays;
 
@@ -48,6 +72,73 @@ import java.util.Arrays;
  通过测试用例： 58 / 58
  */
 public class Solution130 {
+
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度  O(N*M)
+     空间复杂度  O(N*M)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路： 深度优先便利。
+     1. 最终结果是O 的 一定是 4边是O的，然后往4个方向发展有关联的。
+     2. 先对 4边进行深度搜索，O的元素标记成 'A'。
+     3. 然后便利所有元素， 'A' 改成 'O' 。 'O' 改成 'X'。
+
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:1 ms,击败了99.91% 的Java用户
+     内存消耗:42.4 MB,击败了97.61% 的Java用户
+     */
+    public void solveNew20(char[][] board) {
+        if(board == null || board.length <= 1  || board[0].length <= 1 ) {
+            return;
+        }
+        int n = board.length;
+        int m = board[0].length;
+        for(int i = 0; i < m; i ++) {
+            dfs2(board, 0, i);
+            dfs2(board, n - 1, i);
+        }
+
+        for(int i = 1; i < n - 1; i ++ ) {
+            dfs2(board, i, 0);
+            dfs2(board, i, m - 1);
+        }
+
+        for(int i = 0; i < n; i ++) {
+            for(int j = 0; j < m; j ++) {
+                if(board[i][j] == 'A') {
+                    board[i][j] = 'O';
+                } else if(board[i][j] == 'O') {
+                    board[i][j] = 'X';
+                }
+            }
+        }
+
+    }
+
+    private void dfs2(char[][] boards, int x, int y ) {
+        if(x >= 0 && x < boards.length && y >= 0 && y < boards[0].length && boards[x][y] == 'O') {
+            boards[x][y] = 'A';
+            int[] directs = {-1, 0 , 1, 0, -1};
+            for(int i = 0; i < directs.length - 1; i ++) {
+                dfs2(boards, x + directs[i], y + directs[i + 1]);
+            }
+        }
+    }
+
     public void solve(char[][] board) {
         int high_size = board.length;
         if (high_size <= 1){
