@@ -118,6 +118,54 @@ import java.util.Set;
 //}
 
 public class Solution142 {
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度 O(N)
+     空间复杂度 O(1)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：
+     1. f 是快指针的步速， s 是满指针的步速。 a 入口节点之前的长度， b 是循环圆缺 节点长度
+     2. 第一次相遇的时候 f = 2s | f = s + nb  | 两个等式相减。  s = nb | f = 2nb 。
+     3. 入口节点 k = a + nb 。 然后slow 第一次相遇的时候 已经走了 nb。 让他 继续走a步， f 也走a 步。 相遇的节点就是 循环入口节点。
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:0 ms,击败了100.00% 的Java用户
+     内存消耗:42.9 MB,击败了5.22% 的Java用户
+     */
+    public ListNode detectCycleNew20(ListNode head) {
+        if(head == null) {
+            return null;
+        }
+        ListNode fast = head;
+        ListNode slow = head;
+        do {
+            if(fast == null || fast.next == null) {
+                return null;
+            }
+            fast = fast.next.next;
+            slow = slow.next;
+        } while (fast != slow);
+
+        fast = head;
+        while (fast != slow) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return fast;
+    }
     public ListNode detectCycle(ListNode head) {
         if(head == null) {
             return null;
