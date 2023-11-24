@@ -147,7 +147,8 @@ class Solution148 {
         slow.next = null;
 
         ListNode sortNodeLeft =  sortListNew20(head);
-        ListNode sortNodeRight =  sortListNew20(fast);
+        ListNode sortNodeRight =  sortListNew20
+                (fast);
         head = merge(sortNodeLeft, sortNodeRight);
         return head;
     }
