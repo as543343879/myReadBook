@@ -96,6 +96,93 @@ class ListNode {
  }
 
 class Solution148 {
+    public static void main(String[] args) {
+        ListNode listNode1 = new ListNode(4);
+        ListNode listNode2 = new ListNode(2);
+        ListNode listNode3 = new ListNode(1);
+        ListNode listNode4 = new ListNode(3);
+        listNode1.next = listNode2;
+        listNode2.next = listNode3;
+        listNode3.next =listNode4;
+        Solution148 solution148 = new Solution148();
+        solution148.sortListNew20(listNode1);
+        System.out.println();
+
+    }
+
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度   O(logN) 错误 O(NlogN)
+     空间复杂度  O(logN)
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+     解答成功:
+     执行耗时:10 ms,击败了91.30% 的Java用户
+     内存消耗:54.8 MB,击败了36.99% 的Java用户
+     */
+    public ListNode sortListNew20(ListNode head) {
+        if(head == null || head.next == null) {
+            return head;
+        }
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        fast = slow.next;
+        slow.next = null;
+
+        ListNode sortNodeLeft =  sortListNew20(head);
+        ListNode sortNodeRight =  sortListNew20(fast);
+        head = merge(sortNodeLeft, sortNodeRight);
+        return head;
+    }
+
+
+    public ListNode merge(ListNode head1, ListNode head2) {
+        if(head1 == null) {
+            return head2;
+        }
+        if (head2 == null) {
+            return head1;
+        }
+        ListNode head = new ListNode(0);
+        ListNode temp = head;
+        while (head1 != null || head2 != null) {
+            if(head1 == null) {
+                temp.next = head2;
+                break;
+            } else if(head2 == null) {
+                temp.next = head1;
+                break;
+            } else {
+                if(head1.val < head2.val) {
+                    temp.next = head1;
+                    head1 = head1.next;
+                } else {
+                    temp.next = head2;
+                    head2 = head2.next;
+                }
+                temp = temp.next;
+            }
+        }
+
+        return head.next;
+    }
     public ListNode sortList(ListNode head) {
         if(head == null || head.next == null) {
             return head;
