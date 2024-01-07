@@ -163,4 +163,63 @@ public class Solution7 {
         return isNegative ? -Integer.valueOf(strX) : Integer.valueOf(strX);
 
     }
+
+
+    /**
+     1 复杂度分析
+     估算问题中复杂度的上限和下限
+     时间复杂度
+     空间复杂度
+     O(1) 一个常量下完成
+     O(n) 一次遍历
+     O(logn) 折半查询
+     O(n^2) 两重嵌套循环查询
+     2 定位问题
+     根据问题类型，确定采用何种算法思维。
+     例如
+     这个问题是什么类型（排序、查找、最优化）的问题；
+     这个问题的复杂度下限是多少，即最低的时间复杂度可能是多少；
+     采用哪些数据结构或算法思维，能把这个问题解决。
+     思路：
+     1. 首次处理符号。 然后判断 是否精度溢出 错误 不能直接处理符号。
+     2. 然后每次 对10 取余。 错误， 判断 怎么处理 精度溢出问题。
+     3 数据操作分析
+     根据增、删、查和数据顺序关系去选择合适的数据结构，利用空间换取时间。
+     4 编码实现
+     5 执行结果
+         解答成功:
+         执行耗时:1 ms,击败了46.17% 的Java用户
+         内存消耗:39.7 MB,击败了14.04% 的Java用户
+     */
+    public int reverseNew20(int x) {
+//        boolean isFlag = x > 0;
+//        if(!isFlag ) {
+//            if(x== Integer.MIN_VALUE) {
+//                return 0;
+//            }
+//            x = -x;
+//        }
+//
+//        int res = 0;
+//        int maxLeft = Integer.MAX_VALUE / 10;
+//        int maxRight  = Integer.MAX_VALUE % 10;
+//        while (x > 0) {
+//            if(res > maxLeft || ((res == maxLeft) && maxRight > (x % 10))) {
+//                return 0;
+//            }
+//            res = res * 10 + x % 10;
+//            x /= 10;
+//        }
+//        return isFlag ? res : -res;
+        int res = 0;
+        while (x != 0) {
+            int temp = res;
+            res = res * 10 + x % 10;
+            if(res / 10 != temp ) {
+                return 0;
+            }
+            x /= 10;
+        }
+        return res;
+    }
 }
