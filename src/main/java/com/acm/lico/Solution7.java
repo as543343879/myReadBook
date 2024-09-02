@@ -11,7 +11,65 @@ package com.acm.lico;
  * @author 格林
  * @date 2021-06-27
  */
+//class ListNode {
+//    int val;
+//    ListNode next;
+//    ListNode() {}
+//    ListNode(int val) { this.val = val; }
+//    ListNode(int val, ListNode next) { this.val = val; this.next = next;
+//    }
+//}
 public class Solution7 {
+    public static void main(String[] args) {
+        // Scanner input=new Scanner(System.in);
+        // String str=input.next();
+        ListNode node1 = new ListNode(1);
+        ListNode node2 = new ListNode(2);
+        ListNode node3 = new ListNode(3);
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = null;
+        Solution7 main = new Solution7();
+        ListNode temp = main.removeNthFromEnd(node1, 2);
+        while(node1 != null) {
+            System.out.print(node1.val + " ");
+            node1 = node1.next;
+        }
+    }
+
+    private ListNode removeNthFromEnd(ListNode head, int n) {
+        if(head == null) {
+            return head;
+        }
+        ListNode preHead = new ListNode(0, head);
+        int len = getLength(head);
+        if(n > len || n < 0) {
+            return head;
+        }
+        ListNode temp = preHead;
+        for(int i = 0; i < len - n + 1; i ++ ) {
+            temp = temp.next;
+        }
+        if(temp.next != null) {
+            ListNode tempNext = temp.next;
+            temp.next = temp.next.next;
+            tempNext.next = null;
+        }
+
+        ListNode res = preHead.next;
+        return res;
+    }
+
+    public int getLength(ListNode root) {
+        int len = 0;
+        while(root != null) {
+            len ++;
+            root = root.next;
+        }
+        return len;
+
+
+    }
     /**
      1 复杂度分析
      估算问题中复杂度的上限和下限
@@ -123,9 +181,9 @@ public class Solution7 {
         return res;
     }
 
-    public static void main(String[] args) {
-        System.out.println(reverse4(1111111119));
-    }
+//    public static void main(String[] args) {
+//        System.out.println(reverse4(1111111119));
+//    }
 
 
     /**
@@ -196,11 +254,10 @@ public class Solution7 {
 //        if(!isFlag ) {
 //            if(x== Integer.MIN_VALUE) {
 //                return 0;
-//            }
+//            }·
 //            x = -x;
 //        }
 //
-//        int res = 0;
 //        int maxLeft = Integer.MAX_VALUE / 10;
 //        int maxRight  = Integer.MAX_VALUE % 10;
 //        while (x > 0) {
